@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ExampleCommand;
@@ -41,10 +42,23 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  // Controllers
+  public final XboxController driverController = new XboxController(0);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    // Set default commands for each subsystem
+    m_robotDrive.setDefaultCommand(
+        new RunCommand(
+            () -> {
+              m_robotDrive.GTADrive(
+                  driverController.getTriggerAxis(GenericHID.Hand.kLeft),
+                  driverController.getTriggerAxis(GenericHID.Hand.kRight),
+                  driverController.getX(GenericHID.Hand.kLeft));
+            }));
   }
 
   /**

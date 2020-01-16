@@ -72,8 +72,23 @@ public class Drivetrain extends SubsystemBase {
         Rotation2d.fromDegrees(getHeading()),
         leftEncoder.getPosition(),
         rightEncoder.getPosition());
+  }
 
-    // todo: implement drive code
+  public void GTADrive(double leftTrigger, double rightTrigger, double turnValue) {
+    // Wren: implement this
+    // This is a custom control scheme that we used last year, and 2791 has used since 2014
+    // Left trigger is reverse, right trigger is forward, turn value is how fast the drivetrain
+    // should be rotating
+    // You can see an implementation of it here:
+    // https://github.com/FRC5254/FRC-5254---2019/blob/master/src/main/java/frc/robot/subsystems/Drivetrain.java#L110
+    // Try to understand how it works. For example, there is a function we use called `Math.signum`.
+    // You can see some docs on the `Math` package here:
+    // https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html
+    // (Math is a library built into Java by default)
+    // I will ask you to explain how the drive code works on Saturday
+
+    // code here:
+
   }
 
   /**
