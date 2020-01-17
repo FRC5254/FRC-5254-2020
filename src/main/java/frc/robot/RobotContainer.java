@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.List;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -21,20 +23,16 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.ShooterSetSpeed;
+import frc.robot.commands.ShooterShootNScore;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
-import java.util.List;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -69,10 +67,7 @@ public class RobotContainer {
             }));
 
     new JoystickButton(driverController, Button.kA.value)
-        .whileActiveOnce(
-            new SequentialCommandGroup(
-                new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM),
-                new InstantCommand(() -> m_shooter.setAccelerator(true), m_shooter)));
+        .whileActiveOnce(new ShooterShootNScore(m_shooter));
   }
 
   /**

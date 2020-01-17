@@ -16,12 +16,10 @@ import frc.robot.subsystems.Shooter;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class ShooterShootNScore extends SequentialCommandGroup {
-
   private final Shooter shooter;
 
   /** Creates a new ShooterShootNScore. */
   public ShooterShootNScore(Shooter shooter) {
-
     super(
         new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM),
         new InstantCommand(() -> shooter.setAccelerator(true), shooter));
