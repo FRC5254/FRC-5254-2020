@@ -29,4 +29,11 @@ public final class Constants {
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
   }
+
+  public static final class ShooterConstants {
+    public static final double kWallShotRPM = 10_000;
+    public static final double kAutoLineRPM = 8_000;
+
+    public static final double kAcceptableRPMRange = 50;
+  }
 }
