@@ -74,7 +74,7 @@ public class Drivetrain extends SubsystemBase {
         rightEncoder.getPosition());
   }
 
-  public void GTADrive(double leftTrigger, double rightTrigger, double turnValue) {
+  public void GTADrive(double leftTrigger, double rightTrigger, double turn) {
     // Wren: implement this
     // This is a custom control scheme that we used last year, and 2791 has used since 2014
     // Left trigger is reverse, right trigger is forward, turn value is how fast the drivetrain
@@ -88,8 +88,21 @@ public class Drivetrain extends SubsystemBase {
     // I will ask you to explain how the drive code works on Saturday
 
     // code here:
+    if (-0.2 <= turn && turn <= 0.2) {
+      turn = 0.0;
+    }
 
+    turn = turn * turn * Math.signum(turn);
+
+    double left = rightTrigger - leftTrigger +  turn;
+    double right = rightTrigger - leftTrigger - turn;
+    left = Math.min(1.0, Math.max(-1.0, left));
+    right = Math.max(-1.0, Math.min(1.0, right));
+
+    right1.set(right);
+    left1.set(left);
   }
+  
 
   /**
    * Returns the currently-estimated pose of the robot.
