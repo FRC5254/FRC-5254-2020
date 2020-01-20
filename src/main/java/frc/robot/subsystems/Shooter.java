@@ -22,13 +22,15 @@ public class Shooter extends SubsystemBase {
     flywheel2.follow(flywheel1);
 
     flywheel1.getEncoder().setPositionConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
-    flywheel1.getEncoder().setVelocityConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
+    flywheel1
+        .getEncoder()
+        .setVelocityConversionFactor(1.0 / (60 * ShooterConstants.kFlywheelGearRatio));
     accelerator
         .getEncoder()
         .setPositionConversionFactor(1.0 / ShooterConstants.kAcceleratorGearRatio);
     accelerator
         .getEncoder()
-        .setVelocityConversionFactor(1.0 / ShooterConstants.kAcceleratorGearRatio);
+        .setVelocityConversionFactor(1.0 / (60 * ShooterConstants.kAcceleratorGearRatio));
 
     flywheel1.setIdleMode(IdleMode.kCoast);
     flywheel2.setIdleMode(IdleMode.kCoast);
