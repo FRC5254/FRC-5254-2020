@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.RobotMap;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -21,10 +22,10 @@ public class Drivetrain extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
 
   public Drivetrain() {
-    left1 = new CANSparkMax(0, MotorType.kBrushless);
-    left2 = new CANSparkMax(1, MotorType.kBrushless);
-    right1 = new CANSparkMax(2, MotorType.kBrushless);
-    right2 = new CANSparkMax(3, MotorType.kBrushless);
+    left1 = new CANSparkMax(RobotMap.kDriveMotorLeft1, MotorType.kBrushless);
+    left2 = new CANSparkMax(RobotMap.kDriveMotorLeft2, MotorType.kBrushless);
+    right1 = new CANSparkMax(RobotMap.kDriveMotorRight1, MotorType.kBrushless);
+    right2 = new CANSparkMax(RobotMap.kDriveMotorRight2, MotorType.kBrushless);
 
     left2.follow(left1);
     right2.follow(right1);
@@ -32,30 +33,24 @@ public class Drivetrain extends SubsystemBase {
     left1.setInverted(true);
     left2.setInverted(true);
 
-    left1.setSmartCurrentLimit(60);
-    right1.setSmartCurrentLimit(60);
+    left1.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
+    right1.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
 
-    left1.setOpenLoopRampRate(0.0);
-    right1.setOpenLoopRampRate(0.0);
+    left1.setOpenLoopRampRate(DriveConstants.kRampRate);
+    right1.setOpenLoopRampRate(DriveConstants.kRampRate);
 
     left1.setIdleMode(IdleMode.kBrake);
     left2.setIdleMode(IdleMode.kCoast);
     right1.setIdleMode(IdleMode.kBrake);
     right2.setIdleMode(IdleMode.kCoast);
 
-    final double wheelDiameter = 4.0;
-    final double pulsePerRev = 42.0;
-    final double gearRatio = 6.67;
-    final double distancePerPulse =
-        Math.PI * Units.inchesToMeters(wheelDiameter) / pulsePerRev / gearRatio;
-
     // Set encoders to return distance in terms of meters
-    left1.getEncoder().setPositionConversionFactor(1.0 / distancePerPulse);
-    right1.getEncoder().setPositionConversionFactor(1.0 / distancePerPulse);
+    left1.getEncoder().setPositionConversionFactor(1.0 / DriveConstants.kDistancePerPulse);
+    right1.getEncoder().setPositionConversionFactor(1.0 / DriveConstants.kDistancePerPulse);
 
     // Set encoders to return velocity in terms of meters per second
-    left1.getEncoder().setVelocityConversionFactor((1.0 / distancePerPulse) * (1.0 / 60.0));
-    right1.getEncoder().setVelocityConversionFactor((1.0 / distancePerPulse) * (1.0 / 60.0));
+    left1.getEncoder().setVelocityConversionFactor(1.0 / DriveConstants.kDistancePerPulse);
+    right1.getEncoder().setVelocityConversionFactor(1.0 / DriveConstants.kDistancePerPulse);
 
     leftEncoder = left1.getEncoder();
     rightEncoder = right1.getEncoder();
@@ -75,26 +70,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void GTADrive(double leftTrigger, double rightTrigger, double turn) {
-    // Wren: implement this
-    // This is a custom control scheme that we used last year, and 2791 has used since 2014
-    // Left trigger is reverse, right trigger is forward, turn value is how fast the drivetrain
-    // should be rotating
-    // You can see an implementation of it here:
-    // https://github.com/FRC5254/FRC-5254---2019/blob/master/src/main/java/frc/robot/subsystems/Drivetrain.java#L110
-    // Try to understand how it works. For example, there is a function we use called `Math.signum`.
-    // You can see some docs on the `Math` package here:
-    // https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html
-    // (Math is a library built into Java by default)
-    // I will ask you to explain how the drive code works on Saturday
-
-    // code here:
-    if (-0.2 <= turn && turn <= 0.2) {
+    if (-DriveConstants.kJoystickTurnDeadzone <= turn
+        && turn <= DriveConstants.kJoystickTurnDeadzone) {
       turn = 0.0;
     }
 
     turn = turn * turn * Math.signum(turn);
 
-    double left = rightTrigger - leftTrigger +  turn;
+    double left = rightTrigger - leftTrigger + turn;
     double right = rightTrigger - leftTrigger - turn;
     left = Math.min(1.0, Math.max(-1.0, left));
     right = Math.max(-1.0, Math.min(1.0, right));
@@ -102,7 +85,6 @@ public class Drivetrain extends SubsystemBase {
     right1.set(right);
     left1.set(left);
   }
-  
 
   /**
    * Returns the currently-estimated pose of the robot.
