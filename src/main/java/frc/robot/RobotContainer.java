@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.RamseteGenerator;
 import frc.robot.commands.ShooterShootNScore;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -30,7 +29,6 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain m_robotDrive = new Drivetrain();
   private final Shooter m_shooter = new Shooter();
 
