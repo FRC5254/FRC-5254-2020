@@ -64,7 +64,7 @@ public class RobotContainer {
                   driverController.getTriggerAxis(GenericHID.Hand.kLeft),
                   driverController.getTriggerAxis(GenericHID.Hand.kRight),
                   driverController.getX(GenericHID.Hand.kLeft));
-            }));
+            }, m_robotDrive));
 
     new JoystickButton(driverController, Button.kA.value)
         .whileActiveOnce(new ShooterShootNScore(m_shooter));

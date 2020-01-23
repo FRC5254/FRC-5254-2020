@@ -14,23 +14,29 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
 
-  private final CANSparkMax left1, left2, right1, right2;
-  private final ADXRS450_Gyro gyro;
+  private final CANSparkMax left1, left2, left3, right1, right2, right3;
+  // private final ADXRS450_Gyro gyro;
 
   private final CANEncoder leftEncoder, rightEncoder;
   private final DifferentialDriveOdometry m_odometry;
 
   public Drivetrain() {
-    left1 = new CANSparkMax(0, MotorType.kBrushless);
-    left2 = new CANSparkMax(1, MotorType.kBrushless);
-    right1 = new CANSparkMax(2, MotorType.kBrushless);
-    right2 = new CANSparkMax(3, MotorType.kBrushless);
+    left1 = new CANSparkMax(1, MotorType.kBrushless);
+    left2 = new CANSparkMax(2, MotorType.kBrushless);
+    left3 = new CANSparkMax(3, MotorType.kBrushless);
+    right1 = new CANSparkMax(4, MotorType.kBrushless);
+    right2 = new CANSparkMax(5, MotorType.kBrushless);
+    right3 = new CANSparkMax(6, MotorType.kBrushless);
+
 
     left2.follow(left1);
+    left3.follow(left2);
     right2.follow(right1);
+    right3.follow(right2);
 
     left1.setInverted(true);
     left2.setInverted(true);
+    left3.setInverted(true);
 
     left1.setSmartCurrentLimit(60);
     right1.setSmartCurrentLimit(60);
@@ -40,10 +46,13 @@ public class Drivetrain extends SubsystemBase {
 
     left1.setIdleMode(IdleMode.kBrake);
     left2.setIdleMode(IdleMode.kCoast);
+    left3.setIdleMode(IdleMode.kCoast);
     right1.setIdleMode(IdleMode.kBrake);
     right2.setIdleMode(IdleMode.kCoast);
+    right3.setIdleMode(IdleMode.kCoast);
 
-    final double wheelDiameter = 4.0;
+
+    final double wheelDiameter = 6.0;
     final double pulsePerRev = 42.0;
     final double gearRatio = 6.67;
     final double distancePerPulse =
@@ -60,7 +69,7 @@ public class Drivetrain extends SubsystemBase {
     leftEncoder = left1.getEncoder();
     rightEncoder = right1.getEncoder();
 
-    gyro = new ADXRS450_Gyro();
+    // gyro = new ADXRS450_Gyro();
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
@@ -178,7 +187,7 @@ public class Drivetrain extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    gyro.reset();
+    // gyro.reset();
   }
 
   /**
@@ -187,7 +196,8 @@ public class Drivetrain extends SubsystemBase {
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-    return Math.IEEEremainder(gyro.getAngle(), 360);
+    return 0;
+    // return Math.IEEEremainder(gyro.getAngle(), 360);
   }
 
   /**
@@ -196,6 +206,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return gyro.getRate();
+    return 0;
+    // return gyro.getRate();
   }
 }
