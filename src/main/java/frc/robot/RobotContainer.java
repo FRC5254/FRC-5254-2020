@@ -47,7 +47,7 @@ public class RobotContainer {
               m_robotDrive.GTADrive(
                   driverController.getTriggerAxis(GenericHID.Hand.kLeft),
                   driverController.getTriggerAxis(GenericHID.Hand.kRight),
-                  driverController.getX(GenericHID.Hand.kLeft));
+                  -driverController.getX(GenericHID.Hand.kLeft));
             }, m_robotDrive));
 
     new JoystickButton(driverController, Button.kA.value)
