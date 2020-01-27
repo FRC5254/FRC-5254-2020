@@ -8,10 +8,8 @@ public final class Constants {
     // Drivetrain
     public static int kDriveMotorLeft1 = 1;
     public static int kDriveMotorLeft2 = 2;
-    public static int kDriveMotorLeft3 = 3;
     public static int kDriveMotorRight1 = 4;
     public static int kDriveMotorRight2 = 5;
-    public static int kDriveMotorRight3 = 6;
 
     // Shooter
     public static int kFlywheelMotor1 = 4;

@@ -15,7 +15,7 @@ import frc.robot.Constants.RobotMap;
 
 public class Drivetrain extends SubsystemBase {
 
-  private final CANSparkMax left1, left2, left3, right1, right2, right3;
+  private final CANSparkMax left1, left2, right1, right2;
   // private final ADXRS450_Gyro gyro;
 
   private final CANEncoder leftEncoder, rightEncoder;
@@ -24,19 +24,14 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
     left1 = new CANSparkMax(RobotMap.kDriveMotorLeft1, MotorType.kBrushless);
     left2 = new CANSparkMax(RobotMap.kDriveMotorLeft2, MotorType.kBrushless);
-    left3 = new CANSparkMax(RobotMap.kDriveMotorLeft3, MotorType.kBrushless);
     right1 = new CANSparkMax(RobotMap.kDriveMotorRight1, MotorType.kBrushless);
     right2 = new CANSparkMax(RobotMap.kDriveMotorRight2, MotorType.kBrushless);
-    right3 = new CANSparkMax(RobotMap.kDriveMotorRight3, MotorType.kBrushless);
 
     left2.follow(left1);
-    left3.follow(left2);
     right2.follow(right1);
-    right3.follow(right2);
 
     left1.setInverted(true);
     left2.setInverted(true);
-    left3.setInverted(true);
 
     left1.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
     right1.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
@@ -46,10 +41,8 @@ public class Drivetrain extends SubsystemBase {
 
     left1.setIdleMode(IdleMode.kBrake);
     left2.setIdleMode(IdleMode.kCoast);
-    left3.setIdleMode(IdleMode.kCoast);
     right1.setIdleMode(IdleMode.kBrake);
     right2.setIdleMode(IdleMode.kCoast);
-    right3.setIdleMode(IdleMode.kCoast);
 
 
     // Set encoders to return distance in terms of meters
