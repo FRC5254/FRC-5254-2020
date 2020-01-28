@@ -4,7 +4,6 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
@@ -12,13 +11,18 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.RobotMap;
+import io.github.oblarg.oblog.annotations.Log;
 
 public class Drivetrain extends SubsystemBase {
 
   private final CANSparkMax left1, left2, right1, right2;
   // private final ADXRS450_Gyro gyro;
 
+  @Log(methodName = "getPosition")
+  @Log(methodName = "getVelocity")
   private final CANEncoder leftEncoder, rightEncoder;
+
+  @Log.ToString
   private final DifferentialDriveOdometry m_odometry;
 
   public Drivetrain() {
@@ -43,7 +47,6 @@ public class Drivetrain extends SubsystemBase {
     left2.setIdleMode(IdleMode.kCoast);
     right1.setIdleMode(IdleMode.kBrake);
     right2.setIdleMode(IdleMode.kCoast);
-
 
     // Set encoders to return distance in terms of meters
     left1.getEncoder().setPositionConversionFactor(1.0 / DriveConstants.kDistancePerPulse);

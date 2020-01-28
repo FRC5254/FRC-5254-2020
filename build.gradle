@@ -40,6 +40,12 @@ deploy {
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
+// Allow us to get Java libraries from GitHub
+repositories {
+  maven { url 'https://jitpack.io' }
+}
+
+
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
 dependencies {
@@ -53,6 +59,9 @@ dependencies {
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
     testImplementation 'junit:junit:4.12'
+
+    // Oblog
+    implementation "com.github.Oblarg.Oblog:lib:3.0.3"
 
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
