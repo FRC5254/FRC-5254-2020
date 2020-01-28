@@ -22,8 +22,7 @@ public class Drivetrain extends SubsystemBase {
   @Log(methodName = "getVelocity")
   private final CANEncoder leftEncoder, rightEncoder;
 
-  @Log.ToString
-  private final DifferentialDriveOdometry m_odometry;
+  @Log.ToString private final DifferentialDriveOdometry m_odometry;
 
   public Drivetrain() {
     left1 = new CANSparkMax(RobotMap.kDriveMotorLeft1, MotorType.kBrushless);
