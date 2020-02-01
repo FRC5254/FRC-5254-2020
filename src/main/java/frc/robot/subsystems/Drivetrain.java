@@ -4,10 +4,13 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.RobotMap;
@@ -16,13 +19,13 @@ import io.github.oblarg.oblog.annotations.Log;
 public class Drivetrain extends SubsystemBase {
 
   private final CANSparkMax left1, left2, right1, right2;
-  // private final ADXRS450_Gyro gyro;
+  private final ADXRS450_Gyro gyro;
 
   @Log(methodName = "getPosition")
   @Log(methodName = "getVelocity")
-  private final CANEncoder leftEncoder, rightEncoder;
+  public final CANEncoder leftEncoder, rightEncoder;
 
-  @Log.ToString private final DifferentialDriveOdometry m_odometry;
+  @Log.ToString public final DifferentialDriveOdometry m_odometry;
 
   public Drivetrain() {
     left1 = new CANSparkMax(RobotMap.kDriveMotorLeft1, MotorType.kBrushless);
@@ -48,18 +51,19 @@ public class Drivetrain extends SubsystemBase {
     right2.setIdleMode(IdleMode.kCoast);
 
     // Set encoders to return distance in terms of meters
-    left1.getEncoder().setPositionConversionFactor(1.0 / DriveConstants.kDistancePerPulse);
-    right1.getEncoder().setPositionConversionFactor(1.0 / DriveConstants.kDistancePerPulse);
+    left1.getEncoder().setPositionConversionFactor(DriveConstants.kDistancePerPulse);
+    right1.getEncoder().setPositionConversionFactor(DriveConstants.kDistancePerPulse);
 
     // Set encoders to return velocity in terms of meters per second
-    left1.getEncoder().setVelocityConversionFactor(1.0 / DriveConstants.kDistancePerPulse);
-    right1.getEncoder().setVelocityConversionFactor(1.0 / DriveConstants.kDistancePerPulse);
+    left1.getEncoder().setVelocityConversionFactor(DriveConstants.kDistancePerPulse / 60.0);
+    right1.getEncoder().setVelocityConversionFactor(DriveConstants.kDistancePerPulse / 60.0);
 
     leftEncoder = left1.getEncoder();
     rightEncoder = right1.getEncoder();
 
-    // gyro = new ADXRS450_Gyro();
+    gyro = new ADXRS450_Gyro();
     resetEncoders();
+    zeroHeading();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
 
@@ -163,7 +167,7 @@ public class Drivetrain extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    // gyro.reset();
+    gyro.reset();
   }
 
   /**
@@ -172,8 +176,8 @@ public class Drivetrain extends SubsystemBase {
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-    return 0;
-    // return Math.IEEEremainder(gyro.getAngle(), 360);
+    // return 0;
+    return Math.IEEEremainder(gyro.getAngle(), 360);
   }
 
   /**
@@ -182,7 +186,7 @@ public class Drivetrain extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return 0;
-    // return gyro.getRate();
+    // return 0;
+    return gyro.getRate();
   }
 }

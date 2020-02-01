@@ -42,13 +42,9 @@ public class RamseteGenerator {
     // An example trajectory to follow.  All units in meters.
     Trajectory exampleTrajectory =
         TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
             startingPose,
-            // Pass through these two interior waypoints, making an 's' curve path
             List.of(innerPoints),
-            // End 3 meters straight ahead of where we started, facing forward
             endingPose,
-            // Pass config
             config);
 
     RamseteCommand ramseteCommand =

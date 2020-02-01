@@ -13,8 +13,11 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.RamseteGenerator;
 import frc.robot.commands.ShooterShootNScore;
@@ -29,8 +32,8 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_robotDrive = new Drivetrain();
-  private final Shooter m_shooter = new Shooter();
+  public final Drivetrain m_robotDrive = new Drivetrain();
+  // private final Shooter m_shooter = new Shooter();
 
   // Controllers
   public final XboxController driverController = new XboxController(0);
@@ -51,8 +54,8 @@ public class RobotContainer {
             },
             m_robotDrive));
 
-    new JoystickButton(driverController, Button.kA.value)
-        .whileActiveOnce(new ShooterShootNScore(m_shooter));
+    // new JoystickButton(driverController, Button.kA.value)
+    //     .whileActiveOnce(new ShooterShootNScore(m_shooter));
   }
 
   /**
@@ -69,13 +72,37 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return RamseteGenerator.createStandardPath(
-            m_robotDrive,
-            new Pose2d(0, 0, new Rotation2d(0)), // start
-            new Pose2d(3, 0, new Rotation2d(0)), // end
-            // all middle points:
-            new Translation2d(1, 1),
-            new Translation2d(2, -1))
-        .andThen(() -> m_robotDrive.tankDriveVolts(0, 0), m_robotDrive);
+    // return RamseteGenerator.createStandardPath(
+    //         m_robotDrive,
+    //         new Pose2d(0, 0, new Rotation2d(0)), // start
+    //         new Pose2d(3, 0, new Rotation2d(0)), // end
+    //         // all middle points:
+    //         new Translation2d(1, 1),
+    //         new Translation2d(2, -1))
+    //     .andThen(() -> m_robotDrive.tankDriveVolts(0, 0), m_robotDrive);
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> SmartDashboard.putString("foo", "starting")),
+      new InstantCommand(() -> {
+        m_robotDrive.zeroHeading();
+        m_robotDrive.resetEncoders();
+        m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+      }),
+      RamseteGenerator.createStandardPath(m_robotDrive,
+      new Pose2d(0, 0, new Rotation2d(0)),
+      new Pose2d(2, 0, new Rotation2d(0)),
+      new Translation2d(0.25, 0.25),
+      new Translation2d(0.5, 0.5),
+      new Translation2d(0.75, 0.5),
+      new Translation2d(1.0, 0.25),
+      new Translation2d(1.25, 0.0),
+      new Translation2d(1.5, 0.0)),
+      new InstantCommand(
+        () -> {
+          m_robotDrive.tankDriveVolts(0, 0);
+          SmartDashboard.putString("foo", "done");
+        },
+        m_robotDrive
+      )
+    );
   }
 }
