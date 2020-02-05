@@ -128,8 +128,8 @@ public class Drivetrain extends SubsystemBase {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    left1.set(leftVolts / 12.0);
-    right1.set(rightVolts / 12.0);
+    left1.set(leftVolts / 12.6);
+    right1.set(rightVolts / 12.6);
   }
 
   /** Resets the drive encoders to currently read a position of 0. */

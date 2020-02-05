@@ -35,9 +35,9 @@ public class RamseteGenerator {
                 AutoConstants.kMaxSpeedMetersPerSecond,
                 AutoConstants.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics)
+            .setKinematics(DriveConstants.kDriveKinematics);
             // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
+            // .addConstraint(autoVoltageConstraint);
 
     // An example trajectory to follow.  All units in meters.
     Trajectory exampleTrajectory =
