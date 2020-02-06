@@ -6,15 +6,15 @@ import edu.wpi.first.wpilibj.util.Units;
 public final class Constants {
   public static final class RobotMap {
     // Drivetrain
-    public static int kDriveMotorLeft1 = 1;
-    public static int kDriveMotorLeft2 = 2;
-    public static int kDriveMotorRight1 = 4;
-    public static int kDriveMotorRight2 = 6;
+    public static int kDriveMotorLeft1 = 9;
+    public static int kDriveMotorLeft2 = 8;
+    public static int kDriveMotorRight1 = 7;
+    public static int kDriveMotorRight2 = 10;
 
     // Shooter
-    public static int kFlywheelMotor1 = 7;
-    public static int kFlywheelMotor2 = 8;
-    public static int kAcceleratorMotor = 9;
+    public static int kFlywheelMotor1 = 6;
+    public static int kFlywheelMotor2 = 2;
+    public static int kAcceleratorMotor = 1;
   }
 
   public static final class DriveConstants {
@@ -60,8 +60,8 @@ public final class Constants {
     // Physical details
     public static final double kFlywheelGearRatio = 1.0;
     public static final double kFlywheelMaxRPM = 5880 / kFlywheelGearRatio;
-    public static final double kAcceleratorGearRatio = 4.0;
-    public static final double kAcceleratorMaxRPM = 18730 / kAcceleratorGearRatio;
+    public static final double kAcceleratorGearRatio = 6.0;
+    public static final double kAcceleratorMaxRPM = 11_000 / kAcceleratorGearRatio;
 
     // Shot details
     public static final double kWallShotRPM = 5_000;
@@ -70,7 +70,7 @@ public final class Constants {
     public static final double kAcceleratorRPM = 2_500;
 
     // Motor config
-    public static final int kFlywheelCurrentLimit = 100;
-    public static final int kAcceleratorCurrentLimit = 100;
+    public static final int kFlywheelCurrentLimit = 20;
+    public static final int kAcceleratorCurrentLimit = 30;
   }
 }

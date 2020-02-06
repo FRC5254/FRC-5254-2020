@@ -56,14 +56,14 @@ public class Robot extends TimedRobot {
     // Have Oblog update values on Shuffleboard
     Logger.updateEntries();
 
-    SmartDashboard.putString(
-        "odometry", m_robotContainer.m_robotDrive.m_odometry.getPoseMeters().toString());
-    SmartDashboard.putNumber(
-        "left encoder dist", m_robotContainer.m_robotDrive.leftEncoder.getPosition());
-    SmartDashboard.putNumber("factor", Constants.DriveConstants.kDistancePerPulse);
-    SmartDashboard.putNumber(
-        "left encoder speed", m_robotContainer.m_robotDrive.leftEncoder.getVelocity());
-    SmartDashboard.putNumber("Gyro", m_robotContainer.m_robotDrive.getHeading());
+    // SmartDashboard.putString(
+    //     "odometry", m_robotContainer.m_robotDrive.m_odometry.getPoseMeters().toString());
+    // SmartDashboard.putNumber(
+    //     "left encoder dist", m_robotContainer.m_robotDrive.leftEncoder.getPosition());
+    // SmartDashboard.putNumber("factor", Constants.DriveConstants.kDistancePerPulse);
+    // SmartDashboard.putNumber(
+    //     "left encoder speed", m_robotContainer.m_robotDrive.leftEncoder.getVelocity());
+    // SmartDashboard.putNumber("Gyro", m_robotContainer.m_robotDrive.getHeading());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_robotContainer.m_robotDrive.resetEncoders();
+    // m_robotContainer.m_robotDrive.resetEncoders();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
