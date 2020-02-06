@@ -22,7 +22,8 @@ public class ShooterShootNScore extends SequentialCommandGroup {
   public ShooterShootNScore(Shooter shooter) {
     super(
         new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM),
-        new InstantCommand(() -> shooter.setAccelerator(true), shooter));
+        new InstantCommand(
+            () -> shooter.setAcceleratorToRPM(ShooterConstants.kAcceleratorRPM), shooter));
 
     this.shooter = shooter;
   }
@@ -30,6 +31,6 @@ public class ShooterShootNScore extends SequentialCommandGroup {
   @Override
   public void end(boolean interrupted) {
     shooter.setFlywheelToRPM(0);
-    shooter.setAccelerator(false);
+    shooter.setAcceleratorToRPM(0);
   }
 }
