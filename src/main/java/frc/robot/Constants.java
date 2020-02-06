@@ -12,9 +12,9 @@ public final class Constants {
     public static int kDriveMotorRight2 = 10;
 
     // Shooter
-    public static int kFlywheelMotor1 = 6;
+    public static int kFlywheelMotor1 = 1;
     public static int kFlywheelMotor2 = 2;
-    public static int kAcceleratorMotor = 1;
+    public static int kAcceleratorMotor = 4;
   }
 
   public static final class DriveConstants {
