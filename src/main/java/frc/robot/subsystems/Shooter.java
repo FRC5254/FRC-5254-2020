@@ -19,6 +19,11 @@ public class Shooter extends SubsystemBase {
     flywheel1 = new CANSparkMax(RobotMap.kFlywheelMotor1, MotorType.kBrushless);
     flywheel2 = new CANSparkMax(RobotMap.kFlywheelMotor2, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushed);
+
+    flywheel1.restoreFactoryDefaults();
+    flywheel2.restoreFactoryDefaults();
+    accelerator.restoreFactoryDefaults();
+
     encoder = flywheel1.getEncoder();
 
     flywheel2.follow(flywheel1);
