@@ -9,7 +9,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -18,11 +17,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.RamseteGenerator;
-import frc.robot.commands.ShooterShootNScore;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Shooter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -81,28 +77,28 @@ public class RobotContainer {
     //         new Translation2d(2, -1))
     //     .andThen(() -> m_robotDrive.tankDriveVolts(0, 0), m_robotDrive);
     return new SequentialCommandGroup(
-      new InstantCommand(() -> SmartDashboard.putString("foo", "starting")),
-      new InstantCommand(() -> {
-        m_robotDrive.zeroHeading();
-        m_robotDrive.resetEncoders();
-        m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
-      }),
-      RamseteGenerator.createStandardPath(m_robotDrive,
-      new Pose2d(0, 0, new Rotation2d(0)),
-      new Pose2d(2, 0, new Rotation2d(0)),
-      new Translation2d(0.25, 0.25),
-      new Translation2d(0.5, 0.5),
-      new Translation2d(0.75, 0.5),
-      new Translation2d(1.0, 0.25),
-      new Translation2d(1.25, 0.0),
-      new Translation2d(1.5, 0.0)),
-      new InstantCommand(
-        () -> {
-          m_robotDrive.tankDriveVolts(0, 0);
-          SmartDashboard.putString("foo", "done");
-        },
-        m_robotDrive
-      )
-    );
+        new InstantCommand(() -> SmartDashboard.putString("foo", "starting")),
+        new InstantCommand(
+            () -> {
+              m_robotDrive.zeroHeading();
+              m_robotDrive.resetEncoders();
+              m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+            }),
+        RamseteGenerator.createStandardPath(
+            m_robotDrive,
+            new Pose2d(0, 0, new Rotation2d(0)),
+            new Pose2d(2, 0, new Rotation2d(0)),
+            new Translation2d(0.25, 0.25),
+            new Translation2d(0.5, 0.5),
+            new Translation2d(0.75, 0.5),
+            new Translation2d(1.0, 0.25),
+            new Translation2d(1.25, 0.0),
+            new Translation2d(1.5, 0.0)),
+        new InstantCommand(
+            () -> {
+              m_robotDrive.tankDriveVolts(0, 0);
+              SmartDashboard.putString("foo", "done");
+            },
+            m_robotDrive));
   }
 }

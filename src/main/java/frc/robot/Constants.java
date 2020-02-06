@@ -1,9 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Units;
-import io.github.oblarg.oblog.annotations.Log;
 
 public final class Constants {
   public static final class RobotMap {
@@ -27,7 +25,8 @@ public final class Constants {
     public static final double kWheelDiameter = 6.0;
     public static final double kEncoderPulsePerRev = 42.0;
     public static final double kGearRatio = (50.0 / 11.0) * (50.0 / 24.0);
-    public static final double kDistancePerPulse = (1.0 / kGearRatio) * Units.inchesToMeters(6.0) * Math.PI;
+    public static final double kDistancePerPulse =
+        (1.0 / kGearRatio) * Units.inchesToMeters(6.0) * Math.PI;
 
     // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
     // These characterization values MUST be determined either experimentally or theoretically
