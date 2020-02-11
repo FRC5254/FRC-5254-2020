@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.util.Units;
 
@@ -20,6 +21,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Physical details
     public static final double kTrackwidthMeters = Units.inchesToMeters(24);
+    public static final double kRobotLengthWithBumpersMeters = Units.inchesToMeters(38);
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
     public static final double kWheelDiameter = 6.0;
@@ -72,5 +74,22 @@ public final class Constants {
     // Motor config
     public static final int kFlywheelCurrentLimit = 20;
     public static final int kAcceleratorCurrentLimit = 30;
+  }
+
+  // Okay, this is a little gross
+  // Coordinate (0, 0) is outside of the field!! Because of the curved driver stations
+  // The point of view is from behind the driver station facing the field on the close side of your
+  // robot
+  // Which means its as if you were looking at the robot from the other alliance's POV
+  // So with that: Y moves you left/right along the intiation line
+  // and X moves you towards the driver station wall (theoretically, X = 0 is against the flat part
+  // of the wall)
+  public static final class LocationConstants {
+    public static final class StartingLocations {
+      public static final Translation2d kInFrontOfGoal =
+          new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(94.655));
+      public static final Translation2d kSneakyPete =
+          new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(286.311));
+    }
   }
 }

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -16,7 +17,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.Drivetrain;
 import java.util.List;
 
-public class RamseteGenerator {
+public class AutoHelper {
   public static Command createStandardPath(
       Drivetrain robotDrive, Pose2d startingPose, Pose2d endingPose, Translation2d... innerPoints) {
     // Create a voltage constraint to ensure we don't accelerate too fast
@@ -62,5 +63,22 @@ public class RamseteGenerator {
             robotDrive);
 
     return ramseteCommand;
+  }
+
+  public enum OffsetConfig {
+    OFFSET_TOWARDS_GOAL,
+    OFFSET_AWAY_FROM_GOAL
+  }
+
+  public static Translation2d getStartingPoint(
+      Translation2d startingPoint, OffsetConfig offsetConfig, double offsetDistance) {
+    if (offsetConfig == OffsetConfig.OFFSET_TOWARDS_GOAL) {
+      return startingPoint.minus(new Translation2d(offsetDistance, 0));
+    } else if (offsetConfig == OffsetConfig.OFFSET_AWAY_FROM_GOAL) {
+      return startingPoint.plus(new Translation2d(offsetDistance, 0));
+    } else {
+      SmartDashboard.putString("ERROR", "Incorrect offset configuration given");
+      return startingPoint;
+    }
   }
 }

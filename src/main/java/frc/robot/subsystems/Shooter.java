@@ -28,7 +28,7 @@ public class Shooter extends SubsystemBase {
 
     flywheel1.setInverted(true);
     flywheel2.follow(flywheel1, true);
-    
+
     flywheel1.getEncoder().setVelocityConversionFactor(1.0);
     flywheel1.getEncoder().setPositionConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
     // flywheel1
@@ -53,7 +53,6 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter max output", 0);
     SmartDashboard.putNumber("Shooter setpoint (RPM)", 0);
     SmartDashboard.putNumber("Shooter accelerator RPM", 0);
-    
   }
 
   public void setFlywheelToRPM(double rpm) {
