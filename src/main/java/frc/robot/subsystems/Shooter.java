@@ -85,4 +85,9 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter error", encoder.getVelocity() - setpointRPM);
     setAcceleratorToRPM(acceleratorRPM);
   }
+
+  public boolean isVelocityWithinTargetRange(double setpoint, double targetRange) {
+    return setpoint - targetRange <= getFlywheelEncoder().getVelocity()
+        && getFlywheelEncoder().getVelocity() <= setpoint + targetRange;
+  }
 }
