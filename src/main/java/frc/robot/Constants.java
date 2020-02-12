@@ -16,6 +16,15 @@ public final class Constants {
     public static int kFlywheelMotor1 = 1;
     public static int kFlywheelMotor2 = 2;
     public static int kAcceleratorMotor = 4;
+
+    // Intake
+    public static int kIntakeMotor = 11;
+    public static int kIntakeSolenoid1 = 12;
+    public static int kIntakeSolenoid2 = 13;
+
+    // Hopper
+    public static int kLeftBelt = 14;
+    public static int kRightBelt = 15;
   }
 
   public static final class DriveConstants {
@@ -91,5 +100,14 @@ public final class Constants {
       public static final Translation2d kSneakyPete =
           new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(286.311));
     }
+  }
+
+  public static final class IntakeConstants {
+    public static final double intakeSpeed = 0.25; // Arbitrary
+  }
+
+  public static final class HopperConstants {
+    public static final double leftBelt = 0.25; // Arbitrary
+    public static final double rightBelt = 0.5; // Arbitrary
   }
 }
