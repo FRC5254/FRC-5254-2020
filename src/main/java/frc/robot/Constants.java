@@ -7,11 +7,11 @@ import frc.robot.Limelight.Pipeline;
 
 public final class Constants {
   public static final class RobotMap {
-    // Drivetrain
-    public static int kDriveMotorLeft1 = 9;
-    public static int kDriveMotorLeft2 = 8;
-    public static int kDriveMotorRight1 = 7;
-    public static int kDriveMotorRight2 = 10;
+    // Drivetrain ARBITRARY - should be 1,2,3,4 but shooter is using those ID's right now
+    public static int kDriveMotorLeft1 = 6;
+    public static int kDriveMotorLeft2 = 7;
+    public static int kDriveMotorRight1 = 8;
+    public static int kDriveMotorRight2 = 9;
 
     // Shooter
     public static int kFlywheelMotor1 = 1;
@@ -20,7 +20,7 @@ public final class Constants {
     public static int kHoodSolenoid = 0;
 
     // Intake ARBITRARY CAN IDS
-    public static int kIntakeMotor = 11;
+    public static int kIntakeMotor = 5;
     public static int kIntakeSolenoid1 = 12;
     public static int kIntakeSolenoid2 = 13;
 
