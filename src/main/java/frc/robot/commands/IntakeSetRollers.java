@@ -8,21 +8,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 
-public class ShooterSetSpeed extends CommandBase {
-
-  private final Shooter shooter;
-  private final double rpm;
-
-  /** Creates a new ShooterSetSpeed. */
-  public ShooterSetSpeed(Shooter shooter, double rpm) {
+public class IntakeSetRollers extends CommandBase {
+  /**
+   * Creates a new IntakeSetRollers.
+   */
+  private final Intake m_intake;
+  
+  public IntakeSetRollers(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.shooter = shooter;
-    this.rpm = rpm;
-
-    addRequirements(shooter);
+    addRequirements(intake);
+    m_intake = intake;
+  
   }
 
   // Called when the command is initially scheduled.
@@ -32,7 +30,7 @@ public class ShooterSetSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setFlywheelToRPM(rpm);
+    m_intake.setIntakeMotor(targetRPM);
   }
 
   // Called once the command ends or is interrupted.
@@ -42,8 +40,6 @@ public class ShooterSetSpeed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double rpmError = shooter.getFlywheelEncoder().getVelocity() - rpm;
-    return -ShooterConstants.kAcceptableRPMRange <= rpmError
-        && rpmError <= ShooterConstants.kAcceptableRPMRange;
+    return true;
   }
 }

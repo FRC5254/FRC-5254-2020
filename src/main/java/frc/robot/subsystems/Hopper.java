@@ -29,7 +29,7 @@ public class Hopper extends SubsystemBase {
   }
 
   public void setHopper(double leftSpeed, double rightSpeed) {
-    leftBelt.set(HopperConstants.leftBelt);
-    rightBelt.set(HopperConstants.rightBelt);
+    leftBelt.set(leftSpeed);
+    rightBelt.set(rightSpeed);
   }
 }

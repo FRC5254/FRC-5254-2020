@@ -103,11 +103,6 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final double intakeSpeed = 0.25; // Arbitrary
-  }
-
-  public static final class HopperConstants {
-    public static final double leftBelt = 0.25; // Arbitrary
-    public static final double rightBelt = 0.5; // Arbitrary
+    public static final double intakeSpeed = 0.5; // Suggested, not final
   }
 }

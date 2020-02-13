@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
     rollers.setIdleMode(IdleMode.kBrake);
   }
 
-  public void setIntakeMotor() {
+  public void setIntakeMotor(double rpm) {
     rollers.set(IntakeConstants.intakeSpeed);
   }
 
