@@ -23,6 +23,8 @@ public class HopperSetSpeed extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(hopper);
     m_hopper = hopper;
+    this.leftSpeed = leftSpeed;
+    this.rightSpeed = rightSpeed;
   }
 
   // Called when the command is initially scheduled.

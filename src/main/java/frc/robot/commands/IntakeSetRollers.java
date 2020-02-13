@@ -22,6 +22,7 @@ public class IntakeSetRollers extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
     m_intake = intake;
+    this.speed = speed;
   
   }
 

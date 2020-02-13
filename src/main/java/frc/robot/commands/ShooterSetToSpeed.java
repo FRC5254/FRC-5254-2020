@@ -15,7 +15,7 @@ public class ShooterSetToSpeed extends CommandBase {
   /** Creates a new ShooterSetToSpeed. */
   private final Shooter m_shooter;
 
-  private double targetRPM;
+  private double rpm;
   private boolean waitUntilAtSpeed;
 
   public ShooterSetToSpeed(Shooter shooter, double rpm) {
@@ -25,7 +25,7 @@ public class ShooterSetToSpeed extends CommandBase {
 
   public ShooterSetToSpeed(Shooter shooter, double rpm, boolean waitUntilSpunUp) {
     m_shooter = shooter;
-    targetRPM = rpm;
+    this.rpm = rpm;
     waitUntilAtSpeed = waitUntilSpunUp;
     addRequirements(m_shooter);
   }
@@ -37,7 +37,7 @@ public class ShooterSetToSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setFlywheelToRPM(targetRPM);
+    m_shooter.setFlywheelToRPM(rpm);
   }
 
   // Called once the command ends or is interrupted.
@@ -48,7 +48,7 @@ public class ShooterSetToSpeed extends CommandBase {
   @Override
   public boolean isFinished() {
     if (waitUntilAtSpeed) {
-      return m_shooter.isVelocityWithinTargetRange(targetRPM, ShooterConstants.kAcceptableRPMRange);
+      return m_shooter.isVelocityWithinTargetRange(rpm, ShooterConstants.kAcceptableRPMRange);
     } else {
       return true;
     }
