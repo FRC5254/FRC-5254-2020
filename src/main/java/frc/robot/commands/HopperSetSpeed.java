@@ -8,21 +8,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Hopper;
 
-public class IntakeSetRollers extends CommandBase {
+public class HopperSetSpeed extends CommandBase {
   /**
-   * Creates a new IntakeSetRollers.
+   * Creates a new HopperSetSpeed.
    */
-  private final Intake m_intake;
+  private final Hopper m_hopper;
+
+  private double leftSpeed;
+  private double rightSpeed;
   
-  private double speed;
-  
-  public IntakeSetRollers(Intake intake, double speed) {
+  public HopperSetSpeed(Hopper hopper, double leftSpeed, double rightSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
-    m_intake = intake;
-  
+    addRequirements(hopper);
+    m_hopper = hopper;
   }
 
   // Called when the command is initially scheduled.
@@ -32,7 +32,7 @@ public class IntakeSetRollers extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setIntakeMotor(speed);
+    m_hopper.setHopper(leftSpeed, rightSpeed);
   }
 
   // Called once the command ends or is interrupted.

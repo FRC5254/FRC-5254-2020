@@ -19,12 +19,12 @@ public final class Constants {
     public static int kAcceleratorMotor = 4;
     public static int kHoodSolenoid = 0;
 
-    // Intake
+    // Intake ARBITRARY CAN IDS
     public static int kIntakeMotor = 11;
     public static int kIntakeSolenoid1 = 12;
     public static int kIntakeSolenoid2 = 13;
 
-    // Hopper
+    // Hopper ARBITRARY CAN IDS
     public static int kLeftBelt = 14;
     public static int kRightBelt = 15;
   }
