@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutoHelper;
 import frc.robot.commands.IntakeSetExtended;
+import frc.robot.commands.auto.AutoHelper;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -32,10 +32,10 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public final Drivetrain m_robotDrive = new Drivetrain();
-  public final Shooter m_shooter = new Shooter();
-  public final Hopper m_hopper = new Hopper();
-  public final Intake m_intake = new Intake();
+  private final Drivetrain m_robotDrive = new Drivetrain();
+  private final Shooter m_shooter = new Shooter();
+  private final Hopper m_hopper = new Hopper();
+  private final Intake m_intake = new Intake();
 
   // Controllers
   public final XboxController driverController = new XboxController(0);
