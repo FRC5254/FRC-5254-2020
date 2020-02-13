@@ -234,7 +234,7 @@ public class Limelight {
     } else if (mode == 1) {
       return StreamMode
           .PIP_MAIN; // The secondary camera stream is placed in the lower-right corner of the
-                     // primary camera stream
+      // primary camera stream
     } else if (mode == 2) {
       return StreamMode.PIP_SECONDARY;
     } else {

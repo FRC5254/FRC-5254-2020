@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.util.Units;
+import frc.robot.Limelight.Pipeline;
 
 public final class Constants {
   public static final class RobotMap {
@@ -16,6 +17,7 @@ public final class Constants {
     public static int kFlywheelMotor1 = 1;
     public static int kFlywheelMotor2 = 2;
     public static int kAcceleratorMotor = 4;
+    public static int kHoodSolenoid = 0;
 
     // Intake
     public static int kIntakeMotor = 11;
@@ -79,6 +81,9 @@ public final class Constants {
     public static final double kAutoLineRPM = 4_500;
     public static final double kAcceptableRPMRange = 50;
     public static final double kAcceleratorRPM = 2_500;
+    public static final double kCurrentDrawnToDetectCompletedShot = 15;
+    public static final double kCurrentDrawnTimeWindow = 0.1;
+    public static final double kIdleRPM = 1_000;
 
     // Motor config
     public static final int kFlywheelCurrentLimit = 20;
@@ -104,5 +109,16 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final double intakeSpeed = 0.5; // Suggested, not final
+  }
+
+  public static final class LimelightConstants {
+    // Alignment constants
+    public static final double kAlignmentkP = 0.0;
+    public static final double kAlignmentkI = 0.0;
+    public static final double kAlignmentkD = 0.0;
+    public static final double kAlignmentAcceptableError = 0.0;
+    public static final double kTargetLimelightOffset = 1.0;
+
+    public static final Pipeline kShotPipeline = Pipeline.PIPELINE0;
   }
 }

@@ -6,19 +6,42 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotMap;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
+  public enum HoodState {
+    WALL_SHOT(true),
+    FAR_SHOT(false);
+
+    private boolean value;
+
+    private HoodState(boolean value) {
+      this.value = value;
+    }
+  }
+
   private CANSparkMax flywheel1, flywheel2, accelerator;
   private CANEncoder encoder;
+  private int shotsFired;
+  private Timer currentMonitorTimer;
+  private Solenoid hoodPiston;
+  public HoodState hoodState;
 
   public Shooter() {
+    shotsFired = 0;
+    currentMonitorTimer = new Timer();
+
     flywheel1 = new CANSparkMax(RobotMap.kFlywheelMotor1, MotorType.kBrushless);
     flywheel2 = new CANSparkMax(RobotMap.kFlywheelMotor2, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushless);
+
+    hoodPiston = new Solenoid(RobotMap.kHoodSolenoid);
+    hoodState = null;
 
     flywheel1.restoreFactoryDefaults();
     flywheel2.restoreFactoryDefaults();
@@ -69,6 +92,30 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (hoodState == null) {
+      setHoodState(HoodState.FAR_SHOT);
+    }
+
+    // Shot detection
+    // If our current draw is high
+    if (flywheel1.getOutputCurrent() >= ShooterConstants.kCurrentDrawnToDetectCompletedShot) {
+      // If the timer is not started
+      if (currentMonitorTimer.get() == 0) {
+        // Start it
+        currentMonitorTimer.start();
+      }
+
+      // Now that the timer is running
+      // If the timer is gone past the required time
+      if (currentMonitorTimer.get() >= ShooterConstants.kCurrentDrawnTimeWindow) {
+        // Stop and reset the timer, and increment our shot number by 1
+        currentMonitorTimer.stop();
+        currentMonitorTimer.reset();
+        shotsFired++;
+      }
+    }
+
+    // Live PID tuning
     double kp = SmartDashboard.getNumber("Shooter kP", 0);
     double kf = SmartDashboard.getNumber("Shooter kF", 0);
     double maxOutput = SmartDashboard.getNumber("Shooter max output", 0);
@@ -89,5 +136,22 @@ public class Shooter extends SubsystemBase {
   public boolean isVelocityWithinTargetRange(double setpoint, double targetRange) {
     return setpoint - targetRange <= getFlywheelEncoder().getVelocity()
         && getFlywheelEncoder().getVelocity() <= setpoint + targetRange;
+  }
+
+  public int getShotsFired() {
+    return shotsFired;
+  }
+
+  public void resetShotsFired() {
+    shotsFired = 0;
+  }
+
+  public void setHoodState(HoodState newState) {
+    hoodPiston.set(newState.value);
+    hoodState = newState;
+  }
+
+  public HoodState getHoodState() {
+    return hoodState;
   }
 }

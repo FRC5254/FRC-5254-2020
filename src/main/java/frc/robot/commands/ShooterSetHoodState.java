@@ -8,11 +8,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Shooter.HoodState;
 
-public class ShooterWaitUntilAtTargetSpeed extends CommandBase {
-  /** Creates a new ShooterWaitUntilAtTargetSpeed. */
-  public ShooterWaitUntilAtTargetSpeed() {
+public class ShooterSetHoodState extends CommandBase {
+  /** Creates a new ShooterSetHoodState. */
+  private Shooter m_shooter;
+
+  private HoodState hoodState;
+
+  public ShooterSetHoodState(Shooter shooter, HoodState state) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(shooter);
+    m_shooter = shooter;
+    hoodState = state;
   }
 
   // Called when the command is initially scheduled.
@@ -21,7 +30,9 @@ public class ShooterWaitUntilAtTargetSpeed extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_shooter.setHoodState(hoodState);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -30,6 +41,6 @@ public class ShooterWaitUntilAtTargetSpeed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
