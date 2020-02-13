@@ -11,19 +11,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
-public class ShooterSetToSpeed extends CommandBase {
-  /** Creates a new ShooterSetToSpeed. */
+public class ShooterSetSpeed extends CommandBase {
+  /** Creates a new ShooterSetSpeed. */
   private final Shooter m_shooter;
 
   private double rpm;
   private boolean waitUntilAtSpeed;
 
-  public ShooterSetToSpeed(Shooter shooter, double rpm) {
+  public ShooterSetSpeed(Shooter shooter, double rpm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this(shooter, rpm, false);
   }
 
-  public ShooterSetToSpeed(Shooter shooter, double rpm, boolean waitUntilSpunUp) {
+  public ShooterSetSpeed(Shooter shooter, double rpm, boolean waitUntilSpunUp) {
     m_shooter = shooter;
     this.rpm = rpm;
     waitUntilAtSpeed = waitUntilSpunUp;

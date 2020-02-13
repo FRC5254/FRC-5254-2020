@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.DrivetrainAlignToGoal;
 import frc.robot.commands.IntakeSetExtended;
 import frc.robot.commands.ShooterSetHoodState;
-import frc.robot.commands.ShooterSetToSpeed;
+import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -43,7 +43,7 @@ public class FullShotSequence extends SequentialCommandGroup {
                     Map.entry(true, new InstantCommand())),
                 () -> intake == null),
             new DrivetrainAlignToGoal(drivetrain),
-            new ShooterSetToSpeed(shooter, shooterRPM, true)));
+            new ShooterSetSpeed(shooter, shooterRPM, true)));
   }
 
   public FullShotSequence(
