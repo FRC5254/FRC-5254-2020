@@ -11,14 +11,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hopper;
 
 public class HopperSetSpeed extends CommandBase {
-  /**
-   * Creates a new HopperSetSpeed.
-   */
+  /** Creates a new HopperSetSpeed. */
   private final Hopper m_hopper;
 
   private double leftSpeed;
   private double rightSpeed;
-  
+
   public HopperSetSpeed(Hopper hopper, double leftSpeed, double rightSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(hopper);

@@ -11,19 +11,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 public class IntakeSetRollers extends CommandBase {
-  /**
-   * Creates a new IntakeSetRollers.
-   */
+  /** Creates a new IntakeSetRollers. */
   private final Intake m_intake;
-  
+
   private double speed;
-  
+
   public IntakeSetRollers(Intake intake, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
     m_intake = intake;
     this.speed = speed;
-  
   }
 
   // Called when the command is initially scheduled.
