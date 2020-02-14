@@ -5,22 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.auto;
+package frc.robot.commands.groups;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.DrivetrainAlignToGoal;
-import frc.robot.commands.IntakeSetExtended;
-import frc.robot.commands.ShooterSetHoodState;
-import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.HoodState;
-import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -33,25 +26,11 @@ public class FullShotSequence extends SequentialCommandGroup {
       Intake intake,
       Shooter shooter,
       double shooterRPM,
-      HoodState hoodState) {
+      HoodState hoodState,
+      BooleanSupplier endCondition,
+      double timeout) {
     addCommands(
-        new ShooterSetHoodState(shooter, hoodState),
-        new ParallelCommandGroup(
-            new SelectCommand(
-                Map.ofEntries(
-                    Map.entry(false, new IntakeSetExtended(intake)),
-                    Map.entry(true, new InstantCommand())),
-                () -> intake == null),
-            new DrivetrainAlignToGoal(drivetrain),
-            new ShooterSetSpeed(shooter, shooterRPM, true)));
-  }
-
-  public FullShotSequence(
-      Drivetrain drivetrain,
-      Hopper hopper,
-      Shooter shooter,
-      double shooterRPM,
-      HoodState hoodState) {
-    this(drivetrain, hopper, null, shooter, shooterRPM, hoodState);
+        new PrepRobotForFeed(drivetrain, intake, shooter, shooterRPM, hoodState),
+        new FeedSpunUpShooter(hopper, intake, shooter, endCondition, timeout));
   }
 }

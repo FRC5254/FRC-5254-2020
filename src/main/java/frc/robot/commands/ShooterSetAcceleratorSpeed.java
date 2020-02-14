@@ -8,16 +8,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
-public class ShooterTurnAcceleratorOn extends CommandBase {
+public class ShooterSetAcceleratorSpeed extends CommandBase {
   /** Creates a new ShooterTurnAcceleratorOn. */
   private final Shooter m_shooter;
 
-  public ShooterTurnAcceleratorOn(Shooter shooter) {
+  private double rpm;
+
+  public ShooterSetAcceleratorSpeed(Shooter shooter, double rpm) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooter;
+    this.rpm = rpm;
     addRequirements(m_shooter);
   }
 
@@ -28,7 +30,7 @@ public class ShooterTurnAcceleratorOn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setAcceleratorToRPM(ShooterConstants.kAcceleratorRPM);
+    m_shooter.setAcceleratorToRPM(rpm);
   }
 
   // Called once the command ends or is interrupted.

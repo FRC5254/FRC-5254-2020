@@ -111,6 +111,13 @@ public final class Constants {
     public static final double intakeSpeed = 0.5; // Suggested, not final
   }
 
+  public static final class HopperConstants {
+    public static final double kLeftNormalFeedSpeed = 0.3;
+    public static final double kRightNormalFeedSpeed = 0.6;
+    public static final double kLeftUnjamFeedSpeed = -0.2;
+    public static final double kRightUnjamFeedSpeed = 0.4;
+  }
+
   public static final class LimelightConstants {
     // Alignment constants
     public static final double kAlignmentkP = 0.0;
