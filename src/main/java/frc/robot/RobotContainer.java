@@ -63,7 +63,7 @@ public class RobotContainer {
               m_robotDrive.GTADrive(
                   driverController.getTriggerAxis(GenericHID.Hand.kLeft) / 2,
                   driverController.getTriggerAxis(GenericHID.Hand.kRight) / 2,
-                  -driverController.getX(GenericHID.Hand.kLeft));
+                  -driverController.getX(GenericHID.Hand.kLeft) / 2);
               }
               else {
                 m_robotDrive.GTADrive(
@@ -85,7 +85,7 @@ public class RobotContainer {
 
     // DRIVER CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Don't know actual direction for hopper motors yet
-    // Hopper intake (foward)
+    // Hopper intake (forward)
     new JoystickButton(driverController, XboxController.Button.kBumperRight.value)
         .whenHeld(new HopperSetSpeed(m_hopper, 1.0, -1.0));
 

@@ -36,8 +36,8 @@ public class Shooter extends SubsystemBase {
     shotsFired = 0;
     currentMonitorTimer = new Timer();
 
-    flywheel1 = new CANSparkMax(RobotMap.kFlywheelMotor1, MotorType.kBrushless);
-    flywheel2 = new CANSparkMax(RobotMap.kFlywheelMotor2, MotorType.kBrushless);
+    flywheel1 = new CANSparkMax(RobotMap.kFlywheelMotorLeft, MotorType.kBrushless);
+    flywheel2 = new CANSparkMax(RobotMap.kFlywheelMotorRight, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushless);
 
     hoodPiston = new Solenoid(RobotMap.kHoodSolenoid);

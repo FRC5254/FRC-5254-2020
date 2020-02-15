@@ -14,17 +14,17 @@ public final class Constants {
     public static int kDriveMotorRight2 = 5;
 
     // Shooter
-    public static int kFlywheelMotor1 = 8;
-    public static int kFlywheelMotor2 = 9;
+    public static int kFlywheelMotorLeft = 8;
+    public static int kFlywheelMotorRight = 9;
     public static int kAcceleratorMotor = 10;
     public static int kHoodSolenoid = 2;
 
-    // Intake ARBITRARY CAN IDS
+    // Intake
     public static int kIntakeMotor = 3;
     public static int kIntakeSolenoid1 = 0;
     public static int kIntakeSolenoid2 = 1;
 
-    // Hopper ARBITRARY CAN IDS
+    // Hopper
     public static int kLeftBelt = 6;
     public static int kRightBelt = 7;
   }
