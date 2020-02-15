@@ -7,26 +7,26 @@ import frc.robot.Limelight.Pipeline;
 
 public final class Constants {
   public static final class RobotMap {
-    // Drivetrain ARBITRARY - should be 1,2,3,4 but shooter is using those ID's right now
-    public static int kDriveMotorLeft1 = 6;
-    public static int kDriveMotorLeft2 = 7;
-    public static int kDriveMotorRight1 = 8;
-    public static int kDriveMotorRight2 = 9;
+    // Drivetrain
+    public static int kDriveMotorLeft1 = 1;
+    public static int kDriveMotorLeft2 = 2;
+    public static int kDriveMotorRight1 = 4;
+    public static int kDriveMotorRight2 = 5;
 
     // Shooter
-    public static int kFlywheelMotor1 = 1;
-    public static int kFlywheelMotor2 = 2;
-    public static int kAcceleratorMotor = 4;
-    public static int kHoodSolenoid = 0;
+    public static int kFlywheelMotor1 = 8;
+    public static int kFlywheelMotor2 = 9;
+    public static int kAcceleratorMotor = 10;
+    public static int kHoodSolenoid = 2;
 
     // Intake ARBITRARY CAN IDS
-    public static int kIntakeMotor = 5;
-    public static int kIntakeSolenoid1 = 12;
-    public static int kIntakeSolenoid2 = 13;
+    public static int kIntakeMotor = 3;
+    public static int kIntakeSolenoid1 = 0;
+    public static int kIntakeSolenoid2 = 1;
 
     // Hopper ARBITRARY CAN IDS
-    public static int kLeftBelt = 14;
-    public static int kRightBelt = 15;
+    public static int kLeftBelt = 6;
+    public static int kRightBelt = 7;
   }
 
   public static final class DriveConstants {
@@ -78,6 +78,7 @@ public final class Constants {
 
     // Shot details
     public static final double kWallShotRPM = 5_000;
+    public static final double kTrenchShotRPM = 5_300;
     public static final double kAutoLineRPM = 4_500;
     public static final double kAcceptableRPMRange = 50;
     public static final double kAcceleratorRPM = 2_500;

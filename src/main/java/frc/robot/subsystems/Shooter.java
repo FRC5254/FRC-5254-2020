@@ -16,7 +16,7 @@ import frc.robot.Constants.ShooterConstants;
 public class Shooter extends SubsystemBase {
   public enum HoodState {
     WALL_SHOT(true),
-    FAR_SHOT(false);
+    TRENCH_SHOT(false);
 
     private boolean value;
 
@@ -93,7 +93,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     if (hoodState == null) {
-      setHoodState(HoodState.FAR_SHOT);
+      setHoodState(HoodState.TRENCH_SHOT);
     }
 
     // Shot detection
