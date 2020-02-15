@@ -17,12 +17,19 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetExtended;
+import frc.robot.commands.IntakeSetRetracted;
+import frc.robot.commands.IntakeSetRollers;
+import frc.robot.commands.ShooterSetAcceleratorSpeed;
+import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.auto.AutoHelper;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import sun.awt.www.content.audio.x_aiff;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -65,8 +72,33 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driverController, XboxController.Button.kB.value)
+
+    //Intake
+    new JoystickButton(operatorController, XboxController.Button.kX.value)
         .whenPressed(new IntakeSetExtended(m_intake));
+
+    new JoystickButton(operatorController, XboxController.Button.kA.value)
+        .whenPressed(new IntakeSetRetracted(m_intake));
+
+    new Trigger(() -> {
+      return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > .1;
+    }).whenActive(new IntakeSetRollers(m_intake, 1.0));
+    
+    new JoystickButton(operatorController, XboxController.Button.kStart.value)
+        .whenHeld(new IntakeSetRollers(m_intake, -1.0));
+
+    //Hopper
+    new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+        .whenHeld(new HopperSetSpeed(m_hopper, 1.0, -1.0)); // Don't know actual direction for hopper motors yet
+
+    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
+        .whenHeld(new HopperSetSpeed(m_hopper, -0.5, 0.5)); // Don't know actual direction for hopper motors yet
+        
+    //Shooter + Accelerator
+    new JoystickButton(operatorController, XboxController.Button.kB.value)
+        .whenPressed(new ShooterSetSpeed(m_shooter,1.0), new ShooterSetAcceleratorSpeed(shooter, rpm));
+
+
   }
 
   /**
