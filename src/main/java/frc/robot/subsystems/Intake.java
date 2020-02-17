@@ -17,14 +17,14 @@ import frc.robot.Constants.RobotMap;
 public class Intake extends SubsystemBase {
 
   private final CANSparkMax rollers;
-  private final Solenoid intakeSolenoid1;
-  private final Solenoid intakeSolenoid2;
+  private final Solenoid intakeSolenoidFront;
+  private final Solenoid intakeSolenoidBack;
 
   public Intake() {
 
     rollers = new CANSparkMax(RobotMap.kIntakeMotor, MotorType.kBrushless);
-    intakeSolenoid1 = new Solenoid(RobotMap.kIntakeSolenoid1);
-    intakeSolenoid2 = new Solenoid(RobotMap.kIntakeSolenoid2);
+    intakeSolenoidFront = new Solenoid(RobotMap.kIntakeSolenoidFront);
+    intakeSolenoidBack = new Solenoid(RobotMap.kIntakeSolenoidBack);
 
     rollers.restoreFactoryDefaults();
 
@@ -36,12 +36,12 @@ public class Intake extends SubsystemBase {
   }
 
   public void extend() {
-    intakeSolenoid1.set(true);
-    intakeSolenoid2.set(true);
+    intakeSolenoidFront.set(false);
+    intakeSolenoidBack.set(true);
   }
 
   public void retract() {
-    intakeSolenoid1.set(false);
-    intakeSolenoid2.set(false);
+    intakeSolenoidFront.set(true);
+    intakeSolenoidBack.set(false);
   }
 }

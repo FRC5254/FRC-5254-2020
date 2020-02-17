@@ -15,13 +15,15 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   public enum HoodState {
-    WALL_SHOT(true),
-    TRENCH_SHOT(false);
+    WALL_SHOT(true, false),
+    TRENCH_SHOT(false, true);
 
-    private boolean value;
+    private boolean valueFront;
+    private boolean valueBack;
 
-    private HoodState(boolean value) {
-      this.value = value;
+    private HoodState(boolean valueFront, boolean valueBack) {
+      this.valueFront = valueFront;
+      this.valueBack = valueBack;
     }
   }
 
@@ -29,7 +31,8 @@ public class Shooter extends SubsystemBase {
   private CANEncoder encoder;
   private int shotsFired;
   private Timer currentMonitorTimer;
-  private Solenoid hoodPiston;
+  private Solenoid hoodPistonFront;
+  private Solenoid hoodPistonBack;
   public HoodState hoodState;
 
   public Shooter() {
@@ -40,7 +43,8 @@ public class Shooter extends SubsystemBase {
     flywheel2 = new CANSparkMax(RobotMap.kFlywheelMotorRight, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushless);
 
-    hoodPiston = new Solenoid(RobotMap.kHoodSolenoid);
+    hoodPistonFront = new Solenoid(RobotMap.kHoodSolenoidFront);
+    hoodPistonBack = new Solenoid(RobotMap.kHoodSolenoidBack);
     hoodState = null;
 
     flywheel1.restoreFactoryDefaults();
@@ -147,7 +151,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setHoodState(HoodState newState) {
-    hoodPiston.set(newState.value);
+    hoodPistonFront.set(newState.valueFront);
+    hoodPistonBack.set(newState.valueBack);
     hoodState = newState;
   }
 

@@ -17,12 +17,13 @@ public final class Constants {
     public static int kFlywheelMotorLeft = 8;
     public static int kFlywheelMotorRight = 9;
     public static int kAcceleratorMotor = 10;
-    public static int kHoodSolenoid = 2;
+    public static int kHoodSolenoidFront = 2; // Towards piston head
+    public static int kHoodSolenoidBack = 3;
 
     // Intake
     public static int kIntakeMotor = 3;
-    public static int kIntakeSolenoid1 = 0;
-    public static int kIntakeSolenoid2 = 1;
+    public static int kIntakeSolenoidFront = 0; // Towards piston head
+    public static int kIntakeSolenoidBack = 1;
 
     // Hopper
     public static int kLeftBelt = 6;
