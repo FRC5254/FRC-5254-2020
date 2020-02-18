@@ -73,16 +73,16 @@ public final class Constants {
   public static final class ShooterConstants {
     // Physical details
     public static final double kFlywheelGearRatio = 1.0;
-    public static final double kFlywheelMaxRPM = 5880 / kFlywheelGearRatio;
+    public static final double kFlywheelMaxRPM = 5_880 / kFlywheelGearRatio;
     public static final double kAcceleratorGearRatio = 6.0;
     public static final double kAcceleratorMaxRPM = 11_000 / kAcceleratorGearRatio;
 
-    // Shot details ARBITRARY RIGHT NOW
-    public static final double kWallShotRPM = 5_000;
-    public static final double kTrenchShotRPM = 5_300;
-    public static final double kAutoLineRPM = 4_500;
+    // Shot details
+    public static final double kWallShotRPM = 3_800;
+    public static final double kTrenchShotRPM = 5_400;
+    public static final double kAutoLineRPM = 5_000;
     public static final double kAcceptableRPMRange = 50;
-    public static final double kAcceleratorRPM = 2_500;
+    public static final double kAcceleratorRPM = 6_000;
     public static final double kCurrentDrawnToDetectCompletedShot = 15;
     public static final double kCurrentDrawnTimeWindow = 0.1;
     public static final double kIdleRPM = 1_000;

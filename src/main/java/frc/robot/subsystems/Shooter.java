@@ -51,6 +51,7 @@ public class Shooter extends SubsystemBase {
 
     flywheelLeft.setInverted(true);
     flywheelRight.follow(flywheelLeft, true);
+    accelerator.setInverted(true);
 
     flywheelLeft.getEncoder().setVelocityConversionFactor(1.0);
     flywheelLeft.getEncoder().setPositionConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
