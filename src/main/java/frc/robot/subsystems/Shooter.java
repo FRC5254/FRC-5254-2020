@@ -17,7 +17,7 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   public enum HoodState {
-    WALL_SHOT(Value.kForward), TRENCH_SHOT(Value.kReverse);
+    WALL_SHOT(Value.kReverse), TRENCH_SHOT(Value.kForward);
 
     private Value state;
     private HoodState(Value state) {

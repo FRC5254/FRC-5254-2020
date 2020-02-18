@@ -77,7 +77,7 @@ public final class Constants {
     public static final double kAcceleratorGearRatio = 6.0;
     public static final double kAcceleratorMaxRPM = 11_000 / kAcceleratorGearRatio;
 
-    // Shot details
+    // Shot details ARBITRARY RIGHT NOW
     public static final double kWallShotRPM = 5_000;
     public static final double kTrenchShotRPM = 5_300;
     public static final double kAutoLineRPM = 4_500;
@@ -110,14 +110,14 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final double intakeSpeed = 0.5; // Suggested, not final
+    public static final double kIntakeSpeed = 0.5; // Suggested, not final
   }
 
   public static final class HopperConstants {
     public static final double kLeftNormalFeedSpeed = 0.3;
     public static final double kRightNormalFeedSpeed = 0.6;
     public static final double kLeftUnjamFeedSpeed = -0.2;
-    public static final double kRightUnjamFeedSpeed = 0.4;
+    public static final double kRightUnjamFeedSpeed = -0.4;
   }
 
   public static final class LimelightConstants {

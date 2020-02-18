@@ -36,10 +36,10 @@ public class Intake extends SubsystemBase {
   }
 
   public void extend() {
-    intakeDoubleSolenoid.set(Value.kForward);
+    intakeDoubleSolenoid.set(Value.kReverse);
   }
     
   public void retract() {
-    intakeDoubleSolenoid.set(Value.kReverse);
+    intakeDoubleSolenoid.set(Value.kForward);
   }
 }

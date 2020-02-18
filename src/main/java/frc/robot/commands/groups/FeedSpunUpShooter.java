@@ -21,7 +21,7 @@ class FeedSpunUpShooter extends ParallelCommandGroup {
         new HopperSetSpeed(
             hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed),
         // Turn the intake on
-        new IntakeSetRollers(intake, IntakeConstants.intakeSpeed),
+        new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
         // Turn the accelerator on
         new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPM),
         // Wait until the end condition is satisfied,

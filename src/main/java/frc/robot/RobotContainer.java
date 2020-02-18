@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.HopperConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetExtended;
@@ -86,12 +88,12 @@ public class RobotContainer {
     // Don't know actual direction for hopper motors yet
     // Hopper intake (forward)
     new JoystickButton(driverController, XboxController.Button.kBumperRight.value)
-        .whenHeld(new HopperSetSpeed(m_hopper, 1.0, -1.0));
+        .whenHeld(new HopperSetSpeed(m_hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed));
 
     // Don't know actual direction for hopper motors yet
     // Hopper unjam (backward)
     new JoystickButton(driverController, XboxController.Button.kBumperLeft.value)
-        .whenHeld(new HopperSetSpeed(m_hopper, -0.5, 0.5));
+        .whenHeld(new HopperSetSpeed(m_hopper, HopperConstants.kLeftUnjamFeedSpeed, HopperConstants.kRightUnjamFeedSpeed));
 
     // OPERATOR CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -110,11 +112,11 @@ public class RobotContainer {
     //         })
     //     .whenActive(new IntakeSetRollers(m_intake, 1.0));
     new JoystickButton(operatorController, XboxController.Button.kY.value)
-        .whenPressed(new IntakeSetRollers(m_intake, 1.0));
+        .whenPressed(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed));
 
     // Rollers outtake
     new JoystickButton(operatorController, XboxController.Button.kBack.value)
-        .whenHeld(new IntakeSetRollers(m_intake, -1.0));
+        .whenHeld(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed));
 
     // Wall shot
     // new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
