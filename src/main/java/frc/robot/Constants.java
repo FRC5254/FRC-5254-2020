@@ -22,8 +22,8 @@ public final class Constants {
 
     // Intake
     public static int kIntakeMotor = 3;
-    public static int kIntakeSolenoidFront = 0; // Towards piston head
-    public static int kIntakeSolenoidBack = 1;
+    public static int kIntakeDoubleSolenoidFront = 0; // Towards piston head
+    public static int kIntakeDoubleSolenoidBack = 1;
 
     // Hopper
     public static int kLeftBelt = 6;
