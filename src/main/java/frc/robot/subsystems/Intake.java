@@ -19,14 +19,12 @@ import frc.robot.Constants.RobotMap;
 public class Intake extends SubsystemBase {
 
   private final CANSparkMax rollers;
-  private final DoubleSolenoid intakeDoubleSolenoidLeft;
-  private final DoubleSolenoid intakeDoubleSolenoidRight;
+  private final DoubleSolenoid intakeDoubleSolenoid;
 
   public Intake() {
 
     rollers = new CANSparkMax(RobotMap.kIntakeMotor, MotorType.kBrushed);
-    intakeDoubleSolenoidLeft = new DoubleSolenoid(RobotMap.kIntakeDoubleSolenoidBack, RobotMap.kIntakeDoubleSolenoidFront);
-    intakeDoubleSolenoidRight = new DoubleSolenoid(RobotMap.kIntakeDoubleSolenoidBack, RobotMap.kIntakeDoubleSolenoidFront);
+    intakeDoubleSolenoid = new DoubleSolenoid(RobotMap.kIntakeDoubleSolenoidBack, RobotMap.kIntakeDoubleSolenoidFront);
 
     rollers.restoreFactoryDefaults();
 
@@ -38,12 +36,10 @@ public class Intake extends SubsystemBase {
   }
 
   public void extend() {
-    intakeDoubleSolenoidLeft.set(Value.kForward);
-    intakeDoubleSolenoidRight.set(Value.kForward);
+    intakeDoubleSolenoid.set(Value.kForward);
   }
-
+    
   public void retract() {
-    intakeDoubleSolenoidLeft.set(Value.kReverse);
-    intakeDoubleSolenoidRight.set(Value.kReverse);
+    intakeDoubleSolenoid.set(Value.kReverse);
   }
 }
