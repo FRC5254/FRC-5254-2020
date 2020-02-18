@@ -57,7 +57,7 @@ public final class Constants {
     // Motor config
     public static final int kCurrentLimit = 60;
     public static final double kRampRate = 0.0;
-    public static final double kJoystickTurnDeadzone = 0.3;
+    public static final double kJoystickTurnDeadzone = 0.15;
   }
 
   public static final class AutoConstants {
@@ -110,14 +110,14 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final double kIntakeSpeed = 0.5; // Suggested, not final
+    public static final double kIntakeSpeed = 1.0; // Suggested, not final
   }
 
   public static final class HopperConstants {
-    public static final double kLeftNormalFeedSpeed = 0.3;
-    public static final double kRightNormalFeedSpeed = 0.6;
-    public static final double kLeftUnjamFeedSpeed = -0.2;
-    public static final double kRightUnjamFeedSpeed = -0.4;
+    public static final double kLeftNormalFeedSpeed = 0.65;
+    public static final double kRightNormalFeedSpeed = 0.65;
+    public static final double kLeftUnjamFeedSpeed = -0.3;
+    public static final double kRightUnjamFeedSpeed = -0.3;
   }
 
   public static final class LimelightConstants {

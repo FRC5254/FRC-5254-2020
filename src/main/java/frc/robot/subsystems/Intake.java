@@ -24,7 +24,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     rollers = new CANSparkMax(RobotMap.kIntakeMotor, MotorType.kBrushed);
-    intakeDoubleSolenoid = new DoubleSolenoid(RobotMap.kIntakeDoubleSolenoidBack, RobotMap.kIntakeDoubleSolenoidFront);
+    intakeDoubleSolenoid = new DoubleSolenoid(RobotMap.kIntakeDoubleSolenoidFront, RobotMap.kIntakeDoubleSolenoidBack);
 
     rollers.restoreFactoryDefaults();
 

@@ -40,7 +40,7 @@ public class Shooter extends SubsystemBase {
     flywheelRight = new CANSparkMax(RobotMap.kFlywheelMotorRight, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushless);
 
-    hoodPiston= new DoubleSolenoid(RobotMap.kHoodDoubleSolenoidBack, RobotMap.kHoodDoubleSolenoidFront);
+    hoodPiston= new DoubleSolenoid(RobotMap.kHoodDoubleSolenoidFront, RobotMap.kHoodDoubleSolenoidBack);
     hoodState = null;
 
     flywheelLeft.restoreFactoryDefaults();

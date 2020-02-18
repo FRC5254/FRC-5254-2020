@@ -65,12 +65,12 @@ public class RobotContainer {
                 m_robotDrive.GTADrive(
                     driverController.getTriggerAxis(GenericHID.Hand.kLeft) / 2,
                     driverController.getTriggerAxis(GenericHID.Hand.kRight) / 2,
-                    -driverController.getX(GenericHID.Hand.kLeft) / 2);
+                    driverController.getX(GenericHID.Hand.kLeft) / 2);
               } else {
                 m_robotDrive.GTADrive(
                     driverController.getTriggerAxis(GenericHID.Hand.kLeft),
                     driverController.getTriggerAxis(GenericHID.Hand.kRight),
-                    -driverController.getX(GenericHID.Hand.kLeft));
+                    driverController.getX(GenericHID.Hand.kLeft));
               }
             },
             m_robotDrive));
@@ -88,12 +88,14 @@ public class RobotContainer {
     // Don't know actual direction for hopper motors yet
     // Hopper intake (forward)
     new JoystickButton(driverController, XboxController.Button.kBumperRight.value)
-        .whenHeld(new HopperSetSpeed(m_hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed));
+        .whenPressed(new HopperSetSpeed(m_hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed))
+        .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
 
     // Don't know actual direction for hopper motors yet
     // Hopper unjam (backward)
     new JoystickButton(driverController, XboxController.Button.kBumperLeft.value)
-        .whenHeld(new HopperSetSpeed(m_hopper, HopperConstants.kLeftUnjamFeedSpeed, HopperConstants.kRightUnjamFeedSpeed));
+        .whenPressed(new HopperSetSpeed(m_hopper, HopperConstants.kLeftUnjamFeedSpeed, HopperConstants.kRightUnjamFeedSpeed))
+        .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
 
     // OPERATOR CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -106,17 +108,20 @@ public class RobotContainer {
         .whenPressed(new IntakeSetRetracted(m_intake));
 
     // Rollers intake
-    // new Trigger(
-    //         () -> {
-    //           return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > .1;
-    //         })
-    //     .whenActive(new IntakeSetRollers(m_intake, 1.0));
-    new JoystickButton(operatorController, XboxController.Button.kY.value)
-        .whenPressed(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed));
+    new Trigger(
+            () -> {
+              return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > .1;
+            })
+        .whenActive(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed))
+        .whenInactive(new IntakeSetRollers(m_intake, 0.0));
+    // new JoystickButton(operatorController, XboxController.Button.kY.value)
+    //     .whenPressed(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed))
+    //     .whenReleased(new IntakeSetRollers(m_intake, 0));
 
     // Rollers outtake
     new JoystickButton(operatorController, XboxController.Button.kBack.value)
-        .whenHeld(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed));
+        .whenPressed(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
+        .whenReleased(new IntakeSetRollers(m_intake, 0.0));
 
     // Wall shot
     // new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
