@@ -85,13 +85,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // DRIVER CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Don't know actual direction for hopper motors yet
     // Hopper intake (forward)
     new JoystickButton(driverController, XboxController.Button.kBumperRight.value)
         .whenPressed(new HopperSetSpeed(m_hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed))
         .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
 
-    // Don't know actual direction for hopper motors yet
     // Hopper unjam (backward)
     new JoystickButton(driverController, XboxController.Button.kBumperLeft.value)
         .whenPressed(new HopperSetSpeed(m_hopper, HopperConstants.kLeftUnjamFeedSpeed, HopperConstants.kRightUnjamFeedSpeed))
