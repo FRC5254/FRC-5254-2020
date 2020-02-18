@@ -114,9 +114,6 @@ public class RobotContainer {
             })
         .whenActive(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed))
         .whenInactive(new IntakeSetRollers(m_intake, 0.0));
-    // new JoystickButton(operatorController, XboxController.Button.kY.value)
-    //     .whenPressed(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed))
-    //     .whenReleased(new IntakeSetRollers(m_intake, 0));
 
     // Rollers outtake
     new JoystickButton(operatorController, XboxController.Button.kBack.value)
