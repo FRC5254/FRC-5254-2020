@@ -12,18 +12,13 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.RobotMap;
-import io.github.oblarg.oblog.annotations.Log;
 
 public class Drivetrain extends SubsystemBase {
 
   private final CANSparkMax left1, left2, right1, right2;
   private final ADXRS450_Gyro gyro;
-
-  @Log(methodName = "getPosition")
-  @Log(methodName = "getVelocity")
   public final CANEncoder leftEncoder, rightEncoder;
-
-  @Log.ToString public final DifferentialDriveOdometry m_odometry;
+  public final DifferentialDriveOdometry m_odometry;
 
   public Drivetrain() {
     left1 = new CANSparkMax(RobotMap.kDriveMotorLeft1, MotorType.kBrushless);

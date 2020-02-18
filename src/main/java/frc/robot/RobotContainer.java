@@ -59,17 +59,16 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> {
-              if(driverController.getBButton()) {
-              m_robotDrive.GTADrive(
-                  driverController.getTriggerAxis(GenericHID.Hand.kLeft) / 2,
-                  driverController.getTriggerAxis(GenericHID.Hand.kRight) / 2,
-                  -driverController.getX(GenericHID.Hand.kLeft) / 2);
-              }
-              else {
+              if (driverController.getBButton()) {
                 m_robotDrive.GTADrive(
-                  driverController.getTriggerAxis(GenericHID.Hand.kLeft),
-                  driverController.getTriggerAxis(GenericHID.Hand.kRight),
-                  -driverController.getX(GenericHID.Hand.kLeft));
+                    driverController.getTriggerAxis(GenericHID.Hand.kLeft) / 2,
+                    driverController.getTriggerAxis(GenericHID.Hand.kRight) / 2,
+                    -driverController.getX(GenericHID.Hand.kLeft) / 2);
+              } else {
+                m_robotDrive.GTADrive(
+                    driverController.getTriggerAxis(GenericHID.Hand.kLeft),
+                    driverController.getTriggerAxis(GenericHID.Hand.kRight),
+                    -driverController.getX(GenericHID.Hand.kLeft));
               }
             },
             m_robotDrive));
@@ -93,7 +92,6 @@ public class RobotContainer {
     // Hopper unjam (backward)
     new JoystickButton(driverController, XboxController.Button.kBumperLeft.value)
         .whenHeld(new HopperSetSpeed(m_hopper, -0.5, 0.5));
-    
 
     // OPERATOR CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -133,7 +131,7 @@ public class RobotContainer {
     // Hood state TRENCH
     new JoystickButton(operatorController, XboxController.Button.kY.value)
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
-    
+
     // Hood state WALL
     new JoystickButton(operatorController, XboxController.Button.kB.value)
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
