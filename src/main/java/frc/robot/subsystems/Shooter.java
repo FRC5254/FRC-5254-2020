@@ -6,8 +6,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
-import edu.wpi.first.wpilibj.Solenoid;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotMap;
@@ -15,46 +17,44 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   public enum HoodState {
-    WALL_SHOT(true),
-    TRENCH_SHOT(false);
+    WALL_SHOT(Value.kForward), TRENCH_SHOT(Value.kReverse);
 
-    private boolean value;
-
-    private HoodState(boolean value) {
-      this.value = value;
+    private Value state;
+    private HoodState(Value state) {
+      this.state = state;
     }
   }
 
-  private CANSparkMax flywheel1, flywheel2, accelerator;
+  private CANSparkMax flywheelLeft, flywheelRight, accelerator;
   private CANEncoder encoder;
   private int shotsFired;
   private Timer currentMonitorTimer;
-  private Solenoid hoodPiston;
+  private DoubleSolenoid hoodPiston;
   public HoodState hoodState;
 
   public Shooter() {
     shotsFired = 0;
     currentMonitorTimer = new Timer();
 
-    flywheel1 = new CANSparkMax(RobotMap.kFlywheelMotorLeft, MotorType.kBrushless);
-    flywheel2 = new CANSparkMax(RobotMap.kFlywheelMotorRight, MotorType.kBrushless);
+    flywheelLeft = new CANSparkMax(RobotMap.kFlywheelMotorLeft, MotorType.kBrushless);
+    flywheelRight = new CANSparkMax(RobotMap.kFlywheelMotorRight, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushless);
 
-    hoodPiston = new Solenoid(RobotMap.kHoodSolenoid);
+    hoodPiston= new DoubleSolenoid(RobotMap.kHoodDoubleSolenoidBack, RobotMap.kHoodDoubleSolenoidFront);
     hoodState = null;
 
-    flywheel1.restoreFactoryDefaults();
-    flywheel2.restoreFactoryDefaults();
+    flywheelLeft.restoreFactoryDefaults();
+    flywheelRight.restoreFactoryDefaults();
     accelerator.restoreFactoryDefaults();
 
-    encoder = flywheel1.getEncoder();
+    encoder = flywheelLeft.getEncoder();
 
-    flywheel1.setInverted(true);
-    flywheel2.follow(flywheel1, true);
+    flywheelLeft.setInverted(true);
+    flywheelRight.follow(flywheelLeft, true);
 
-    flywheel1.getEncoder().setVelocityConversionFactor(1.0);
-    flywheel1.getEncoder().setPositionConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
-    // flywheel1
+    flywheelLeft.getEncoder().setVelocityConversionFactor(1.0);
+    flywheelLeft.getEncoder().setPositionConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
+    // flywheelLeft
     //     .getEncoder()
     //     .setVelocityConversionFactor(1.0 / (60 * ShooterConstants.kFlywheelGearRatio));
     // accelerator
@@ -64,11 +64,11 @@ public class Shooter extends SubsystemBase {
     //     .getEncoder()
     //     .setVelocityConversionFactor(1.0 / (60 * ShooterConstants.kAcceleratorGearRatio));
 
-    flywheel1.setIdleMode(IdleMode.kCoast);
-    flywheel2.setIdleMode(IdleMode.kCoast);
+    flywheelLeft.setIdleMode(IdleMode.kCoast);
+    flywheelRight.setIdleMode(IdleMode.kCoast);
     accelerator.setIdleMode(IdleMode.kCoast);
 
-    flywheel1.setSmartCurrentLimit(ShooterConstants.kFlywheelCurrentLimit);
+    flywheelLeft.setSmartCurrentLimit(ShooterConstants.kFlywheelCurrentLimit);
     accelerator.setSmartCurrentLimit(ShooterConstants.kAcceleratorCurrentLimit);
 
     SmartDashboard.putNumber("Shooter kP", 0.000050);
@@ -79,7 +79,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setFlywheelToRPM(double rpm) {
-    flywheel1.getPIDController().setReference(rpm, ControlType.kVelocity);
+    flywheelLeft.getPIDController().setReference(rpm, ControlType.kVelocity);
   }
 
   public void setAcceleratorToRPM(double rpm) {
@@ -98,7 +98,7 @@ public class Shooter extends SubsystemBase {
 
     // Shot detection
     // If our current draw is high
-    if (flywheel1.getOutputCurrent() >= ShooterConstants.kCurrentDrawnToDetectCompletedShot) {
+    if (flywheelLeft.getOutputCurrent() >= ShooterConstants.kCurrentDrawnToDetectCompletedShot) {
       // If the timer is not started
       if (currentMonitorTimer.get() == 0) {
         // Start it
@@ -122,7 +122,7 @@ public class Shooter extends SubsystemBase {
     double setpointRPM = SmartDashboard.getNumber("Shooter setpoint (RPM)", 0);
     double acceleratorRPM = SmartDashboard.getNumber("Shooter accelerator RPM", 0);
 
-    CANPIDController pidController = flywheel1.getPIDController();
+    CANPIDController pidController = flywheelLeft.getPIDController();
     pidController.setP(kp);
     pidController.setFF(kf);
     pidController.setOutputRange(-maxOutput, maxOutput);
@@ -147,7 +147,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setHoodState(HoodState newState) {
-    hoodPiston.set(newState.value);
+    hoodPiston.set(newState.state);
     hoodState = newState;
   }
 

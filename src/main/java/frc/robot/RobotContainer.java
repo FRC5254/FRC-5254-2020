@@ -42,7 +42,7 @@ import frc.robot.subsystems.Shooter.HoodState;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_robotDrive = new Drivetrain();
-  private final Shooter m_shooter = new Shooter();
+//   private final Shooter m_shooter = new Shooter();
   private final Hopper m_hopper = new Hopper();
   private final Intake m_intake = new Intake();
 
@@ -104,37 +104,39 @@ public class RobotContainer {
         .whenPressed(new IntakeSetRetracted(m_intake));
 
     // Rollers intake
-    new Trigger(
-            () -> {
-              return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > .1;
-            })
-        .whenActive(new IntakeSetRollers(m_intake, 1.0));
+    // new Trigger(
+    //         () -> {
+    //           return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > .1;
+    //         })
+    //     .whenActive(new IntakeSetRollers(m_intake, 1.0));
+    new JoystickButton(operatorController, XboxController.Button.kY.value)
+        .whenPressed(new IntakeSetRollers(m_intake, 1.0));
 
     // Rollers outtake
     new JoystickButton(operatorController, XboxController.Button.kBack.value)
         .whenHeld(new IntakeSetRollers(m_intake, -1.0));
 
     // Wall shot
-    new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
-        .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
+    // new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
+    //     .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM))
+    //     .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
 
     // Trench shot
-    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-        .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kTrenchShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
+    // new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
+    //     .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kTrenchShotRPM))
+    //     .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
 
     // Turn shooter off
-    new JoystickButton(operatorController, XboxController.Button.kStart.value)
-        .whenPressed(new ShooterSetSpeed(m_shooter, 0.0));
+    // new JoystickButton(operatorController, XboxController.Button.kStart.value)
+    //     .whenPressed(new ShooterSetSpeed(m_shooter, 0.0));
 
     // Hood state TRENCH
-    new JoystickButton(operatorController, XboxController.Button.kY.value)
-        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
-
-    // Hood state WALL
-    new JoystickButton(operatorController, XboxController.Button.kB.value)
-        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
+    // new JoystickButton(operatorController, XboxController.Button.kY.value)
+    //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
+    
+    // // Hood state WALL
+    // new JoystickButton(operatorController, XboxController.Button.kB.value)
+    //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
   }
 
   /**

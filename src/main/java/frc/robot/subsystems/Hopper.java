@@ -13,8 +13,8 @@ public class Hopper extends SubsystemBase {
 
   public Hopper() {
 
-    leftBelt = new CANSparkMax(RobotMap.kLeftBelt, MotorType.kBrushless);
-    rightBelt = new CANSparkMax(RobotMap.kRightBelt, MotorType.kBrushless);
+    leftBelt = new CANSparkMax(RobotMap.kLeftBelt, MotorType.kBrushed);
+    rightBelt = new CANSparkMax(RobotMap.kRightBelt, MotorType.kBrushed);
 
     leftBelt.restoreFactoryDefaults();
     rightBelt.restoreFactoryDefaults();

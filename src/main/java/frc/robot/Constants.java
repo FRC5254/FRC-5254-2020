@@ -10,19 +10,20 @@ public final class Constants {
     // Drivetrain
     public static int kDriveMotorLeft1 = 1;
     public static int kDriveMotorLeft2 = 2;
-    public static int kDriveMotorRight1 = 4;
-    public static int kDriveMotorRight2 = 5;
+    public static int kDriveMotorRight1 = 3;
+    public static int kDriveMotorRight2 = 4;
 
     // Shooter
     public static int kFlywheelMotorLeft = 8;
     public static int kFlywheelMotorRight = 9;
     public static int kAcceleratorMotor = 10;
-    public static int kHoodSolenoid = 2;
+    public static int kHoodDoubleSolenoidFront = 2; // Towards piston head
+    public static int kHoodDoubleSolenoidBack = 3;
 
     // Intake
-    public static int kIntakeMotor = 3;
-    public static int kIntakeSolenoid1 = 0;
-    public static int kIntakeSolenoid2 = 1;
+    public static int kIntakeMotor = 5;
+    public static int kIntakeDoubleSolenoidFront = 0; // Towards piston head
+    public static int kIntakeDoubleSolenoidBack = 1;
 
     // Hopper
     public static int kLeftBelt = 6;
@@ -56,7 +57,7 @@ public final class Constants {
     // Motor config
     public static final int kCurrentLimit = 60;
     public static final double kRampRate = 0.0;
-    public static final double kJoystickTurnDeadzone = 0.15;
+    public static final double kJoystickTurnDeadzone = 0.3;
   }
 
   public static final class AutoConstants {

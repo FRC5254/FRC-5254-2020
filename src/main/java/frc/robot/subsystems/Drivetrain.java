@@ -34,8 +34,8 @@ public class Drivetrain extends SubsystemBase {
     left2.follow(left1);
     right2.follow(right1);
 
-    left1.setInverted(true);
-    left2.setInverted(true);
+    right1.setInverted(true);
+    right2.setInverted(true);
 
     left1.setSmartCurrentLimit(DriveConstants.kCurrentLimit);
     right1.setSmartCurrentLimit(DriveConstants.kCurrentLimit);

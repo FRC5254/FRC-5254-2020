@@ -10,21 +10,21 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.Solenoid;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotMap;
 
 public class Intake extends SubsystemBase {
 
   private final CANSparkMax rollers;
-  private final Solenoid intakeSolenoid1;
-  private final Solenoid intakeSolenoid2;
+  private final DoubleSolenoid intakeDoubleSolenoid;
 
   public Intake() {
 
-    rollers = new CANSparkMax(RobotMap.kIntakeMotor, MotorType.kBrushless);
-    intakeSolenoid1 = new Solenoid(RobotMap.kIntakeSolenoid1);
-    intakeSolenoid2 = new Solenoid(RobotMap.kIntakeSolenoid2);
+    rollers = new CANSparkMax(RobotMap.kIntakeMotor, MotorType.kBrushed);
+    intakeDoubleSolenoid = new DoubleSolenoid(RobotMap.kIntakeDoubleSolenoidBack, RobotMap.kIntakeDoubleSolenoidFront);
 
     rollers.restoreFactoryDefaults();
 
@@ -36,12 +36,10 @@ public class Intake extends SubsystemBase {
   }
 
   public void extend() {
-    intakeSolenoid1.set(true);
-    intakeSolenoid2.set(true);
+    intakeDoubleSolenoid.set(Value.kForward);
   }
-
+    
   public void retract() {
-    intakeSolenoid1.set(false);
-    intakeSolenoid2.set(false);
+    intakeDoubleSolenoid.set(Value.kReverse);
   }
 }
