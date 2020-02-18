@@ -6,6 +6,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,15 +17,13 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   public enum HoodState {
-    WALL_SHOT(false, true),
-    TRENCH_SHOT(true, false);
+    WALL_SHOT(Value.kForward),
+    TRENCH_SHOT(Value.kReverse);
 
-    private boolean valueFront;
-    private boolean valueBack;
+    private boolean Value;
 
-    private HoodState(boolean valueFront, boolean valueBack) {
-      this.valueFront = valueFront;
-      this.valueBack = valueBack;
+    private HoodState(boolean Value) {
+      this.Value = Value;
     }
   }
 
@@ -31,8 +31,7 @@ public class Shooter extends SubsystemBase {
   private CANEncoder encoder;
   private int shotsFired;
   private Timer currentMonitorTimer;
-  private Solenoid hoodPistonFront;
-  private Solenoid hoodPistonBack;
+  private DoubleSolenoid hoodPiston;
   public HoodState hoodState;
 
   public Shooter() {
@@ -43,8 +42,7 @@ public class Shooter extends SubsystemBase {
     flywheelRight = new CANSparkMax(RobotMap.kFlywheelMotorRight, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushless);
 
-    hoodPistonFront = new Solenoid(RobotMap.kHoodSolenoidFront);
-    hoodPistonBack = new Solenoid(RobotMap.kHoodSolenoidBack);
+    hoodPiston= new DoubleSolenoid(RobotMap.kHoodDoubleSolenoidBack, RobotMap.kHoodDoubleSolenoidFront);
     hoodState = null;
 
     flywheelLeft.restoreFactoryDefaults();
@@ -151,8 +149,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setHoodState(HoodState newState) {
-    hoodPistonFront.set(newState.valueFront);
-    hoodPistonBack.set(newState.valueBack);
+    hoodPiston.set(Value.newState);
     hoodState = newState;
   }
 

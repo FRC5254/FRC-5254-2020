@@ -106,11 +106,13 @@ public class RobotContainer {
         .whenPressed(new IntakeSetRetracted(m_intake));
 
     // Rollers intake
-    new Trigger(
-            () -> {
-              return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > .1;
-            })
-        .whenActive(new IntakeSetRollers(m_intake, 1.0));
+    // new Trigger(
+    //         () -> {
+    //           return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > .1;
+    //         })
+    //     .whenActive(new IntakeSetRollers(m_intake, 1.0));
+    new JoystickButton(operatorController, XboxController.Button.kY.value)
+        .whenPressed(new IntakeSetRollers(m_intake, 1.0));
 
     // Rollers outtake
     new JoystickButton(operatorController, XboxController.Button.kBack.value)
