@@ -22,8 +22,7 @@ import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.HopperSetSpeed;
-import frc.robot.commands.IntakeSetExtended;
-import frc.robot.commands.IntakeSetRetracted;
+import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
@@ -33,6 +32,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake.IntakeState;
 import frc.robot.subsystems.Shooter.HoodState;
 
 /**
@@ -99,11 +99,11 @@ public class RobotContainer {
 
     // Extend intake (down)
     new JoystickButton(operatorController, XboxController.Button.kX.value)
-        .whenPressed(new IntakeSetExtended(m_intake));
+        .whenPressed(new IntakeSetState(m_intake, IntakeState.EXTENDED));
 
     // Retract intake (up)
     new JoystickButton(operatorController, XboxController.Button.kA.value)
-        .whenPressed(new IntakeSetRetracted(m_intake));
+        .whenPressed(new IntakeSetState(m_intake, IntakeState.RETRACTED));
 
     // Rollers intake
     new Trigger(

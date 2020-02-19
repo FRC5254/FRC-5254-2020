@@ -114,6 +114,9 @@ public class Shooter extends SubsystemBase {
         currentMonitorTimer.reset();
         shotsFired++;
       }
+    } else { // Our current draw is low, so stop the timer
+      currentMonitorTimer.stop();
+      currentMonitorTimer.reset();
     }
 
     // Live PID tuning

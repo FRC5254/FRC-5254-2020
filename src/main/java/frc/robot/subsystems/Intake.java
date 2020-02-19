@@ -17,12 +17,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotMap;
 
 public class Intake extends SubsystemBase {
+  public enum IntakeState {
+    EXTENDED(Value.kReverse), RETRACTED(Value.kForward);
 
-  private final CANSparkMax rollers;
-  private final DoubleSolenoid intakeDoubleSolenoid;
+    private Value state;
+    private IntakeState(Value state) {
+      this.state = state;
+    }
+  }
+
+  private CANSparkMax rollers;
+  private DoubleSolenoid intakeDoubleSolenoid;
+  private IntakeState intakeState;
 
   public Intake() {
-
+    intakeState = null;
     rollers = new CANSparkMax(RobotMap.kIntakeMotor, MotorType.kBrushed);
     intakeDoubleSolenoid = new DoubleSolenoid(RobotMap.kIntakeDoubleSolenoidFront, RobotMap.kIntakeDoubleSolenoidBack);
 
@@ -35,11 +44,15 @@ public class Intake extends SubsystemBase {
     rollers.set(speed);
   }
 
-  public void extend() {
-    intakeDoubleSolenoid.set(Value.kReverse);
+  public void setIntakeState(IntakeState state) {
+    intakeState = state;
+    intakeDoubleSolenoid.set(state.state);
   }
-    
-  public void retract() {
-    intakeDoubleSolenoid.set(Value.kForward);
+
+  @Override
+  public void periodic() {
+    if (intakeState == null) {
+      setIntakeState(IntakeState.RETRACTED);
+    }
   }
 }

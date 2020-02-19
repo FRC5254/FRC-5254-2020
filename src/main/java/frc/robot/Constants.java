@@ -33,7 +33,6 @@ public final class Constants {
   public static final class DriveConstants {
     // Physical details
     public static final double kTrackwidthMeters = Units.inchesToMeters(24);
-    public static final double kRobotLengthWithBumpersMeters = Units.inchesToMeters(38);
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
     public static final double kWheelDiameter = 6.0;
@@ -107,6 +106,9 @@ public final class Constants {
       public static final Translation2d kSneakyPete =
           new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(286.311));
     }
+
+    public static final double kRobotLengthWithBumpersMeters = Units.inchesToMeters(38);
+    public static final double kStandardOffsetDistance = kRobotLengthWithBumpersMeters / 2;
   }
 
   public static final class IntakeConstants {
