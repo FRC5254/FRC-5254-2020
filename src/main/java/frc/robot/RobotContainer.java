@@ -108,7 +108,7 @@ public class RobotContainer {
     // Rollers intake
     new Trigger(
             () -> {
-              return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > .1;
+              return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > 0.1;
             })
         .whenActive(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed))
         .whenInactive(new IntakeSetRollers(m_intake, 0.0));
@@ -129,9 +129,14 @@ public class RobotContainer {
         .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
         
     // Auto line RPM (+ accelerator)
-    new JoystickButton(operatorController, XboxController.Button.kStickLeft.value)
-        .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
-        .whenPressed (new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
+    new Trigger(
+            () -> {
+              return operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1;
+            })
+          .whenActive(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
+          .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
+          .whenInactive(new ShooterSetSpeed(m_shooter, 0.0))
+          .whenInactive(new ShooterSetAcceleratorSpeed(m_shooter, 0.0));
 
     // Turn shooter + accelerator off
     new JoystickButton(operatorController, XboxController.Button.kStart.value)
