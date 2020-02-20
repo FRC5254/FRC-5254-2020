@@ -112,7 +112,7 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final double kIntakeSpeed = 1.0; // Suggested, not final
+    public static final double kIntakeSpeed = 0.5; // Suggested, not final
   }
 
   public static final class HopperConstants {

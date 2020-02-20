@@ -121,12 +121,14 @@ public class RobotContainer {
     // Wall shooter RPM (+ accelerator)
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
+        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
+        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
 
     // Trench shooter RPM (+ accelerator)
     new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kTrenchShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
+        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
+        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
         
     // Auto line RPM (+ accelerator)
     new Trigger(
@@ -134,7 +136,8 @@ public class RobotContainer {
               return operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1;
             })
           .whenActive(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
-          .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
+          .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
+          .whenActive(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
 
     // Turn shooter + accelerator off
     new JoystickButton(operatorController, XboxController.Button.kStart.value)
@@ -146,13 +149,13 @@ public class RobotContainer {
           m_shooter.slowCoastDown();
         }));
 
-    // Hood state TRENCH
-    new JoystickButton(operatorController, XboxController.Button.kY.value)
-        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
+    // // Hood state TRENCH
+    // new JoystickButton(operatorController, XboxController.Button.kY.value)
+    //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
     
-    // // Hood state WALL
-    new JoystickButton(operatorController, XboxController.Button.kB.value)
-        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
+    // // // Hood state WALL
+    // new JoystickButton(operatorController, XboxController.Button.kB.value)
+    //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
 
     // Wall shot (w/Hood state)
     // new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)

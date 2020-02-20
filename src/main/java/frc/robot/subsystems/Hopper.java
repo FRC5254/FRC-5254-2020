@@ -19,8 +19,6 @@ public class Hopper extends SubsystemBase {
     leftBelt.restoreFactoryDefaults();
     rightBelt.restoreFactoryDefaults();
 
-    rightBelt.setInverted(true);
-
     leftBelt.setIdleMode(IdleMode.kBrake);
     rightBelt.setIdleMode(IdleMode.kBrake);
   }
