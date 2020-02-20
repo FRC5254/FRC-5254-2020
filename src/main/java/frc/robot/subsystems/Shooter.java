@@ -77,6 +77,10 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter max output", 0);
     SmartDashboard.putNumber("Shooter setpoint (RPM)", 0);
     SmartDashboard.putNumber("Shooter accelerator RPM", 0);
+
+    flywheelLeft.getPIDController().setP(0.000050);
+    flywheelLeft.getPIDController().setFF(0.000165);
+    flywheelLeft.getPIDController().setOutputRange(-1, 1);
   }
 
   public void setFlywheelToRPM(double rpm) {
@@ -120,21 +124,21 @@ public class Shooter extends SubsystemBase {
     }
 
     // Live PID tuning
-    double kp = SmartDashboard.getNumber("Shooter kP", 0);
-    double kf = SmartDashboard.getNumber("Shooter kF", 0);
-    double maxOutput = SmartDashboard.getNumber("Shooter max output", 0);
-    double setpointRPM = SmartDashboard.getNumber("Shooter setpoint (RPM)", 0);
-    double acceleratorRPM = SmartDashboard.getNumber("Shooter accelerator RPM", 0);
+    // double kp = SmartDashboard.getNumber("Shooter kP", 0);
+    // double kf = SmartDashboard.getNumber("Shooter kF", 0);
+    // double maxOutput = SmartDashboard.getNumber("Shooter max output", 0);
+    // double setpointRPM = SmartDashboard.getNumber("Shooter setpoint (RPM)", 0);
+    // double acceleratorRPM = SmartDashboard.getNumber("Shooter accelerator RPM", 0);
 
-    CANPIDController pidController = flywheelLeft.getPIDController();
-    pidController.setP(kp);
-    pidController.setFF(kf);
-    pidController.setOutputRange(-maxOutput, maxOutput);
-    pidController.setReference(setpointRPM, ControlType.kVelocity);
+    // CANPIDController pidController = flywheelLeft.getPIDController();
+    // pidController.setP(kp);
+    // pidController.setFF(kf);
+    // pidController.setOutputRange(-maxOutput, maxOutput);
+    // pidController.setReference(setpointRPM, ControlType.kVelocity);
 
-    SmartDashboard.putNumber("Shooter velocity", encoder.getVelocity());
-    SmartDashboard.putNumber("Shooter error", encoder.getVelocity() - setpointRPM);
-    setAcceleratorToRPM(acceleratorRPM);
+    // SmartDashboard.putNumber("Shooter velocity", encoder.getVelocity());
+    // SmartDashboard.putNumber("Shooter error", encoder.getVelocity() - setpointRPM);
+    // setAcceleratorToRPM(acceleratorRPM);
   }
 
   public boolean isVelocityWithinTargetRange(double setpoint, double targetRange) {

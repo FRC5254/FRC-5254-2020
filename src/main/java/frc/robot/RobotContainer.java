@@ -134,9 +134,7 @@ public class RobotContainer {
               return operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1;
             })
           .whenActive(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
-          .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
-          .whenInactive(new ShooterSetSpeed(m_shooter, 0.0))
-          .whenInactive(new ShooterSetAcceleratorSpeed(m_shooter, 0.0));
+          .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM));
 
     // Turn shooter + accelerator off
     new JoystickButton(operatorController, XboxController.Button.kStart.value)
