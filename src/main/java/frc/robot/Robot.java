@@ -37,11 +37,14 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     // Set up port forwarding so we can access the limelight over USB :)
-    // visit 'localhost:5800' or 'localhost:5801' in your browser (ie, Chrome) on the laptop
+    // visit '172.22.11.2:5800' in your browser (ie, Chrome) on the laptop
     // to see the limelight
     // ... maybe
+    // Not sure why 5805 is required. Someone recommended it
+    // Probably internal limelight networking stuff
     PortForwarder.add(5800, "limelight.local", 5800);
     PortForwarder.add(5801, "limelight.local", 5801);
+    PortForwarder.add(5805, "limelight.local", 5805);
   }
 
   /**

@@ -6,10 +6,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotMap;
@@ -17,9 +16,11 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   public enum HoodState {
-    WALL_SHOT(Value.kReverse), TRENCH_SHOT(Value.kForward);
+    WALL_SHOT(Value.kReverse),
+    TRENCH_SHOT(Value.kForward);
 
     private Value state;
+
     private HoodState(Value state) {
       this.state = state;
     }
@@ -40,7 +41,8 @@ public class Shooter extends SubsystemBase {
     flywheelRight = new CANSparkMax(RobotMap.kFlywheelMotorRight, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushless);
 
-    hoodPiston= new DoubleSolenoid(RobotMap.kHoodDoubleSolenoidFront, RobotMap.kHoodDoubleSolenoidBack);
+    hoodPiston =
+        new DoubleSolenoid(RobotMap.kHoodDoubleSolenoidFront, RobotMap.kHoodDoubleSolenoidBack);
     hoodState = null;
 
     flywheelLeft.restoreFactoryDefaults();
@@ -54,7 +56,9 @@ public class Shooter extends SubsystemBase {
     accelerator.setInverted(true);
 
     flywheelLeft.getEncoder().setVelocityConversionFactor(1.0);
-    flywheelLeft.getEncoder().setPositionConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
+    flywheelLeft
+        .getEncoder()
+        .setPositionConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
     // flywheelLeft
     //     .getEncoder()
     //     .setVelocityConversionFactor(1.0 / (60 * ShooterConstants.kFlywheelGearRatio));
@@ -72,19 +76,23 @@ public class Shooter extends SubsystemBase {
     flywheelLeft.setSmartCurrentLimit(ShooterConstants.kFlywheelCurrentLimit);
     accelerator.setSmartCurrentLimit(ShooterConstants.kAcceleratorCurrentLimit);
 
-    SmartDashboard.putNumber("Shooter kP", 0.000050);
-    SmartDashboard.putNumber("Shooter kF", 0.000165);
-    SmartDashboard.putNumber("Shooter max output", 0);
+    SmartDashboard.putNumber("Shooter kP", ShooterConstants.kFlywheelkP);
+    SmartDashboard.putNumber("Shooter kF", ShooterConstants.kFlywheelkF);
+    SmartDashboard.putNumber("Shooter max output", 1);
     SmartDashboard.putNumber("Shooter setpoint (RPM)", 0);
     SmartDashboard.putNumber("Shooter accelerator RPM", 0);
 
-    flywheelLeft.getPIDController().setP(0.000050);
-    flywheelLeft.getPIDController().setFF(0.000165);
+    flywheelLeft.getPIDController().setP(ShooterConstants.kFlywheelkP);
+    flywheelLeft.getPIDController().setFF(ShooterConstants.kFlywheelkF);
     flywheelLeft.getPIDController().setOutputRange(-1, 1);
   }
 
   public void setFlywheelToRPM(double rpm) {
-    flywheelLeft.getPIDController().setReference(rpm, ControlType.kVelocity);
+    if (rpm == 0) {
+      flywheelLeft.set(0.0);
+    } else {
+      flywheelLeft.getPIDController().setReference(rpm, ControlType.kVelocity);
+    }
   }
 
   public void setAcceleratorToRPM(double rpm) {
@@ -123,22 +131,26 @@ public class Shooter extends SubsystemBase {
       currentMonitorTimer.reset();
     }
 
+
     // Live PID tuning
-    // double kp = SmartDashboard.getNumber("Shooter kP", 0);
-    // double kf = SmartDashboard.getNumber("Shooter kF", 0);
-    // double maxOutput = SmartDashboard.getNumber("Shooter max output", 0);
-    // double setpointRPM = SmartDashboard.getNumber("Shooter setpoint (RPM)", 0);
-    // double acceleratorRPM = SmartDashboard.getNumber("Shooter accelerator RPM", 0);
-
-    // CANPIDController pidController = flywheelLeft.getPIDController();
-    // pidController.setP(kp);
-    // pidController.setFF(kf);
-    // pidController.setOutputRange(-maxOutput, maxOutput);
-    // pidController.setReference(setpointRPM, ControlType.kVelocity);
-
-    // SmartDashboard.putNumber("Shooter velocity", encoder.getVelocity());
-    // SmartDashboard.putNumber("Shooter error", encoder.getVelocity() - setpointRPM);
-    // setAcceleratorToRPM(acceleratorRPM);
+    final boolean enableLivePIDTuning = false;
+    if (enableLivePIDTuning) {
+      double kp = SmartDashboard.getNumber("Shooter kP", 0);
+      double kf = SmartDashboard.getNumber("Shooter kF", 0);
+      double maxOutput = SmartDashboard.getNumber("Shooter max output", 0);
+      double setpointRPM = SmartDashboard.getNumber("Shooter setpoint (RPM)", 0);
+      double acceleratorRPM = SmartDashboard.getNumber("Shooter accelerator RPM", 0);
+  
+      CANPIDController pidController = flywheelLeft.getPIDController();
+      pidController.setP(kp);
+      pidController.setFF(kf);
+      pidController.setOutputRange(-maxOutput, maxOutput);
+      pidController.setReference(setpointRPM, ControlType.kVelocity);
+  
+      SmartDashboard.putNumber("Shooter velocity", encoder.getVelocity());
+      SmartDashboard.putNumber("Shooter error", encoder.getVelocity() - setpointRPM);
+      setAcceleratorToRPM(acceleratorRPM);
+    }
   }
 
   public boolean isVelocityWithinTargetRange(double setpoint, double targetRange) {
@@ -161,9 +173,5 @@ public class Shooter extends SubsystemBase {
 
   public HoodState getHoodState() {
     return hoodState;
-  }
-
-  public void slowCoastDown() {
-    flywheelLeft.set(0.0);
   }
 }

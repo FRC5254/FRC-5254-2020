@@ -89,6 +89,8 @@ public final class Constants {
     // Motor config
     public static final int kFlywheelCurrentLimit = 20;
     public static final int kAcceleratorCurrentLimit = 30;
+    public static final double kFlywheelkP = 0.000050;
+    public static final double kFlywheelkF = 0.000165;
   }
 
   // Okay, this is a little gross

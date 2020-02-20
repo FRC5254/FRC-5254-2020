@@ -22,8 +22,8 @@ import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.HopperSetSpeed;
-import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.IntakeSetRollers;
+import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
@@ -31,8 +31,8 @@ import frc.robot.commands.auto.AutoHelper;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake.IntakeState;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.HoodState;
 
 /**
@@ -87,12 +87,20 @@ public class RobotContainer {
     // DRIVER CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Hopper intake (forward)
     new JoystickButton(driverController, XboxController.Button.kBumperRight.value)
-        .whenPressed(new HopperSetSpeed(m_hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed))
+        .whenPressed(
+            new HopperSetSpeed(
+                m_hopper,
+                HopperConstants.kLeftNormalFeedSpeed,
+                HopperConstants.kRightNormalFeedSpeed))
         .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
 
     // Hopper unjam (backward)
     new JoystickButton(driverController, XboxController.Button.kBumperLeft.value)
-        .whenPressed(new HopperSetSpeed(m_hopper, HopperConstants.kLeftUnjamFeedSpeed, HopperConstants.kRightUnjamFeedSpeed))
+        .whenPressed(
+            new HopperSetSpeed(
+                m_hopper,
+                HopperConstants.kLeftUnjamFeedSpeed,
+                HopperConstants.kRightUnjamFeedSpeed))
         .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
 
     // OPERATOR CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,30 +137,25 @@ public class RobotContainer {
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kTrenchShotRPM))
         .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
-        
+
     // Auto line RPM (+ accelerator)
     new Trigger(
             () -> {
               return operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1;
             })
-          .whenActive(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
-          .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
-          .whenActive(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
+        .whenActive(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
+        .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
+        .whenActive(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
 
     // Turn shooter + accelerator off
     new JoystickButton(operatorController, XboxController.Button.kStart.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, 0.0))
         .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, 0.0));
 
-    new JoystickButton(operatorController, XboxController.Button.kStart.value)
-        .whenPressed(new InstantCommand(() -> {
-          m_shooter.slowCoastDown();
-        }));
-
     // // Hood state TRENCH
     // new JoystickButton(operatorController, XboxController.Button.kY.value)
     //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
-    
+
     // // // Hood state WALL
     // new JoystickButton(operatorController, XboxController.Button.kB.value)
     //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));

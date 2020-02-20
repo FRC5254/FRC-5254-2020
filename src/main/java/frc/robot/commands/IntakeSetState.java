@@ -14,6 +14,7 @@ import frc.robot.subsystems.Intake.IntakeState;
 public class IntakeSetState extends CommandBase {
   /** Creates a new IntakeSetExtended. */
   private Intake m_intake;
+
   private IntakeState state;
 
   public IntakeSetState(Intake intake, IntakeState state) {
