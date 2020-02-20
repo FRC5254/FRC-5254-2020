@@ -26,7 +26,7 @@ public class DrivetrainAlignToGoal extends CommandBase {
     m_drivetrain = drivetrain;
     pidController =
         new PIDController(
-            LimelightConstants.kAlignmentkD,
+            LimelightConstants.kAlignmentkP,
             LimelightConstants.kAlignmentkI,
             LimelightConstants.kAlignmentkD);
   }
