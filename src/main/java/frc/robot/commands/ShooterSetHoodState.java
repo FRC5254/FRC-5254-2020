@@ -19,7 +19,6 @@ public class ShooterSetHoodState extends CommandBase {
 
   public ShooterSetHoodState(Shooter shooter, HoodState state) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
     m_shooter = shooter;
     hoodState = state;
   }
