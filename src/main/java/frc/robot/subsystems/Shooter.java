@@ -162,4 +162,8 @@ public class Shooter extends SubsystemBase {
   public HoodState getHoodState() {
     return hoodState;
   }
+
+  public void slowCoastDown() {
+    flywheelLeft.set(0.0);
+  }
 }

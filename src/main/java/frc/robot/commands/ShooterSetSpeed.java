@@ -27,7 +27,6 @@ public class ShooterSetSpeed extends CommandBase {
     m_shooter = shooter;
     this.rpm = rpm;
     waitUntilAtSpeed = waitUntilSpunUp;
-    addRequirements(m_shooter);
   }
 
   // Called when the command is initially scheduled.

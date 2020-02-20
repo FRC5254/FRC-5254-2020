@@ -141,6 +141,11 @@ public class RobotContainer {
         .whenPressed(new ShooterSetSpeed(m_shooter, 0.0))
         .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, 0.0));
 
+    new JoystickButton(operatorController, XboxController.Button.kStart.value)
+        .whenPressed(new InstantCommand(() -> {
+          m_shooter.slowCoastDown();
+        }));
+
     // Hood state TRENCH
     new JoystickButton(operatorController, XboxController.Button.kY.value)
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
