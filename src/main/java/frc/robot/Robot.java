@@ -85,6 +85,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     SmartDashboard.putBoolean("Auto command is finished", m_autonomousCommand.isFinished());
+
+    // Run HelixLogger
+    // HelixLogger.getInstance().saveLogs();
   }
 
   @Override
@@ -101,6 +104,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    // Run HelixLogger
+    // HelixLogger.getInstance().saveLogs();
+
     // Set this to true when we want to test color wheel stuff
     final boolean checkForGameData = false;
     if (checkForGameData) {
