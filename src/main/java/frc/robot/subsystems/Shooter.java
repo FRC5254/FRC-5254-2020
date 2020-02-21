@@ -55,19 +55,18 @@ public class Shooter extends SubsystemBase {
     flywheelRight.follow(flywheelLeft, true);
     accelerator.setInverted(true);
 
-    flywheelLeft.getEncoder().setVelocityConversionFactor(1.0);
     flywheelLeft
         .getEncoder()
         .setPositionConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
-    // flywheelLeft
-    //     .getEncoder()
-    //     .setVelocityConversionFactor(1.0 / (60 * ShooterConstants.kFlywheelGearRatio));
-    // accelerator
-    //     .getEncoder()
-    //     .setPositionConversionFactor(1.0 / ShooterConstants.kAcceleratorGearRatio);
-    // accelerator
-    //     .getEncoder()
-    //     .setVelocityConversionFactor(1.0 / (60 * ShooterConstants.kAcceleratorGearRatio));
+    flywheelLeft
+        .getEncoder()
+        .setVelocityConversionFactor(1.0 / ShooterConstants.kFlywheelGearRatio);
+    accelerator
+        .getEncoder()
+        .setPositionConversionFactor(1.0 / ShooterConstants.kAcceleratorGearRatio);
+    accelerator
+        .getEncoder()
+        .setVelocityConversionFactor(1.0 / ShooterConstants.kAcceleratorGearRatio);
 
     flywheelLeft.setIdleMode(IdleMode.kCoast);
     flywheelRight.setIdleMode(IdleMode.kCoast);
@@ -109,6 +108,13 @@ public class Shooter extends SubsystemBase {
       setHoodState(HoodState.TRENCH_SHOT);
     }
 
+    // Make belts not skip lol
+    if (encoder.getVelocity() < ShooterConstants.kLowRPMThreshold) {
+      flywheelLeft.setClosedLoopRampRate(ShooterConstants.kLowRPMRampRate);
+    } else {
+      flywheelLeft.setClosedLoopRampRate(0.0);
+    }
+
     // Shot detection
     // If our current draw is high
     if (flywheelLeft.getOutputCurrent() >= ShooterConstants.kCurrentDrawnToDetectCompletedShot) {
@@ -131,7 +137,6 @@ public class Shooter extends SubsystemBase {
       currentMonitorTimer.reset();
     }
 
-
     // Live PID tuning
     final boolean enableLivePIDTuning = false;
     if (enableLivePIDTuning) {
@@ -140,13 +145,13 @@ public class Shooter extends SubsystemBase {
       double maxOutput = SmartDashboard.getNumber("Shooter max output", 0);
       double setpointRPM = SmartDashboard.getNumber("Shooter setpoint (RPM)", 0);
       double acceleratorRPM = SmartDashboard.getNumber("Shooter accelerator RPM", 0);
-  
+
       CANPIDController pidController = flywheelLeft.getPIDController();
       pidController.setP(kp);
       pidController.setFF(kf);
       pidController.setOutputRange(-maxOutput, maxOutput);
       pidController.setReference(setpointRPM, ControlType.kVelocity);
-  
+
       SmartDashboard.putNumber("Shooter velocity", encoder.getVelocity());
       SmartDashboard.putNumber("Shooter error", encoder.getVelocity() - setpointRPM);
       setAcceleratorToRPM(acceleratorRPM);

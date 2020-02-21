@@ -84,7 +84,8 @@ public final class Constants {
     public static final double kAcceleratorRPM = 6_000;
     public static final double kCurrentDrawnToDetectCompletedShot = 15;
     public static final double kCurrentDrawnTimeWindow = 0.1;
-    public static final double kIdleRPM = 1_000;
+    public static final double kLowRPMThreshold = 1_000;
+    public static final double kLowRPMRampRate = 0.05;
 
     // Motor config
     public static final int kFlywheelCurrentLimit = 20;
