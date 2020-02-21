@@ -8,7 +8,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Limelight;
 import frc.robot.Limelight.CamMode;
@@ -19,6 +21,7 @@ public class DrivetrainAlignToGoal extends CommandBase {
   Drivetrain m_drivetrain;
 
   PIDController pidController;
+  SimpleMotorFeedforward feedForward;
 
   public DrivetrainAlignToGoal(Drivetrain drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -29,6 +32,11 @@ public class DrivetrainAlignToGoal extends CommandBase {
             LimelightConstants.kAlignmentkP,
             LimelightConstants.kAlignmentkI,
             LimelightConstants.kAlignmentkD);
+    feedForward =
+        new SimpleMotorFeedforward(
+            DriveConstants.ksVolts,
+            DriveConstants.kvVoltSecondsPerMeter,
+            DriveConstants.kaVoltSecondsSquaredPerMeter);
   }
 
   // Called when the command is initially scheduled.
@@ -44,7 +52,10 @@ public class DrivetrainAlignToGoal extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double pidOutput = pidController.calculate(Limelight.getHorizontalOffset());
+    double pidOutput =
+        pidController.calculate(Limelight.getHorizontalOffset())
+            + feedForward.calculate(m_drivetrain.getLeftEncoder().getVelocity());
+            
     m_drivetrain.tankDriveVolts(-pidOutput, pidOutput);
   }
 
