@@ -11,15 +11,15 @@ public class Limelight implements Subsystem {
     return NetworkTableInstance.getDefault().getTable("limelight");
   }
 
-  private NetworkTableEntry getEntry(final String entryName) {
+  private NetworkTableEntry getEntry(String entryName) {
     return getTable().getEntry(entryName);
   }
 
-  private double getValue(final String entryName) {
+  private double getValue(String entryName) {
     return getEntry(entryName).getDouble(0);
   }
 
-  private void setValue(final String entryName, final double value) {
+  private void setValue(String entryName, double value) {
     getEntry(entryName).setNumber(value);
   }
 
@@ -96,16 +96,16 @@ public class Limelight implements Subsystem {
     FORCE_BLINK(2),
     FORCE_ON(3),
     UNKNOWN(-1);
-    public final double value;
+    public double value;
 
-    LedMode(final double value) {
+    LedMode(double value) {
       this.value = value;
     }
   }
 
   /** @return The current LED mode set on the Limelight */
   public LedMode getLedMode() {
-    final double mode = getValue("ledMode");
+    double mode = getValue("ledMode");
     if (mode == 0) {
       return LedMode.PIPELINE; // Uses the LED mode set in the pipeliine
     } else if (mode == 1) {
@@ -121,7 +121,7 @@ public class Limelight implements Subsystem {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public void setLedMode(final LedMode mode) {
+  public void setLedMode(LedMode mode) {
     if (mode != LedMode.UNKNOWN) {
       setValue("ledMode", mode.value);
     }
@@ -131,16 +131,16 @@ public class Limelight implements Subsystem {
     VISION_CAM(0),
     DRIVER_CAM(1),
     UNKNOWN(-1);
-    public final double value;
+    public double value;
 
-    CamMode(final double value) {
+    CamMode(double value) {
       this.value = value;
     }
   }
 
   /** @return The current LED mode set on the Limelight */
   public CamMode getCamMode() {
-    final double mode = getValue("camMode");
+    double mode = getValue("camMode");
     if (mode == 0) {
       return CamMode.VISION_CAM;
     } else if (mode == 1) {
@@ -152,7 +152,7 @@ public class Limelight implements Subsystem {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public void setCamMode(final CamMode mode) {
+  public void setCamMode(CamMode mode) {
     if (mode != CamMode.UNKNOWN) {
       setValue("camMode", mode.value);
     }
@@ -171,16 +171,16 @@ public class Limelight implements Subsystem {
     PIPELINE9(9),
     UNKNOWN(-1);
 
-    public final double value;
+    public double value;
 
-    Pipeline(final double value) {
+    Pipeline(double value) {
       this.value = value;
     }
   }
 
   /** @return The current LED mode set on the Limelight */
   public Pipeline getCurrentPipeline() {
-    final double mode = getValue("pipeline");
+    double mode = getValue("pipeline");
     if (mode == 0) {
       return Pipeline.PIPELINE0;
     } else if (mode == 1) {
@@ -208,7 +208,7 @@ public class Limelight implements Subsystem {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public void setPipeline(final Pipeline mode) {
+  public void setPipeline(Pipeline mode) {
     if (mode != Pipeline.UNKNOWN) {
       setValue("pipeline", mode.value);
     }
@@ -220,16 +220,16 @@ public class Limelight implements Subsystem {
     PIP_SECONDARY(2),
     UNKNOWN(-1);
 
-    public final double value;
+    public double value;
 
-    StreamMode(final double value) {
+    StreamMode(double value) {
       this.value = value;
     }
   }
 
   /** @return The current LED mode set on the Limelight */
   public StreamMode getCurrentStreamMode() {
-    final double mode = getValue("stream");
+    double mode = getValue("stream");
     if (mode == 0) {
       return StreamMode.STANDARD; // Side-by-side streams if a webcam is attached to Limelight
     } else if (mode == 1) {
@@ -245,7 +245,7 @@ public class Limelight implements Subsystem {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public void setStreamMode(final StreamMode mode) {
+  public void setStreamMode(StreamMode mode) {
     if (mode != StreamMode.UNKNOWN) {
       setValue("stream", mode.value);
     }
@@ -256,16 +256,16 @@ public class Limelight implements Subsystem {
     TWO_PER_SECOND(1),
     UNKNOWN(-1);
 
-    public final double value;
+    public double value;
 
-    SnapshotMode(final double value) {
+    SnapshotMode(double value) {
       this.value = value;
     }
   }
 
   /** @return The current LED mode set on the Limelight */
   public SnapshotMode getCurrentSnapShotMode() {
-    final double mode = getValue("snapshot");
+    double mode = getValue("snapshot");
     if (mode == 0) {
       return SnapshotMode.OFF;
     } else if (mode == 1) {
@@ -277,7 +277,7 @@ public class Limelight implements Subsystem {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public void setSnapshotMode(final SnapshotMode mode) {
+  public void setSnapshotMode(SnapshotMode mode) {
     if (mode != SnapshotMode.UNKNOWN) {
       setValue("snapshot", mode.value);
     }
