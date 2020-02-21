@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.util.Units;
-import frc.robot.Limelight.Pipeline;
+import frc.robot.subsystems.Limelight.Pipeline;
 
 public final class Constants {
   public static final class RobotMap {

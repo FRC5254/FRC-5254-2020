@@ -12,20 +12,23 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
-import frc.robot.Limelight;
-import frc.robot.Limelight.CamMode;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Limelight.CamMode;
 
 public class DrivetrainAlignToGoal extends CommandBase {
   /** Creates a new DrivetrainAlignToGoal. */
   Drivetrain m_drivetrain;
 
+  Limelight limelight;
+
   PIDController pidController;
   SimpleMotorFeedforward feedForward;
 
-  public DrivetrainAlignToGoal(Drivetrain drivetrain) {
+  public DrivetrainAlignToGoal(Drivetrain drivetrain, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
+    addRequirements(limelight);
     m_drivetrain = drivetrain;
     pidController =
         new PIDController(
@@ -45,17 +48,17 @@ public class DrivetrainAlignToGoal extends CommandBase {
     // We want the limelight horizontal offset to be a specific value (probably 1.0 for centered)
     pidController.setSetpoint(LimelightConstants.kTargetLimelightOffset);
     pidController.setTolerance(LimelightConstants.kAlignmentAcceptableError);
-    Limelight.setCamMode(CamMode.VISION_CAM);
-    Limelight.setPipeline(LimelightConstants.kShotPipeline);
+    limelight.setCamMode(CamMode.VISION_CAM);
+    limelight.setPipeline(LimelightConstants.kShotPipeline);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double pidOutput =
-        pidController.calculate(Limelight.getHorizontalOffset())
+        pidController.calculate(limelight.getHorizontalOffset())
             + feedForward.calculate(m_drivetrain.getLeftEncoder().getVelocity());
-            
+
     m_drivetrain.tankDriveVolts(-pidOutput, pidOutput);
   }
 
@@ -63,7 +66,7 @@ public class DrivetrainAlignToGoal extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drivetrain.tankDriveVolts(0, 0);
-    Limelight.setCamMode(CamMode.DRIVER_CAM);
+    limelight.setCamMode(CamMode.DRIVER_CAM);
   }
 
   // Returns true when the command should end.

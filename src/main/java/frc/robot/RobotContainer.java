@@ -32,6 +32,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Intake.IntakeState;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.HoodState;
 
@@ -47,6 +48,7 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Hopper m_hopper = new Hopper();
   private final Intake m_intake = new Intake();
+  private final Limelight m_limelight = new Limelight();
 
   // Controllers
   public final XboxController driverController = new XboxController(0);
