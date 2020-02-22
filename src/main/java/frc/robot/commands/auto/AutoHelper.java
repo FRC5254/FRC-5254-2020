@@ -72,10 +72,14 @@ public class AutoHelper {
         new InstantCommand(
             () -> {
               robotDrive.resetOdometry(startingPose);
-              robotDrive.zeroHeading();
-              robotDrive.setGyroOffset(startingPose.getRotation().getDegrees());
+              // robotDrive.zeroHeading();
+              // robotDrive.setGyroOffset(startingPose.getRotation().getDegrees());
             }),
-        ramseteCommand);
+        ramseteCommand,
+        new InstantCommand(
+            () -> {
+              robotDrive.tankDriveVolts(0, 0);
+            }));
   }
 
   public enum OffsetConfig {

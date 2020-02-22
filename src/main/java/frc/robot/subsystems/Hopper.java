@@ -27,4 +27,8 @@ public class Hopper extends SubsystemBase {
     leftBelt.set(leftSpeed);
     rightBelt.set(rightSpeed);
   }
+
+  public boolean isFeeding() {
+    return leftBelt.get() != 0;
+  }
 }

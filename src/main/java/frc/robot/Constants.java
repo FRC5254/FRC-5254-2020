@@ -82,8 +82,8 @@ public final class Constants {
     public static final double kAutoLineRPM = 5_000;
     public static final double kAcceptableRPMRange = 50;
     public static final double kAcceleratorRPM = 6_000;
-    public static final double kCurrentDrawnToDetectCompletedShot = 15;
-    public static final double kCurrentDrawnTimeWindow = 0.1;
+    public static final double kCurrentDrawnToDetectCompletedShot = 10;
+    public static final double kCurrentDrawnTimeWindow = 0.075;
     public static final double kLowRPMThreshold = 1_500;
     public static final double kLowRPMRampRate = 0.25;
 
@@ -107,7 +107,7 @@ public final class Constants {
       public static final Translation2d kInFrontOfGoal =
           new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(94.655));
       public static final Translation2d kWallShot =
-          new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(94.655));
+          new Translation2d(Units.inchesToMeters(50), Units.inchesToMeters(94.655));
 
       public static final Translation2d kSneakyPete =
           new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(286.311));
@@ -124,8 +124,8 @@ public final class Constants {
   }
 
   public static final class HopperConstants {
-    public static final double kLeftNormalFeedSpeed = 0.65;
-    public static final double kRightNormalFeedSpeed = 0.65;
+    public static final double kLeftNormalFeedSpeed = 0.8;
+    public static final double kRightNormalFeedSpeed = 0.8;
     public static final double kLeftUnjamFeedSpeed = -0.3;
     public static final double kRightUnjamFeedSpeed = -0.3;
   }

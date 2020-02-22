@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotMap;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Robot;
 
 public class Shooter extends SubsystemBase {
   public enum HoodState {
@@ -115,9 +116,12 @@ public class Shooter extends SubsystemBase {
       flywheelLeft.setClosedLoopRampRate(0.0);
     }
 
+    SmartDashboard.putNumber("Shooter current draw", flywheelLeft.getOutputCurrent());
+
     // Shot detection
     // If our current draw is high
-    if (flywheelLeft.getOutputCurrent() >= ShooterConstants.kCurrentDrawnToDetectCompletedShot) {
+    if (flywheelLeft.getOutputCurrent() >= ShooterConstants.kCurrentDrawnToDetectCompletedShot
+        && Robot.m_robotContainer.m_hopper.isFeeding()) {
       // If the timer is not started
       if (currentMonitorTimer.get() == 0) {
         // Start it
@@ -136,6 +140,8 @@ public class Shooter extends SubsystemBase {
       currentMonitorTimer.stop();
       currentMonitorTimer.reset();
     }
+
+    SmartDashboard.putNumber("Shots fired", shotsFired);
 
     // Live PID tuning
     final boolean enableLivePIDTuning = false;
