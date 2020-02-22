@@ -77,6 +77,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Heading", getHeading());
     SmartDashboard.putNumber("DT Left", getLeftEncoder().getPosition());
     SmartDashboard.putNumber("DT Right", getRightEncoder().getPosition());
+    SmartDashboard.putString("Odometry", m_odometry.getPoseMeters().toString());
   }
 
   public void GTADrive(double leftTrigger, double rightTrigger, double turn) {
@@ -131,8 +132,10 @@ public class Drivetrain extends SubsystemBase {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    left1.setVoltage(leftVolts);
-    right1.setVoltage(rightVolts);
+    SmartDashboard.putNumber("left volts", leftVolts);
+    SmartDashboard.putNumber("right volts", rightVolts);
+    left1.set(leftVolts / 12.6);
+    right1.set(rightVolts / 12.6);
   }
 
   /** Resets the drive encoders to currently read a position of 0. */

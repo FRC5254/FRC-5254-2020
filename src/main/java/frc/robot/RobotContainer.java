@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -192,13 +193,8 @@ public class RobotContainer {
         AutoHelper.createStandardPath(
             m_robotDrive,
             new Pose2d(0, 0, new Rotation2d(0)),
-            new Pose2d(2, 0, new Rotation2d(0)),
-            new Translation2d(0.25, 0.25),
-            new Translation2d(0.5, 0.5),
-            new Translation2d(0.75, 0.5),
-            new Translation2d(1.0, 0.25),
-            new Translation2d(1.25, 0.0),
-            new Translation2d(1.5, 0.0)),
+            new Pose2d(-Units.inchesToMeters(135), Units.inchesToMeters(200), new Rotation2d(180)),
+            new Translation2d(-Units.inchesToMeters(150), Units.inchesToMeters(100))),
         new InstantCommand(
             () -> {
               m_robotDrive.tankDriveVolts(0, 0);
