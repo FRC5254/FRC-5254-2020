@@ -15,7 +15,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.HoodState;
 import java.util.Map;
 
-class PrepRobotForFeed extends ParallelCommandGroup {
+public class PrepRobotForFeed extends ParallelCommandGroup {
   public PrepRobotForFeed(
       Drivetrain drivetrain,
       Intake intake,
@@ -37,6 +37,6 @@ class PrepRobotForFeed extends ParallelCommandGroup {
                 Map.entry(true, new InstantCommand())),
             () -> drivetrain == null),
         // Spin the shooter up and wait for it to reach full speed
-        new ShooterSetSpeed(shooter, shooterRPM, true));
+        new ShooterSetSpeed(shooter, shooterRPM, true).withTimeout(2.5));
   }
 }
