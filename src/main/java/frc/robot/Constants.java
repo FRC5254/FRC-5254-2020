@@ -60,8 +60,8 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 2;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(5);
+    public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(5);
     public static final double kAutoMaxDriveVoltage = 10;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
@@ -78,18 +78,18 @@ public final class Constants {
 
     // Shot details
     public static final double kWallShotRPM = 3_800;
-    public static final double kTrenchShotRPM = 5_400;
+    public static final double kTrenchShotRPM = 5_600;
     public static final double kAutoLineRPM = 5_000;
     public static final double kAcceptableRPMRange = 50;
     public static final double kAcceleratorRPM = 6_000;
     public static final double kCurrentDrawnToDetectCompletedShot = 15;
     public static final double kCurrentDrawnTimeWindow = 0.1;
-    public static final double kLowRPMThreshold = 1_000;
-    public static final double kLowRPMRampRate = 0.05;
+    public static final double kLowRPMThreshold = 1_500;
+    public static final double kLowRPMRampRate = 0.25;
 
     // Motor config
-    public static final int kFlywheelCurrentLimit = 20;
-    public static final int kAcceleratorCurrentLimit = 30;
+    public static final int kFlywheelCurrentLimit = 30;
+    public static final int kAcceleratorCurrentLimit = 25;
     public static final double kFlywheelkP = 0.000050;
     public static final double kFlywheelkF = 0.000165;
   }
@@ -106,8 +106,13 @@ public final class Constants {
     public static final class StartingLocations {
       public static final Translation2d kInFrontOfGoal =
           new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(94.655));
+      public static final Translation2d kWallShot =
+          new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(94.655));
+
       public static final Translation2d kSneakyPete =
           new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(286.311));
+      public static final Translation2d kYoinkOpponentTrench =
+          new Translation2d(Units.inchesToMeters(121 + 12 * 5), Units.inchesToMeters(286.311));
     }
 
     public static final double kRobotLengthWithBumpersMeters = Units.inchesToMeters(38);
@@ -115,7 +120,7 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final double kIntakeSpeed = 0.5; // Suggested, not final
+    public static final double kIntakeSpeed = 0.75; // Suggested, not final
   }
 
   public static final class HopperConstants {
@@ -127,10 +132,10 @@ public final class Constants {
 
   public static final class LimelightConstants {
     // Alignment constants
-    public static final double kAlignmentkP = 0.0;
+    public static final double kAlignmentkP = 0.35;
     public static final double kAlignmentkI = 0.0;
-    public static final double kAlignmentkD = 0.0;
-    public static final double kAlignmentAcceptableError = 0.0;
+    public static final double kAlignmentkD = 0.075;
+    public static final double kAlignmentAcceptableError = 0.3;
     public static final double kTargetLimelightOffset = 1.0;
 
     public static final Pipeline kShotPipeline = Pipeline.PIPELINE0;

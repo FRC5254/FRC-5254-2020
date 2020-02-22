@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
@@ -30,6 +31,7 @@ public class DrivetrainAlignToGoal extends CommandBase {
     addRequirements(drivetrain);
     addRequirements(limelight);
     m_drivetrain = drivetrain;
+    this.limelight = limelight;
     pidController =
         new PIDController(
             LimelightConstants.kAlignmentkP,
@@ -59,6 +61,7 @@ public class DrivetrainAlignToGoal extends CommandBase {
         pidController.calculate(limelight.getHorizontalOffset())
             + feedForward.calculate(m_drivetrain.getLeftEncoder().getVelocity());
 
+    SmartDashboard.putNumber("Alignment error", pidController.getPositionError());
     m_drivetrain.tankDriveVolts(-pidOutput, pidOutput);
   }
 

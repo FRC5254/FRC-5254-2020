@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.Drivetrain;
@@ -19,7 +21,12 @@ import java.util.List;
 
 public class AutoHelper {
   public static Command createStandardPath(
-      Drivetrain robotDrive, Pose2d startingPose, Pose2d endingPose, Translation2d... innerPoints) {
+      Drivetrain robotDrive,
+      boolean reversed,
+      double maxSpeed,
+      Pose2d startingPose,
+      Pose2d endingPose,
+      Translation2d... innerPoints) {
     // Create a voltage constraint to ensure we don't accelerate too fast
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
@@ -32,20 +39,17 @@ public class AutoHelper {
 
     // Create config for trajectory
     TrajectoryConfig config =
-        new TrajectoryConfig(
-                AutoConstants.kMaxSpeedMetersPerSecond,
-                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        new TrajectoryConfig(maxSpeed, AutoConstants.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(DriveConstants.kDriveKinematics)
-    .addConstraint(autoVoltageConstraint)
-    .setReversed(true);
+            .addConstraint(autoVoltageConstraint)
+            .setReversed(reversed);
     // Apply the voltage constraint
 
     // An example trajectory to follow.  All units in meters.
     Trajectory exampleTrajectory =
         TrajectoryGenerator.generateTrajectory(
             startingPose, List.of(innerPoints), endingPose, config);
-
 
     RamseteCommand ramseteCommand =
         new RamseteCommand(
@@ -64,7 +68,14 @@ public class AutoHelper {
             robotDrive::tankDriveVolts,
             robotDrive);
 
-    return ramseteCommand;
+    return new SequentialCommandGroup(
+        new InstantCommand(
+            () -> {
+              robotDrive.resetOdometry(startingPose);
+              robotDrive.zeroHeading();
+              robotDrive.setGyroOffset(startingPose.getRotation().getDegrees());
+            }),
+        ramseteCommand);
   }
 
   public enum OffsetConfig {

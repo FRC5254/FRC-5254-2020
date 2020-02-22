@@ -20,6 +20,7 @@ public class Drivetrain extends SubsystemBase {
   private final ADXRS450_Gyro gyro;
   public final CANEncoder leftEncoder, rightEncoder;
   public final DifferentialDriveOdometry m_odometry;
+  private double gyroOffset;
 
   public Drivetrain() {
     left1 = new CANSparkMax(RobotMap.kDriveMotorLeft1, MotorType.kBrushless);
@@ -61,6 +62,7 @@ public class Drivetrain extends SubsystemBase {
     rightEncoder = right1.getEncoder();
 
     gyro = new ADXRS450_Gyro();
+    gyroOffset = 0.0;
     resetEncoders();
     zeroHeading();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -176,14 +178,17 @@ public class Drivetrain extends SubsystemBase {
     gyro.reset();
   }
 
+  public void setGyroOffset(double offset) {
+    gyroOffset = offset;
+  }
+
   /**
    * Returns the heading of the robot.
    *
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-    // return 0;
-    return Math.IEEEremainder(gyro.getAngle(), 360) * -1;
+    return Math.IEEEremainder(gyro.getAngle() + gyroOffset, 360) * -1;
   }
 
   /**

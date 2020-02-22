@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -22,13 +20,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.DrivetrainAlignToGoal;
 import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
-import frc.robot.commands.auto.AutoHelper;
+import frc.robot.commands.auto.SneakyPete;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -105,6 +104,9 @@ public class RobotContainer {
                 HopperConstants.kLeftUnjamFeedSpeed,
                 HopperConstants.kRightUnjamFeedSpeed))
         .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
+
+    new JoystickButton(driverController, XboxController.Button.kY.value)
+        .whileActiveOnce(new DrivetrainAlignToGoal(m_robotDrive, m_limelight));
 
     // OPERATOR CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -190,11 +192,14 @@ public class RobotContainer {
               m_robotDrive.resetEncoders();
               m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
             }),
-        AutoHelper.createStandardPath(
-            m_robotDrive,
-            new Pose2d(0, 0, new Rotation2d(0)),
-            new Pose2d(-Units.inchesToMeters(135), Units.inchesToMeters(200), new Rotation2d(180)),
-            new Translation2d(-Units.inchesToMeters(150), Units.inchesToMeters(100))),
+        // AutoHelper.createStandardPath(
+        //     m_robotDrive,
+        //     true,
+        //     new Pose2d(0, 0, new Rotation2d(0)),
+        //     new Pose2d(-Units.inchesToMeters(135), Units.inchesToMeters(200), new
+        // Rotation2d(180)),
+        //     new Translation2d(-Units.inchesToMeters(150), Units.inchesToMeters(100))),
+        new SneakyPete(m_robotDrive, m_intake),
         new InstantCommand(
             () -> {
               m_robotDrive.tankDriveVolts(0, 0);
