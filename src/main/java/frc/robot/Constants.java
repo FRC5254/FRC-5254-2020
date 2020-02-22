@@ -32,7 +32,7 @@ public final class Constants {
 
   public static final class DriveConstants {
     // Physical details
-    public static final double kTrackwidthMeters = Units.inchesToMeters(24);
+    public static final double kTrackwidthMeters = 0.6295313467128202;
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
     public static final double kWheelDiameter = 6.0;
@@ -46,12 +46,12 @@ public final class Constants {
     // for *your* robot's drive.
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
     // values for your robot.
-    public static final double ksVolts = 1.25;
-    public static final double kvVoltSecondsPerMeter = 2.52;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.322;
+    public static final double ksVolts = 0.18;
+    public static final double kvVoltSecondsPerMeter = 2.45;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.495;
 
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 1.6;
+    public static final double kPDriveVel = 1.91;
 
     // Motor config
     public static final int kCurrentLimit = 60;
@@ -60,8 +60,8 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 2;
-    public static final double kMaxAccelerationMetersPerSecondSquared = .5;
+    public static final double kMaxSpeedMetersPerSecond = 5;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 2;
     public static final double kAutoMaxDriveVoltage = 10;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
