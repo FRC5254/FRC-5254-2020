@@ -7,8 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
 public class ShooterSetSpeed extends CommandBase {
@@ -36,6 +36,7 @@ public class ShooterSetSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("Shooter setpoint (RPM)", rpm);
     m_shooter.setFlywheelToRPM(rpm);
   }
 
@@ -46,10 +47,6 @@ public class ShooterSetSpeed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (waitUntilAtSpeed) {
-      return m_shooter.isVelocityWithinTargetRange(rpm, ShooterConstants.kAcceptableRPMRange);
-    } else {
-      return true;
-    }
+    return true;
   }
 }

@@ -76,9 +76,6 @@ public class Shooter extends SubsystemBase {
     flywheelLeft.setSmartCurrentLimit(ShooterConstants.kFlywheelCurrentLimit);
     accelerator.setSmartCurrentLimit(ShooterConstants.kAcceleratorCurrentLimit);
 
-    SmartDashboard.putNumber("Shooter kP", ShooterConstants.kFlywheelkP);
-    SmartDashboard.putNumber("Shooter kF", ShooterConstants.kFlywheelkF);
-    SmartDashboard.putNumber("Shooter max output", 1);
     SmartDashboard.putNumber("Shooter setpoint (RPM)", 0);
     SmartDashboard.putNumber("Shooter accelerator RPM", 0);
 
@@ -144,18 +141,12 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shots fired", shotsFired);
 
     // Live PID tuning
-    final boolean enableLivePIDTuning = false;
+    final boolean enableLivePIDTuning = true;
     if (enableLivePIDTuning) {
-      double kp = SmartDashboard.getNumber("Shooter kP", 0);
-      double kf = SmartDashboard.getNumber("Shooter kF", 0);
-      double maxOutput = SmartDashboard.getNumber("Shooter max output", 0);
       double setpointRPM = SmartDashboard.getNumber("Shooter setpoint (RPM)", 0);
       double acceleratorRPM = SmartDashboard.getNumber("Shooter accelerator RPM", 0);
 
       CANPIDController pidController = flywheelLeft.getPIDController();
-      pidController.setP(kp);
-      pidController.setFF(kf);
-      pidController.setOutputRange(-maxOutput, maxOutput);
       pidController.setReference(setpointRPM, ControlType.kVelocity);
 
       SmartDashboard.putNumber("Shooter velocity", encoder.getVelocity());
