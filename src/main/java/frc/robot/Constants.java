@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.util.Units;
-import frc.robot.Limelight.Pipeline;
+import frc.robot.subsystems.Limelight.Pipeline;
 
 public final class Constants {
   public static final class RobotMap {
@@ -32,7 +32,7 @@ public final class Constants {
 
   public static final class DriveConstants {
     // Physical details
-    public static final double kTrackwidthMeters = Units.inchesToMeters(24);
+    public static final double kTrackwidthMeters = 0.6295313467128202;
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
     public static final double kWheelDiameter = 6.0;
@@ -46,12 +46,12 @@ public final class Constants {
     // for *your* robot's drive.
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
     // values for your robot.
-    public static final double ksVolts = 1.25;
-    public static final double kvVoltSecondsPerMeter = 2.52;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.322;
+    public static final double ksVolts = 0.18;
+    public static final double kvVoltSecondsPerMeter = 2.45;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.495;
 
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 1.6;
+    public static final double kPDriveVel = 1.91;
 
     // Motor config
     public static final int kCurrentLimit = 60;
@@ -60,12 +60,12 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 2;
-    public static final double kMaxAccelerationMetersPerSecondSquared = .5;
+    public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(5);
+    public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(5);
     public static final double kAutoMaxDriveVoltage = 10;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-    public static final double kRamseteB = 2;
+    public static final double kRamseteB = 2.0;
     public static final double kRamseteZeta = 0.7;
   }
 
@@ -78,17 +78,20 @@ public final class Constants {
 
     // Shot details
     public static final double kWallShotRPM = 3_800;
-    public static final double kTrenchShotRPM = 5_400;
+    public static final double kTrenchShotRPM = 5_600;
     public static final double kAutoLineRPM = 5_000;
     public static final double kAcceptableRPMRange = 50;
     public static final double kAcceleratorRPM = 6_000;
-    public static final double kCurrentDrawnToDetectCompletedShot = 15;
-    public static final double kCurrentDrawnTimeWindow = 0.1;
-    public static final double kIdleRPM = 1_000;
+    public static final double kCurrentDrawnToDetectCompletedShot = 10;
+    public static final double kCurrentDrawnTimeWindow = 0.075;
+    public static final double kLowRPMThreshold = 1_500;
+    public static final double kLowRPMRampRate = 0.25;
 
     // Motor config
-    public static final int kFlywheelCurrentLimit = 20;
-    public static final int kAcceleratorCurrentLimit = 30;
+    public static final int kFlywheelCurrentLimit = 30;
+    public static final int kAcceleratorCurrentLimit = 25;
+    public static final double kFlywheelkP = 0.000050;
+    public static final double kFlywheelkF = 0.000165;
   }
 
   // Okay, this is a little gross
@@ -103,8 +106,13 @@ public final class Constants {
     public static final class StartingLocations {
       public static final Translation2d kInFrontOfGoal =
           new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(94.655));
+      public static final Translation2d kWallShot =
+          new Translation2d(Units.inchesToMeters(50), Units.inchesToMeters(94.655));
+
       public static final Translation2d kSneakyPete =
           new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(286.311));
+      public static final Translation2d kYoinkOpponentTrench =
+          new Translation2d(Units.inchesToMeters(121 + 12 * 5), Units.inchesToMeters(286.311));
     }
 
     public static final double kRobotLengthWithBumpersMeters = Units.inchesToMeters(38);
@@ -112,22 +120,22 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final double kIntakeSpeed = 0.5; // Suggested, not final
+    public static final double kIntakeSpeed = 0.85; // Suggested, not final
   }
 
   public static final class HopperConstants {
-    public static final double kLeftNormalFeedSpeed = 0.65;
-    public static final double kRightNormalFeedSpeed = 0.65;
+    public static final double kLeftNormalFeedSpeed = 0.8;
+    public static final double kRightNormalFeedSpeed = 0.8;
     public static final double kLeftUnjamFeedSpeed = -0.3;
     public static final double kRightUnjamFeedSpeed = -0.3;
   }
 
   public static final class LimelightConstants {
     // Alignment constants
-    public static final double kAlignmentkP = 0.0;
+    public static final double kAlignmentkP = 0.35;
     public static final double kAlignmentkI = 0.0;
-    public static final double kAlignmentkD = 0.0;
-    public static final double kAlignmentAcceptableError = 0.0;
+    public static final double kAlignmentkD = 0.075;
+    public static final double kAlignmentAcceptableError = 0.3;
     public static final double kTargetLimelightOffset = 1.0;
 
     public static final Pipeline kShotPipeline = Pipeline.PIPELINE0;

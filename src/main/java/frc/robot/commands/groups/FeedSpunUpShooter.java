@@ -13,7 +13,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import java.util.function.BooleanSupplier;
 
-class FeedSpunUpShooter extends ParallelCommandGroup {
+public class FeedSpunUpShooter extends ParallelCommandGroup {
   public FeedSpunUpShooter(
       Hopper hopper, Intake intake, Shooter shooter, BooleanSupplier endCondition, double timeout) {
     addCommands(

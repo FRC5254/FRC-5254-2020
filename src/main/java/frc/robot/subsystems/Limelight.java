@@ -1,83 +1,84 @@
-package frc.robot;
+package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
-public class Limelight {
+public class Limelight implements Subsystem {
 
-  private static NetworkTable getTable() {
+  private NetworkTable getTable() {
     return NetworkTableInstance.getDefault().getTable("limelight");
   }
 
-  private static NetworkTableEntry getEntry(String entryName) {
+  private NetworkTableEntry getEntry(String entryName) {
     return getTable().getEntry(entryName);
   }
 
-  private static double getValue(String entryName) {
+  private double getValue(String entryName) {
     return getEntry(entryName).getDouble(0);
   }
 
-  private static void setValue(String entryName, double value) {
+  private void setValue(String entryName, double value) {
     getEntry(entryName).setNumber(value);
   }
 
   /** @return true if the Limelight has any valid targets */
-  public static boolean hasValidTargets() {
+  public boolean hasValidTargets() {
     return getValue("tv") == 1;
   }
 
-  public static double getTargetValue() {
+  public double getTargetValue() {
     return getValue("tv");
   }
 
   /** @return horizontal offset from crosshair to target (-27 degrees to 27 degrees) */
-  public static double getHorizontalOffset() {
+  public double getHorizontalOffset() {
     return getValue("tx");
   }
 
   /** @return vertical offset from crosshair to target (-20.5 degrees to 20.5 degrees) */
-  public static double getVerticalOffset() {
+  public double getVerticalOffset() {
     return getValue("ty");
   }
 
   /** @return target area (0% of image to 100% of image) */
-  public static double getTargetArea() {
+  public double getTargetArea() {
     return getValue("ta");
   }
 
   /** @return skew or rotation (-90 degrees to 0 degrees) */
-  public static double getSkewOrRotation() {
+  public double getSkewOrRotation() {
     return getValue("ts");
   }
 
   /** @return pipeline's latency contribution (ms); add 11ms for image capture */
-  public static double getLatency() {
+  public double getLatency() {
     return getValue("tl");
   }
 
   /** @return sidelength of shortest side of the fitted bounding box (pixels) */
-  public static double getShortSideLength() {
+  public double getShortSideLength() {
     return getValue("tshort");
   }
 
   /** @return sidelength of longest side of the fitted bounding box (pixels) */
-  public static double getLongSideLength() {
+  public double getLongSideLength() {
     return getValue("tlong");
   }
 
   /** @return Horizontal sidelength of the rough bounding box (0 - 320 pixels) */
-  public static double getHorizontalSidelength() {
+  public double getHorizontalSidelength() {
     return getValue("thor");
   }
 
   /** @return Vertical sidelength of the rough bounding box (0 - 320 pixels) */
-  public static double getVerticalSidelength() {
+  public double getVerticalSidelength() {
     return getValue("tvert");
   }
 
   /** @return True active pipeline index of the camera (0 .. 9) */
-  public static double getPipeline() {
+  public double getPipeline() {
     return getValue("getpipe");
   }
 
@@ -85,7 +86,7 @@ public class Limelight {
    * @return Results of a 3D position solution, 6 numbers: Translation (x,y,y)
    *     Rotation(pitch,yaw,roll)
    */
-  public static Double[] getCamtran() {
+  public Double[] getCamtran() {
     return getEntry("camtran").getDoubleArray(new Double[] {});
   }
 
@@ -95,7 +96,7 @@ public class Limelight {
     FORCE_BLINK(2),
     FORCE_ON(3),
     UNKNOWN(-1);
-    public final double value;
+    public double value;
 
     LedMode(double value) {
       this.value = value;
@@ -103,7 +104,7 @@ public class Limelight {
   }
 
   /** @return The current LED mode set on the Limelight */
-  public static LedMode getLedMode() {
+  public LedMode getLedMode() {
     double mode = getValue("ledMode");
     if (mode == 0) {
       return LedMode.PIPELINE; // Uses the LED mode set in the pipeliine
@@ -120,7 +121,7 @@ public class Limelight {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public static void setLedMode(LedMode mode) {
+  public void setLedMode(LedMode mode) {
     if (mode != LedMode.UNKNOWN) {
       setValue("ledMode", mode.value);
     }
@@ -130,7 +131,7 @@ public class Limelight {
     VISION_CAM(0),
     DRIVER_CAM(1),
     UNKNOWN(-1);
-    public final double value;
+    public double value;
 
     CamMode(double value) {
       this.value = value;
@@ -138,7 +139,7 @@ public class Limelight {
   }
 
   /** @return The current LED mode set on the Limelight */
-  public static CamMode getCamMode() {
+  public CamMode getCamMode() {
     double mode = getValue("camMode");
     if (mode == 0) {
       return CamMode.VISION_CAM;
@@ -151,7 +152,7 @@ public class Limelight {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public static void setCamMode(CamMode mode) {
+  public void setCamMode(CamMode mode) {
     if (mode != CamMode.UNKNOWN) {
       setValue("camMode", mode.value);
     }
@@ -170,7 +171,7 @@ public class Limelight {
     PIPELINE9(9),
     UNKNOWN(-1);
 
-    public final double value;
+    public double value;
 
     Pipeline(double value) {
       this.value = value;
@@ -178,7 +179,7 @@ public class Limelight {
   }
 
   /** @return The current LED mode set on the Limelight */
-  public static Pipeline getCurrentPipeline() {
+  public Pipeline getCurrentPipeline() {
     double mode = getValue("pipeline");
     if (mode == 0) {
       return Pipeline.PIPELINE0;
@@ -207,7 +208,7 @@ public class Limelight {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public static void setPipeline(Pipeline mode) {
+  public void setPipeline(Pipeline mode) {
     if (mode != Pipeline.UNKNOWN) {
       setValue("pipeline", mode.value);
     }
@@ -219,7 +220,7 @@ public class Limelight {
     PIP_SECONDARY(2),
     UNKNOWN(-1);
 
-    public final double value;
+    public double value;
 
     StreamMode(double value) {
       this.value = value;
@@ -227,7 +228,7 @@ public class Limelight {
   }
 
   /** @return The current LED mode set on the Limelight */
-  public static StreamMode getCurrentStreamMode() {
+  public StreamMode getCurrentStreamMode() {
     double mode = getValue("stream");
     if (mode == 0) {
       return StreamMode.STANDARD; // Side-by-side streams if a webcam is attached to Limelight
@@ -244,7 +245,7 @@ public class Limelight {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public static void setStreamMode(StreamMode mode) {
+  public void setStreamMode(StreamMode mode) {
     if (mode != StreamMode.UNKNOWN) {
       setValue("stream", mode.value);
     }
@@ -255,7 +256,7 @@ public class Limelight {
     TWO_PER_SECOND(1),
     UNKNOWN(-1);
 
-    public final double value;
+    public double value;
 
     SnapshotMode(double value) {
       this.value = value;
@@ -263,7 +264,7 @@ public class Limelight {
   }
 
   /** @return The current LED mode set on the Limelight */
-  public static SnapshotMode getCurrentSnapShotMode() {
+  public SnapshotMode getCurrentSnapShotMode() {
     double mode = getValue("snapshot");
     if (mode == 0) {
       return SnapshotMode.OFF;
@@ -276,7 +277,7 @@ public class Limelight {
   }
 
   /** @param mode The LED Mode to set on the Limelight */
-  public static void setSnapshotMode(SnapshotMode mode) {
+  public void setSnapshotMode(SnapshotMode mode) {
     if (mode != SnapshotMode.UNKNOWN) {
       setValue("snapshot", mode.value);
     }

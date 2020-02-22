@@ -7,40 +7,31 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Intake.IntakeState;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Limelight.LedMode;
 
-public class IntakeSetState extends CommandBase {
-  /** Creates a new IntakeSetExtended. */
-  private Intake m_intake;
+public class LimelightBlinkForTime extends WaitCommand {
+  /** Creates a new LimelightBlinkForTime. */
+  private Limelight limelight;
 
-  private IntakeState state;
-
-  public IntakeSetState(Intake intake, IntakeState state) {
+  public LimelightBlinkForTime(Limelight limelight, double seconds) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
-    m_intake = intake;
-    this.state = state;
+    super(seconds);
+    this.limelight = limelight;
+    addRequirements(limelight);
   }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setIntakeState(state);
+    limelight.setLedMode(LedMode.FORCE_BLINK);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return true;
+  public void end(boolean interrupted) {
+    super.end(interrupted);
+    limelight.setLedMode(LedMode.PIPELINE);
   }
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.HoodState;
 import java.util.function.BooleanSupplier;
@@ -25,12 +26,13 @@ public class FullShotSequence extends SequentialCommandGroup {
       Hopper hopper,
       Intake intake,
       Shooter shooter,
+      Limelight limelight,
       double shooterRPM,
       HoodState hoodState,
       BooleanSupplier endCondition,
       double timeout) {
     addCommands(
-        new PrepRobotForFeed(drivetrain, intake, shooter, shooterRPM, hoodState),
+        new PrepRobotForFeed(drivetrain, intake, shooter, limelight, shooterRPM, hoodState),
         new FeedSpunUpShooter(hopper, intake, shooter, endCondition, timeout));
   }
 }

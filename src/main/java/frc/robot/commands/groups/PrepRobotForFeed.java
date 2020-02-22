@@ -9,16 +9,18 @@ import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake.IntakeState;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.HoodState;
 import java.util.Map;
 
-class PrepRobotForFeed extends ParallelCommandGroup {
+public class PrepRobotForFeed extends ParallelCommandGroup {
   public PrepRobotForFeed(
       Drivetrain drivetrain,
       Intake intake,
       Shooter shooter,
+      Limelight limelight,
       double shooterRPM,
       HoodState hoodState) {
     addCommands(
@@ -31,10 +33,10 @@ class PrepRobotForFeed extends ParallelCommandGroup {
         // If the drivetrain was provided, align to the goal
         new SelectCommand(
             Map.ofEntries(
-                Map.entry(false, new DrivetrainAlignToGoal(drivetrain)),
+                Map.entry(false, new DrivetrainAlignToGoal(drivetrain, limelight)),
                 Map.entry(true, new InstantCommand())),
             () -> drivetrain == null),
         // Spin the shooter up and wait for it to reach full speed
-        new ShooterSetSpeed(shooter, shooterRPM, true));
+        new ShooterSetSpeed(shooter, shooterRPM, true).withTimeout(2.5));
   }
 }

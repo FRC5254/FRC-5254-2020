@@ -24,7 +24,7 @@ import java.util.Map;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  public static RobotContainer m_robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -37,11 +37,14 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     // Set up port forwarding so we can access the limelight over USB :)
-    // visit 'localhost:5800' or 'localhost:5801' in your browser (ie, Chrome) on the laptop
+    // visit '172.22.11.2:5800' in your browser (ie, Chrome) on the laptop
     // to see the limelight
     // ... maybe
+    // Not sure why 5805 is required. Someone recommended it
+    // Probably internal limelight networking stuff
     PortForwarder.add(5800, "limelight.local", 5800);
     PortForwarder.add(5801, "limelight.local", 5801);
+    PortForwarder.add(5805, "limelight.local", 5805);
   }
 
   /**
@@ -82,6 +85,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     SmartDashboard.putBoolean("Auto command is finished", m_autonomousCommand.isFinished());
+
+    // Run HelixLogger
+    // HelixLogger.getInstance().saveLogs();
   }
 
   @Override
@@ -98,6 +104,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    // Run HelixLogger
+    // HelixLogger.getInstance().saveLogs();
+
     // Set this to true when we want to test color wheel stuff
     final boolean checkForGameData = false;
     if (checkForGameData) {

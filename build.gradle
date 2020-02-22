@@ -63,6 +63,9 @@ dependencies {
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
+
+    // HelixLogger
+    compile 'com.github.TripleHelixProgramming:HelixUtilities:2020-SNAPSHOT'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

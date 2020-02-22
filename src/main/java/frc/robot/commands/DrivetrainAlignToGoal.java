@@ -8,27 +8,40 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
-import frc.robot.Limelight;
-import frc.robot.Limelight.CamMode;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Limelight.CamMode;
 
 public class DrivetrainAlignToGoal extends CommandBase {
   /** Creates a new DrivetrainAlignToGoal. */
   Drivetrain m_drivetrain;
 
-  PIDController pidController;
+  Limelight limelight;
 
-  public DrivetrainAlignToGoal(Drivetrain drivetrain) {
+  PIDController pidController;
+  SimpleMotorFeedforward feedForward;
+
+  public DrivetrainAlignToGoal(Drivetrain drivetrain, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
+    addRequirements(limelight);
     m_drivetrain = drivetrain;
+    this.limelight = limelight;
     pidController =
         new PIDController(
-            LimelightConstants.kAlignmentkD,
+            LimelightConstants.kAlignmentkP,
             LimelightConstants.kAlignmentkI,
             LimelightConstants.kAlignmentkD);
+    feedForward =
+        new SimpleMotorFeedforward(
+            DriveConstants.ksVolts,
+            DriveConstants.kvVoltSecondsPerMeter,
+            DriveConstants.kaVoltSecondsSquaredPerMeter);
   }
 
   // Called when the command is initially scheduled.
@@ -37,14 +50,18 @@ public class DrivetrainAlignToGoal extends CommandBase {
     // We want the limelight horizontal offset to be a specific value (probably 1.0 for centered)
     pidController.setSetpoint(LimelightConstants.kTargetLimelightOffset);
     pidController.setTolerance(LimelightConstants.kAlignmentAcceptableError);
-    Limelight.setCamMode(CamMode.VISION_CAM);
-    Limelight.setPipeline(LimelightConstants.kShotPipeline);
+    limelight.setCamMode(CamMode.VISION_CAM);
+    limelight.setPipeline(LimelightConstants.kShotPipeline);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double pidOutput = pidController.calculate(Limelight.getHorizontalOffset());
+    double pidOutput =
+        pidController.calculate(limelight.getHorizontalOffset())
+            + feedForward.calculate(m_drivetrain.getLeftEncoder().getVelocity());
+
+    SmartDashboard.putNumber("Alignment error", pidController.getPositionError());
     m_drivetrain.tankDriveVolts(-pidOutput, pidOutput);
   }
 
@@ -52,7 +69,7 @@ public class DrivetrainAlignToGoal extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drivetrain.tankDriveVolts(0, 0);
-    Limelight.setCamMode(CamMode.DRIVER_CAM);
+    limelight.setCamMode(CamMode.DRIVER_CAM);
   }
 
   // Returns true when the command should end.

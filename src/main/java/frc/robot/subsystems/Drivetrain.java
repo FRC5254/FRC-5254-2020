@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.RobotMap;
@@ -19,6 +20,7 @@ public class Drivetrain extends SubsystemBase {
   private final ADXRS450_Gyro gyro;
   public final CANEncoder leftEncoder, rightEncoder;
   public final DifferentialDriveOdometry m_odometry;
+  private double gyroOffset;
 
   public Drivetrain() {
     left1 = new CANSparkMax(RobotMap.kDriveMotorLeft1, MotorType.kBrushless);
@@ -60,6 +62,7 @@ public class Drivetrain extends SubsystemBase {
     rightEncoder = right1.getEncoder();
 
     gyro = new ADXRS450_Gyro();
+    gyroOffset = 0.0;
     resetEncoders();
     zeroHeading();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -72,6 +75,11 @@ public class Drivetrain extends SubsystemBase {
         Rotation2d.fromDegrees(getHeading()),
         leftEncoder.getPosition(),
         rightEncoder.getPosition());
+
+    SmartDashboard.putNumber("Heading", getHeading());
+    SmartDashboard.putNumber("DT Left", getLeftEncoder().getPosition());
+    SmartDashboard.putNumber("DT Right", getRightEncoder().getPosition());
+    SmartDashboard.putString("Odometry", m_odometry.getPoseMeters().toString());
   }
 
   public void GTADrive(double leftTrigger, double rightTrigger, double turn) {
@@ -126,6 +134,8 @@ public class Drivetrain extends SubsystemBase {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
+    SmartDashboard.putNumber("left volts", leftVolts);
+    SmartDashboard.putNumber("right volts", rightVolts);
     left1.set(leftVolts / 12.6);
     right1.set(rightVolts / 12.6);
   }
@@ -168,14 +178,17 @@ public class Drivetrain extends SubsystemBase {
     gyro.reset();
   }
 
+  public void setGyroOffset(double offset) {
+    gyroOffset = offset;
+  }
+
   /**
    * Returns the heading of the robot.
    *
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-    // return 0;
-    return Math.IEEEremainder(gyro.getAngle(), 360);
+    return Math.IEEEremainder(gyro.getAngle() + gyroOffset, 360) * -1;
   }
 
   /**
