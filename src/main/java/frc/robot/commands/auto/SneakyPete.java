@@ -36,22 +36,22 @@ public class SneakyPete extends SequentialCommandGroup {
           .setMaxSpeedFPS(8)
           .toTrajectory();
 
-  static Move ballPoint = slowingPoint.copy().forward(10);
+  static Move ballPoint = slowingPoint.copy().forward(10).markAsReference();
   static Trajectory slowDriveForwards =
       new Path(slowingPoint.get(0), List.of(slowingPoint.copy().forward(5).get()), ballPoint.get(0))
           .setMaxSpeedFPS(3)
           .toTrajectory();
 
+  static Move shotPoint = ballPoint.copy().left(100).backward(100).markAsReference();
   static Trajectory goToShootPosition =
       new Path(
               ballPoint.get(0),
               List.of(ballPoint.copy().left(35).backward(60).get()),
-              ballPoint.copy().left(100).backward(100).get(-180 - 45))
+              shotPoint.get(-180 - 45))
           .setMaxSpeedFPS(9)
           .setMaxAccelFPS(2)
           .toTrajectory();
 
-  /** Creates a new SneakyPete. */
   public SneakyPete(
       Drivetrain drivetrain, Intake intake, Shooter shooter, Hopper hopper, Limelight limelight) {
     super(

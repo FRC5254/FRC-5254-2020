@@ -40,16 +40,9 @@ public final class Constants {
     public static final double kDistancePerPulse =
         (1.0 / kGearRatio) * Units.inchesToMeters(6.0) * Math.PI;
 
-    // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-    // These characterization values MUST be determined either experimentally or theoretically
-    // for *your* robot's drive.
-    // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
-    // values for your robot.
     public static final double ksVolts = 0.18;
     public static final double kvVoltSecondsPerMeter = 2.45;
     public static final double kaVoltSecondsSquaredPerMeter = 0.495;
-
-    // Example value only - as above, this must be tuned for your drive!
     public static final double kPDriveVel = 1.91;
 
     // Motor config

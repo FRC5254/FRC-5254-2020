@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
-import java.util.function.DoubleFunction;
 
 public class Move {
 
@@ -16,13 +15,19 @@ public class Move {
   }
 
   public Move(double x, double y) {
-    translation = new Translation2d(x, y);
+    translation = new Translation2d(Units.inchesToMeters(x), Units.inchesToMeters(y));
     isReference = false;
+  }
+
+  public Move markAsReference() {
+    isReference = true;
+    return this;
   }
 
   private Move translate(double x, double y) {
     if (!isReference) {
-      translation = translation.plus(new Translation2d(x, y));
+      translation =
+          translation.plus(new Translation2d(Units.inchesToMeters(x), Units.inchesToMeters(y)));
     } else {
       throw new RuntimeException("Unable to modify a reference Move!");
     }
@@ -45,29 +50,12 @@ public class Move {
     return translate(0, -distance);
   }
 
-  public Move convert(DoubleFunction<Double> conversionFunction) {
-    translation =
-        new Translation2d(
-            conversionFunction.apply(translation.getX()),
-            conversionFunction.apply(translation.getY()));
-    return this;
-  }
-
-  private Move convertInchesToMeters() {
-    return convert((d) -> Units.inchesToMeters(d));
-  }
-
-  public Translation2d get() {
-    return convertInchesToMeters().translation;
-  }
-
   public Move copy() {
     return new Move(translation.getX(), translation.getY());
   }
 
-  public Move markAsReference() {
-    isReference = true;
-    return this;
+  public Translation2d get() {
+    return translation;
   }
 
   public Pose2d get(double headingDegrees) {
