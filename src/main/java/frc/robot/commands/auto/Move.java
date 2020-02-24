@@ -51,7 +51,8 @@ public class Move {
   }
 
   public Move copy() {
-    return new Move(translation.getX(), translation.getY());
+    return new Move(
+        Units.metersToInches(translation.getX()), Units.metersToInches(translation.getY()));
   }
 
   public Translation2d get() {
