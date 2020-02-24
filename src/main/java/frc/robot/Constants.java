@@ -103,7 +103,7 @@ public final class Constants {
     public static final double kAlignmentkI = 0.0;
     public static final double kAlignmentkD = 0.075;
     public static final double kAlignmentAcceptableError = 0.3;
-    public static final double kTargetLimelightOffset = 1.0;
+    public static final double kTargetLimelightOffset = 0.0;
 
     public static final Pipeline kShotPipeline = Pipeline.PIPELINE0;
   }
