@@ -45,7 +45,7 @@ public class SneakyPete extends SequentialCommandGroup {
   static Trajectory goToShootPosition =
       new Path(
               ballPoint.get(0),
-              List.of(ballPoint.get()),
+              List.of(ballPoint.copy().left(35).backward(60).get()),
               ballPoint.copy().left(100).backward(100).get(-180 - 45))
           .setMaxSpeedFPS(9)
           .setMaxAccelFPS(2)
