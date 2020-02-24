@@ -54,6 +54,10 @@ public class RobotContainer {
   public final XboxController driverController = new XboxController(0);
   public final XboxController operatorController = new XboxController(1);
 
+  // Generate this in robot container constructor so that the command is created on robot init
+  // not on auto start (it can take up to 0.5s to generate the paths)
+  public final Command autoCommand;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -76,6 +80,20 @@ public class RobotContainer {
               }
             },
             m_robotDrive));
+
+    // Generate paths at robot init
+    autoCommand =
+        new SequentialCommandGroup(
+            new InstantCommand(
+                () -> {
+                  m_robotDrive.zeroHeading();
+                  m_robotDrive.resetEncoders();
+                  m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+                }),
+            new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight)
+            // new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper)
+
+            );
   }
 
   /**
@@ -185,26 +203,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new SequentialCommandGroup(
-        new InstantCommand(
-            () -> {
-              m_robotDrive.zeroHeading();
-              m_robotDrive.resetEncoders();
-              m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
-            }),
-        // AutoHelper.createStandardPath(
-        //     m_robotDrive,
-        //     true,
-        //     new Pose2d(0, 0, new Rotation2d(0)),
-        //     new Pose2d(-Units.inchesToMeters(135), Units.inchesToMeters(200), new
-        // Rotation2d(180)),
-        //     new Translation2d(-Units.inchesToMeters(150), Units.inchesToMeters(100))),
-        new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight),
-        // new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper),
-        new InstantCommand(
-            () -> {
-              m_robotDrive.tankDriveVolts(0, 0);
-            },
-            m_robotDrive));
+    return autoCommand;
   }
 }

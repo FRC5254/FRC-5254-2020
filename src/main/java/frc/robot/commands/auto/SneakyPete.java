@@ -7,10 +7,7 @@
 
 package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
-import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -26,38 +23,46 @@ import frc.robot.subsystems.Intake.IntakeState;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.HoodState;
+import java.util.List;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class SneakyPete extends SequentialCommandGroup {
+
+  static Move slowingPoint = new Move().forward(80).markAsReference();
+  static Trajectory initialDriveForwards =
+      new Path(
+              AutoHelper.makePose(0, 0, 0),
+              List.of(new Move().forward(35).get()),
+              slowingPoint.get(0))
+          .setMaxSpeedFPS(8)
+          .toTrajectory();
+
+  static Move ballPoint = slowingPoint.copy().forward(10);
+  static Trajectory slowDriveForwards =
+      new Path(slowingPoint.get(0), List.of(slowingPoint.copy().forward(5).get()), ballPoint.get(0))
+          .setMaxSpeedFPS(3)
+          .toTrajectory();
+
+  static Trajectory goToShootPosition =
+      new Path(
+              ballPoint.get(0),
+              List.of(ballPoint.get()),
+              ballPoint.copy().left(100).backward(100).get(-180 - 45))
+          .setMaxSpeedFPS(9)
+          .setMaxAccelFPS(2)
+          .toTrajectory();
+
   /** Creates a new SneakyPete. */
   public SneakyPete(
       Drivetrain drivetrain, Intake intake, Shooter shooter, Hopper hopper, Limelight limelight) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
     super(
         new ParallelCommandGroup(
             new IntakeSetState(intake, IntakeState.EXTENDED),
             new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
-            AutoHelper.createStandardPath(
-                drivetrain,
-                false,
-                Units.feetToMeters(2.5),
-                new Pose2d(0, 0, new Rotation2d(0)),
-                new Pose2d(Units.inchesToMeters(125 - 12 - 12 - 4 - 1), 0, new Rotation2d(0)),
-                new Translation2d(Units.inchesToMeters(60), 0))),
-        new WaitCommand(0.5),
-        AutoHelper.createStandardPath(
-            drivetrain,
-            true,
-            Units.feetToMeters(9.5),
-            new Pose2d(Units.inchesToMeters(125), 0, new Rotation2d(0)),
-            new Pose2d(
-                Units.inchesToMeters(24),
-                Units.inchesToMeters(100),
-                Rotation2d.fromDegrees(-180 - 45)),
-            new Translation2d(-Units.inchesToMeters(0), Units.inchesToMeters(70))),
+            new SequentialCommandGroup(
+                AutoHelper.driveTrajectory(initialDriveForwards, drivetrain),
+                AutoHelper.driveTrajectoryAndStop(slowDriveForwards, drivetrain))),
+        new WaitCommand(0.25),
+        AutoHelper.driveTrajectoryAndStop(goToShootPosition, drivetrain),
         new PrepRobotForFeed(
             drivetrain,
             intake,
@@ -65,43 +70,6 @@ public class SneakyPete extends SequentialCommandGroup {
             limelight,
             ShooterConstants.kTrenchShotRPM,
             HoodState.TRENCH_SHOT),
-        new FeedSpunUpShooter(hopper, intake, shooter, () -> shooter.getShotsFired() > 5, 5));
-    // new ParallelCommandGroup(
-    //     new IntakeSetState(intake, IntakeState.EXTENDED),
-    //     new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
-    //     AutoHelper.createStandardPath(
-    //         drivetrain,
-    //         false,
-    //         Units.feetToMeters(3),
-    //         new Pose2d(
-    //             AutoHelper.getStartingPoint(
-    //                 StartingLocations.kSneakyPete,
-    //                 OffsetConfig.OFFSET_AWAY_FROM_GOAL,
-    //                 LocationConstants.kStandardOffsetDistance),
-    //             Rotation2d.fromDegrees(0)),
-    //         new Pose2d(
-    //             AutoHelper.getStartingPoint(
-    //                 StartingLocations.kYoinkOpponentTrench,
-    //                 OffsetConfig.OFFSET_AWAY_FROM_GOAL,
-    //                 LocationConstants.kStandardOffsetDistance),
-    //             Rotation2d.fromDegrees(0)),
-    //         new Translation2d(122, StartingLocations.kYoinkOpponentTrench.getY()))),
-    // AutoHelper.createStandardPath(
-    //     drivetrain,
-    //     true,
-    //     Units.feetToMeters(9),
-    //     new Pose2d(
-    //         AutoHelper.getStartingPoint(
-    //             StartingLocations.kYoinkOpponentTrench,
-    //             OffsetConfig.OFFSET_AWAY_FROM_GOAL,
-    //             LocationConstants.kStandardOffsetDistance),
-    //         Rotation2d.fromDegrees(0)),
-    //     new Pose2d(
-    //         AutoHelper.getStartingPoint(
-    //             StartingLocations.kInFrontOfGoal,
-    //             OffsetConfig.OFFSET_TOWARDS_GOAL,
-    //             LocationConstants.kStandardOffsetDistance),
-    //         Rotation2d.fromDegrees(180)),
-    //     StartingLocations.kYoinkOpponentTrench));
+        new FeedSpunUpShooter(hopper, intake, shooter, () -> false, 5));
   }
 }
