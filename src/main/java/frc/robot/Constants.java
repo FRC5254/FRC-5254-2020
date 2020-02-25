@@ -120,7 +120,8 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final double kIntakeSpeed = 0.85; // Suggested, not final
+    public static final double kIntakeSpeed = 0.85;
+    public static final int kIntakeCurrentLimit = 25; // Estimate
   }
 
   public static final class HopperConstants {
@@ -128,6 +129,7 @@ public final class Constants {
     public static final double kRightNormalFeedSpeed = 0.8;
     public static final double kLeftUnjamFeedSpeed = -0.3;
     public static final double kRightUnjamFeedSpeed = -0.3;
+    public static final int kHopperCurrentLimit = 25; // Estimate
   }
 
   public static final class LimelightConstants {

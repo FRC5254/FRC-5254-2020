@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.RobotMap;
 
 public class Hopper extends SubsystemBase {
@@ -21,6 +22,8 @@ public class Hopper extends SubsystemBase {
 
     leftBelt.setIdleMode(IdleMode.kBrake);
     rightBelt.setIdleMode(IdleMode.kBrake);
+
+    leftBelt.setSmartCurrentLimit(HopperConstants.kHopperCurrentLimit);
   }
 
   public void setHopper(double leftSpeed, double rightSpeed) {
