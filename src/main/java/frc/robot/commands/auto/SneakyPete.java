@@ -62,10 +62,11 @@ public class SneakyPete extends SequentialCommandGroup {
             drivetrain,
             intake,
             shooter,
+            ShooterConstants.kAcceleratorRPMAutoLine,
             limelight,
-            ShooterConstants.kTrenchShotRPM,
-            HoodState.TRENCH_SHOT),
-        new FeedSpunUpShooter(hopper, intake, shooter, () -> shooter.getShotsFired() > 5, 5));
+            ShooterConstants.kAutoLineRPM,
+            HoodState.AUTOLINE_SHOT),
+        new FeedSpunUpShooter(hopper, intake, shooter, ShooterConstants.kAcceleratorRPMAutoLine, () -> shooter.getShotsFired() > 5, 5));
     // new ParallelCommandGroup(
     //     new IntakeSetState(intake, IntakeState.EXTENDED),
     //     new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),

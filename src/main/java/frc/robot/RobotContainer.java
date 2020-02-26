@@ -134,26 +134,17 @@ public class RobotContainer {
     // Wall shot (shooter, accelerator, & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
+        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMWall))
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
 
-    // Trench shot (shooter, accelerator, & hood)
-    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-        .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kTrenchShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
-        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
-
     // Auto line shot (shooter, accelerator, & hood)
-    new Trigger(
-            () -> {
-              return operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1;
-            })
-        .whenActive(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
-        .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
-        .whenActive(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
+    new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
+        .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
+        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMAutoLine))
+        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.AUTOLINE_SHOT));
 
     // Turn shooter + accelerator off
-    new JoystickButton(operatorController, XboxController.Button.kStart.value)
+    new JoystickButton(operatorController, XboxController.Button.kY.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, 0.0))
         .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, 0.0));
   }

@@ -77,11 +77,11 @@ public final class Constants {
     public static final double kAcceleratorMaxRPM = 11_000 / kAcceleratorGearRatio;
 
     // Shot details
-    public static final double kWallShotRPM = 3_800;
-    public static final double kTrenchShotRPM = 5_600;
-    public static final double kAutoLineRPM = 5_000;
+    public static final double kWallShotRPM = 5_400;
+    public static final double kAutoLineRPM = 4_000;
     public static final double kAcceptableRPMRange = 50;
-    public static final double kAcceleratorRPM = 6_000;
+    public static final double kAcceleratorRPMWall = 6_000;
+    public static final double kAcceleratorRPMAutoLine = 3_000;
     public static final double kCurrentDrawnToDetectCompletedShot = 10;
     public static final double kCurrentDrawnTimeWindow = 0.075;
     public static final double kLowRPMThreshold = 1_500;

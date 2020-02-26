@@ -20,6 +20,7 @@ public class PrepRobotForFeed extends ParallelCommandGroup {
       Drivetrain drivetrain,
       Intake intake,
       Shooter shooter,
+      double acceleratorRPM,
       Limelight limelight,
       double shooterRPM,
       HoodState hoodState) {

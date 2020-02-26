@@ -18,7 +18,7 @@ import frc.robot.Robot;
 public class Shooter extends SubsystemBase {
   public enum HoodState {
     WALL_SHOT(Value.kReverse),
-    TRENCH_SHOT(Value.kForward);
+    AUTOLINE_SHOT(Value.kForward);
 
     private Value state;
 
@@ -103,7 +103,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     if (hoodState == null) {
-      setHoodState(HoodState.TRENCH_SHOT);
+      setHoodState(HoodState.AUTOLINE_SHOT);
     }
 
     // Make belts not skip lol

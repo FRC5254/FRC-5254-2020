@@ -26,13 +26,14 @@ public class FullShotSequence extends SequentialCommandGroup {
       Hopper hopper,
       Intake intake,
       Shooter shooter,
+      double acceleratorRPM,
       Limelight limelight,
       double shooterRPM,
       HoodState hoodState,
       BooleanSupplier endCondition,
       double timeout) {
     addCommands(
-        new PrepRobotForFeed(drivetrain, intake, shooter, limelight, shooterRPM, hoodState),
-        new FeedSpunUpShooter(hopper, intake, shooter, endCondition, timeout));
+        new PrepRobotForFeed(drivetrain, intake, shooter, acceleratorRPM, limelight, shooterRPM, hoodState),
+        new FeedSpunUpShooter(hopper, intake, shooter, acceleratorRPM, endCondition, timeout));
   }
 }
