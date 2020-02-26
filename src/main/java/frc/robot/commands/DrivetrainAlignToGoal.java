@@ -73,7 +73,7 @@ public class DrivetrainAlignToGoal extends CommandBase {
     m_drivetrain.tankDriveVolts(0, 0);
     limelight.setCamMode(CamMode.DRIVER_CAM);
 
-    CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0, ControllerChoice.BOTH));
+    // CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0, ControllerChoice.BOTH));
   }
 
   // Returns true when the command should end.

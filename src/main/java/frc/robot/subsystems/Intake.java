@@ -63,8 +63,8 @@ public class Intake extends SubsystemBase {
     }
 
     // Current peak number is a guess right now
-    if (rollers.getOutputCurrent() >= 15) {
-      CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0, ControllerChoice.BOTH));
-    }
+    // if (rollers.getOutputCurrent() >= 15) {
+    //   CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0, ControllerChoice.BOTH));
+    // }
   }
 }
