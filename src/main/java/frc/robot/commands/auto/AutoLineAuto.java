@@ -17,10 +17,12 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.HopperSetSpeed;
+import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
+import frc.robot.commands.groups.FeedSpunUpShooter;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -36,6 +38,7 @@ public class AutoLineAuto extends SequentialCommandGroup {
       Drivetrain drivetrain,
       Intake intake,
       Shooter shooter,
+      double acceleratorRPM,
       Hopper hopper,
       Limelight limelight,
       double offsetTime1,
@@ -43,24 +46,27 @@ public class AutoLineAuto extends SequentialCommandGroup {
 
     super(
         new ParallelCommandGroup(
-            new ShooterSetSpeed(shooter, ShooterConstants.kAutoLineRPM),
+            new ShooterSetSpeed(shooter, 5_500),
             new ShooterSetHoodState(shooter, HoodState.AUTOLINE_SHOT),
             new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMAutoLine)),
         new WaitCommand(offsetTime1),
-        new HopperSetSpeed(
-            hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed),
-        new WaitCommand(offsetTime2),
+        new FeedSpunUpShooter(
+            hopper, intake, shooter, acceleratorRPM, () -> shooter.getShotsFired() > 100000, 3),
+        // new HopperSetSpeed(
+        //     hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed),
+        // new WaitCommand(offsetTime2),
         new ParallelCommandGroup(
             new ShooterSetSpeed(shooter, 0),
             new ShooterSetAcceleratorSpeed(shooter, 0),
             new HopperSetSpeed(hopper, 0, 0),
+            new IntakeSetRollers(intake, 0),
             AutoHelper.createStandardPath(
                 drivetrain,
-                false,
+                true,
                 Units.feetToMeters(7),
                 new Pose2d(0, 0, new Rotation2d(0)),
-                new Pose2d(-Units.inchesToMeters(5), 0, new Rotation2d(0)),
-                new Translation2d(0, 0) // Wren: not sure what Translation2d does
+                new Pose2d(Units.inchesToMeters(12), 0, new Rotation2d(0)),
+                new Translation2d(Units.inchesToMeters(12), 0) // Wren: not sure what Translation2d does
                 ),
             new IntakeSetState(intake, IntakeState.EXTENDED)));
   }

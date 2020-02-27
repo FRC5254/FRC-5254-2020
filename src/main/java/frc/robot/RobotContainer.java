@@ -29,6 +29,7 @@ import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.auto.AutoLineAuto;
 import frc.robot.commands.auto.SneakyPete;
+import frc.robot.commands.auto.WallShotAuto;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -172,9 +173,9 @@ public class RobotContainer {
         //     new Pose2d(-Units.inchesToMeters(135), Units.inchesToMeters(200), new
         // Rotation2d(180)),
         //     new Translation2d(-Units.inchesToMeters(150), Units.inchesToMeters(100))),
-        new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight),
-        // new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper),
-        // new AutoLineAuto(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight, 0, 0),
+        // new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight),
+        // new WallShotAuto(m_robotDrive, m_intake, m_shooter, 0, m_hopper, 5),
+        new AutoLineAuto(m_robotDrive, m_intake, m_shooter, 0, m_hopper, m_limelight, 2, 0),
         new InstantCommand(
             () -> {
               m_robotDrive.tankDriveVolts(0, 0);

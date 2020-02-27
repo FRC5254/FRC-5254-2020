@@ -27,7 +27,7 @@ public class FeedSpunUpShooter extends ParallelCommandGroup {
         // Turn the intake on
         new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
         // Turn the accelerator on
-        new ShooterSetAcceleratorSpeed(shooter, AcceleratorRPM),
+        // new ShooterSetAcceleratorSpeed(shooter, AcceleratorRPM), because we are spinning up accelerator in PrepRobotForFeed.java
         // Wait until the end condition is satisfied,
         // or until time elapses
         new WaitUntilCommand(endCondition).withTimeout(timeout));

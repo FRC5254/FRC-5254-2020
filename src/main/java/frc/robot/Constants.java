@@ -77,8 +77,8 @@ public final class Constants {
     public static final double kAcceleratorMaxRPM = 11_000 / kAcceleratorGearRatio;
 
     // Shot details
-    public static final double kWallShotRPM = 5_400;
-    public static final double kAutoLineRPM = 4_000;
+    public static final double kWallShotRPM = 4_000;
+    public static final double kAutoLineRPM = 5_400;
     public static final double kAcceptableRPMRange = 50;
     public static final double kAcceleratorRPMWall = 6_000;
     public static final double kAcceleratorRPMAutoLine = 3_000;

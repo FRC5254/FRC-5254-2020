@@ -96,10 +96,11 @@ public class WallShotAuto extends SequentialCommandGroup {
                 new Pose2d(Units.inchesToMeters(72.5), 0, new Rotation2d(0)),
                 new Translation2d(Units.inchesToMeters(35), 0)),
             new ShooterSetHoodState(shooter, HoodState.WALL_SHOT),
-            new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM)),
+            new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM),
+            new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMWall)),
         new WaitCommand(offsetTime),
         new FeedSpunUpShooter(
-            hopper, intake, shooter, AcceleratorRPM, () -> shooter.getShotsFired() > 10, 3), // Wren: why do we want the intake intaking?
+            hopper, intake, shooter, AcceleratorRPM, () -> shooter.getShotsFired() > 100000, 3), // Wren: --need to reset shotsFired - set big num for now-- why do we want the intake intaking?
         new HopperSetSpeed(hopper, 0, 0),
         new ShooterSetSpeed(shooter, 0),
         new ShooterSetAcceleratorSpeed(shooter, 0),
