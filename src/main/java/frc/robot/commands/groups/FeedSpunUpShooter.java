@@ -14,7 +14,12 @@ import java.util.function.BooleanSupplier;
 
 public class FeedSpunUpShooter extends ParallelCommandGroup {
   public FeedSpunUpShooter(
-      Hopper hopper, Intake intake, Shooter shooter, double AcceleratorRPM, BooleanSupplier endCondition, double timeout) {
+      Hopper hopper,
+      Intake intake,
+      Shooter shooter,
+      double AcceleratorRPM,
+      BooleanSupplier endCondition,
+      double timeout) {
     addCommands(
         // Spin up hopper
         new HopperSetSpeed(

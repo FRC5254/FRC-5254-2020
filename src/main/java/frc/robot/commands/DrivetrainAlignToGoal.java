@@ -11,10 +11,8 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
-import frc.robot.commands.ControllerVibrate.ControllerChoice;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Limelight.CamMode;
@@ -73,7 +71,8 @@ public class DrivetrainAlignToGoal extends CommandBase {
     m_drivetrain.tankDriveVolts(0, 0);
     limelight.setCamMode(CamMode.DRIVER_CAM);
 
-    // CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0, ControllerChoice.BOTH));
+    // CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0,
+    // ControllerChoice.BOTH));
   }
 
   // Returns true when the command should end.

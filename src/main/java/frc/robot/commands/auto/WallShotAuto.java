@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.HopperSetSpeed;
@@ -34,7 +35,13 @@ import frc.robot.subsystems.Shooter.HoodState;
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class WallShotAuto extends SequentialCommandGroup {
   /** Creates a new WallShotAuto. */
-  public WallShotAuto(Drivetrain drivetrain, Intake intake, Shooter shooter, double AcceleratorRPM, Hopper hopper) {
+  public WallShotAuto(
+      Drivetrain drivetrain,
+      Intake intake,
+      Shooter shooter,
+      double AcceleratorRPM,
+      Hopper hopper,
+      double offsetTime) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     // super(
@@ -90,7 +97,9 @@ public class WallShotAuto extends SequentialCommandGroup {
                 new Translation2d(Units.inchesToMeters(35), 0)),
             new ShooterSetHoodState(shooter, HoodState.WALL_SHOT),
             new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM)),
-        new FeedSpunUpShooter(hopper, intake, shooter, AcceleratorRPM, () -> shooter.getShotsFired() > 10, 3),
+        new WaitCommand(offsetTime),
+        new FeedSpunUpShooter(
+            hopper, intake, shooter, AcceleratorRPM, () -> shooter.getShotsFired() > 10, 3),
         new HopperSetSpeed(hopper, 0, 0),
         new ShooterSetSpeed(shooter, 0),
         new ShooterSetAcceleratorSpeed(shooter, 0),

@@ -12,12 +12,9 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.RobotMap;
-import frc.robot.commands.ControllerVibrate;
-import frc.robot.commands.ControllerVibrate.ControllerChoice;
 
 public class Intake extends SubsystemBase {
   public enum IntakeState {
@@ -64,7 +61,8 @@ public class Intake extends SubsystemBase {
 
     // Current peak number is a guess right now
     // if (rollers.getOutputCurrent() >= 15) {
-    //   CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0, ControllerChoice.BOTH));
+    //   CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0,
+    // ControllerChoice.BOTH));
     // }
   }
 }

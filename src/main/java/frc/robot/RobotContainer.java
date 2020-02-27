@@ -134,13 +134,15 @@ public class RobotContainer {
     // Wall shot (shooter, accelerator, & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMWall))
+        .whenPressed(
+            new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMWall))
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
 
     // Auto line shot (shooter, accelerator, & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMAutoLine))
+        .whenPressed(
+            new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMAutoLine))
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.AUTOLINE_SHOT));
 
     // Turn shooter + accelerator off

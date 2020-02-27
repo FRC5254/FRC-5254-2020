@@ -66,7 +66,13 @@ public class SneakyPete extends SequentialCommandGroup {
             limelight,
             ShooterConstants.kAutoLineRPM,
             HoodState.AUTOLINE_SHOT),
-        new FeedSpunUpShooter(hopper, intake, shooter, ShooterConstants.kAcceleratorRPMAutoLine, () -> shooter.getShotsFired() > 5, 5));
+        new FeedSpunUpShooter(
+            hopper,
+            intake,
+            shooter,
+            ShooterConstants.kAcceleratorRPMAutoLine,
+            () -> shooter.getShotsFired() > 5,
+            5));
     // new ParallelCommandGroup(
     //     new IntakeSetState(intake, IntakeState.EXTENDED),
     //     new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
