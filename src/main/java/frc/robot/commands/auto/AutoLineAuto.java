@@ -36,7 +36,6 @@ public class AutoLineAuto extends SequentialCommandGroup {
       Drivetrain drivetrain,
       Intake intake,
       Shooter shooter,
-      double acceleratorRPM,
       Hopper hopper,
       Limelight limelight,
       double offsetTime1,
