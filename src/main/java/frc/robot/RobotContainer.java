@@ -174,7 +174,7 @@ public class RobotContainer {
         //     new Translation2d(-Units.inchesToMeters(150), Units.inchesToMeters(100))),
         new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight),
         // new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper),
-        new AutoLineAuto(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight, 0, 0),
+        // new AutoLineAuto(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight, 0, 0),
         new InstantCommand(
             () -> {
               m_robotDrive.tankDriveVolts(0, 0);
