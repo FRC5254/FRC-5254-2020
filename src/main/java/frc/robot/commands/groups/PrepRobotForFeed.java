@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import frc.robot.commands.DrivetrainAlignToGoal;
 import frc.robot.commands.IntakeSetState;
+import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.subsystems.Drivetrain;
@@ -39,5 +40,6 @@ public class PrepRobotForFeed extends ParallelCommandGroup {
             () -> drivetrain == null),
         // Spin the shooter up and wait for it to reach full speed
         new ShooterSetSpeed(shooter, shooterRPM, true).withTimeout(2.5));
+        new ShooterSetAcceleratorSpeed(shooter, acceleratorRPM);
   }
 }
