@@ -99,7 +99,7 @@ public class WallShotAuto extends SequentialCommandGroup {
             new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM)),
         new WaitCommand(offsetTime),
         new FeedSpunUpShooter(
-            hopper, intake, shooter, AcceleratorRPM, () -> shooter.getShotsFired() > 10, 3),
+            hopper, intake, shooter, AcceleratorRPM, () -> shooter.getShotsFired() > 10, 3), // Wren: why do we want the intake intaking?
         new HopperSetSpeed(hopper, 0, 0),
         new ShooterSetSpeed(shooter, 0),
         new ShooterSetAcceleratorSpeed(shooter, 0),
