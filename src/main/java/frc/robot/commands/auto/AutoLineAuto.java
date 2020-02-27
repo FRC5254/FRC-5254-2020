@@ -63,6 +63,6 @@ public class AutoLineAuto extends SequentialCommandGroup {
                 new Pose2d(-Units.inchesToMeters(5), 0, new Rotation2d(0)),
                 new Translation2d(0, 0) // Wren: not sure what Translation2d does
                 ),
-              new IntakeSetState(intake, IntakeState.EXTENDED)));
+            new IntakeSetState(intake, IntakeState.EXTENDED)));
   }
 }
