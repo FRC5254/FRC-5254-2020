@@ -100,7 +100,7 @@ public class WallShotAuto extends SequentialCommandGroup {
             new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMWall)),
         new WaitCommand(offsetTime),
         new FeedSpunUpShooter(
-            hopper, intake, shooter, AcceleratorRPM, () -> shooter.getShotsFired() > 100000, 3), // Wren: --need to reset shotsFired - set big num for now-- why do we want the intake intaking?
+            hopper, () -> shooter.getShotsFired() > 100000, 3), // Wren: --need to reset shotsFired - set big num for now-- why do we want the intake intaking?
         new HopperSetSpeed(hopper, 0, 0),
         new ShooterSetSpeed(shooter, 0),
         new ShooterSetAcceleratorSpeed(shooter, 0),

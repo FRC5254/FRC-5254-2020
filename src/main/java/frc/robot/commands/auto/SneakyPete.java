@@ -68,9 +68,6 @@ public class SneakyPete extends SequentialCommandGroup {
             HoodState.AUTOLINE_SHOT),
         new FeedSpunUpShooter(
             hopper,
-            intake,
-            shooter,
-            ShooterConstants.kAcceleratorRPMAutoLine,
             () -> shooter.getShotsFired() > 5, // This may be interferring with shooting --> would maybe be easier without FeedSpunUpShooter?
             5));
     // new ParallelCommandGroup(

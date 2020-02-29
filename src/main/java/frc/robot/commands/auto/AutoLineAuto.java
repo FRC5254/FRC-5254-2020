@@ -51,7 +51,8 @@ public class AutoLineAuto extends SequentialCommandGroup {
             new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMAutoLine)),
         new WaitCommand(offsetTime1),
         new FeedSpunUpShooter(
-            hopper, intake, shooter, acceleratorRPM, () -> shooter.getShotsFired() > 100000, 3),
+            hopper,
+            () -> shooter.getShotsFired() > 100000, 3),
         // new HopperSetSpeed(
         //     hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed),
         // new WaitCommand(offsetTime2),
