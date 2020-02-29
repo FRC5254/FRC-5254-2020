@@ -47,7 +47,7 @@ import frc.robot.subsystems.Shooter.HoodState;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_robotDrive = new Drivetrain();
-  private final Shooter m_shooter = new Shooter();
+  public final Shooter m_shooter = new Shooter();
   public final Hopper m_hopper = new Hopper();
   private final Intake m_intake = new Intake();
   private final Limelight m_limelight = new Limelight();
