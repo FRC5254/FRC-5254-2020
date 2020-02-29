@@ -10,13 +10,12 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.RobotMap;
 
 public class Climber extends SubsystemBase {
-  
+
   private final CANSparkMax telescope;
   private final CANSparkMax winch;
 
@@ -33,14 +32,18 @@ public class Climber extends SubsystemBase {
 
     telescope.setSmartCurrentLimit(ClimberConstants.kTelescopeCurrentLimit);
     winch.setSmartCurrentLimit(ClimberConstants.kWinchCurrentLimit);
-
   }
 
-  public void setTelescope() {
-    telescope.set(ClimberConstants.kTelescopeSpeed);
+  public void setTelescopeSpeed(double trigger) {
+    if (-ClimberConstants.kTelescopeJoystickDeadzone <= trigger
+        && trigger <= ClimberConstants.kTelescopeJoystickDeadzone) {
+      trigger = 0.0;
+    }
+
+    telescope.set(trigger);
   }
 
-  public void setWinch() {
+  public void setWinchSpeed() {
     winch.set(ClimberConstants.kWinchSpeed);
   }
 }

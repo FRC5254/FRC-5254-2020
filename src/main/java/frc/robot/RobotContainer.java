@@ -28,8 +28,9 @@ import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.auto.AutoLineAuto;
-import frc.robot.commands.auto.SneakyPete;
 import frc.robot.commands.auto.WallShotAuto;
+import frc.robot.commands.auto.SneakyPete;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -50,6 +51,7 @@ public class RobotContainer {
   public final Shooter m_shooter = new Shooter();
   public final Hopper m_hopper = new Hopper();
   private final Intake m_intake = new Intake();
+  private final Climber m_climber = new Climber();
   private final Limelight m_limelight = new Limelight();
 
   // Controllers
@@ -78,6 +80,17 @@ public class RobotContainer {
               }
             },
             m_robotDrive));
+
+    m_climber.setDefaultCommand(
+        new RunCommand(
+            () -> {
+              if (driverController.getBButton()) {
+                m_climber.setTelescopeSpeed(0);
+              } else {
+                m_climber.setTelescopeSpeed(operatorController.getY(GenericHID.Hand.kLeft));
+              }
+            },
+            m_climber));
   }
 
   /**

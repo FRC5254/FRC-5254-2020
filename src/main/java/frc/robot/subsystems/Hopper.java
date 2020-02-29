@@ -25,7 +25,6 @@ public class Hopper extends SubsystemBase {
 
     leftBelt.setSmartCurrentLimit(HopperConstants.kHopperCurrentLimit);
     rightBelt.setSmartCurrentLimit(HopperConstants.kHopperCurrentLimit);
-
   }
 
   public void setHopper(double leftSpeed, double rightSpeed) {

@@ -36,11 +36,7 @@ import frc.robot.subsystems.Shooter.HoodState;
 public class WallShotAuto extends SequentialCommandGroup {
   /** Creates a new WallShotAuto. */
   public WallShotAuto(
-      Drivetrain drivetrain,
-      Intake intake,
-      Shooter shooter,
-      Hopper hopper,
-      double offsetTime) {
+      Drivetrain drivetrain, Intake intake, Shooter shooter, Hopper hopper, double offsetTime) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     // super(
@@ -99,7 +95,10 @@ public class WallShotAuto extends SequentialCommandGroup {
             new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMWall)),
         new WaitCommand(offsetTime),
         new FeedSpunUpShooter(
-            hopper, () -> shooter.getShotsFired() > 100000, 3), // Wren: --need to reset shotsFired - set big num for now-- why do we want the intake intaking?
+            hopper,
+            () -> shooter.getShotsFired() > 100000,
+            3), // Wren: --need to reset shotsFired - set big num for now-- why do we want the
+                // intake intaking?
         new HopperSetSpeed(hopper, 0, 0),
         new ShooterSetSpeed(shooter, 0),
         new ShooterSetAcceleratorSpeed(shooter, 0),

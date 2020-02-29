@@ -138,9 +138,9 @@ public final class Constants {
 
   public static final class ClimberConstants {
     public static final double kWinchSpeed = 1.0;
-    public static final double kTelescopeSpeed = 1.0;
     public static final int kWinchCurrentLimit = 25; // Estimate
     public static final int kTelescopeCurrentLimit = 25; // Estimate
+    public static final double kTelescopeJoystickDeadzone = 0.1;
   }
 
   public static final class LimelightConstants {
