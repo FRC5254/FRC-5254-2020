@@ -39,7 +39,6 @@ public class WallShotAuto extends SequentialCommandGroup {
       Drivetrain drivetrain,
       Intake intake,
       Shooter shooter,
-      double AcceleratorRPM,
       Hopper hopper,
       double offsetTime) {
     // Add your commands in the super() call, e.g.
