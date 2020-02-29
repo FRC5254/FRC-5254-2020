@@ -166,14 +166,6 @@ public class RobotContainer {
               m_robotDrive.resetEncoders();
               m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
             }),
-        // AutoHelper.createStandardPath(
-        //     m_robotDrive,
-        //     true,
-        //     new Pose2d(0, 0, new Rotation2d(0)),
-        //     new Pose2d(-Units.inchesToMeters(135), Units.inchesToMeters(200), new
-        // Rotation2d(180)),
-        //     new Translation2d(-Units.inchesToMeters(150), Units.inchesToMeters(100))),
-        // new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight),
         // new WallShotAuto(m_robotDrive, m_intake, m_shooter, 0, m_hopper, 5),
         new AutoLineAuto(m_robotDrive, m_intake, m_shooter, 0, m_hopper, m_limelight, 2),
         new InstantCommand(
