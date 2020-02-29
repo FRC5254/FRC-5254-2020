@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -84,7 +85,7 @@ public class RobotContainer {
     m_climber.setDefaultCommand(
         new RunCommand(
             () -> {
-              if (driverController.getBButton()) {
+              if (new Timer().get() < 120) {
                 m_climber.setTelescopeSpeed(0);
               } else {
                 m_climber.setTelescopeSpeed(operatorController.getY(GenericHID.Hand.kLeft));

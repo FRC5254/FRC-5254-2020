@@ -8,19 +8,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.subsystems.Climber;
 
-public class IntakeSetRollers extends CommandBase {
-  /** Creates a new IntakeSetRollers. */
-  private final Intake m_intake;
+public class ClimberSetWinchSpeed extends CommandBase {
+  
+  public final Climber m_climber;
+  public double speed;
 
-  private double speed;
-
-  public IntakeSetRollers(Intake intake, double speed) {
+  public ClimberSetWinchSpeed(Climber climber, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    // addRequirements(intake); Wren: why is this commented out? Is there a problem with requring the intake?
-    m_intake = intake;
+    m_climber = climber;
     this.speed = speed;
+
   }
 
   // Called when the command is initially scheduled.
@@ -30,12 +30,13 @@ public class IntakeSetRollers extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setIntakeMotor(speed);
+    m_climber.setWinchSpeed();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
