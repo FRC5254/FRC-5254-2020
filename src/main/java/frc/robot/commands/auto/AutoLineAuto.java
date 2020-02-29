@@ -22,6 +22,7 @@ import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.groups.FeedSpunUpShooter;
+import frc.robot.commands.groups.PrepRobotForFeed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -61,8 +62,8 @@ public class AutoLineAuto extends SequentialCommandGroup {
                 true,
                 Units.feetToMeters(7),
                 new Pose2d(0, 0, new Rotation2d(0)),
-                new Pose2d(Units.inchesToMeters(12), 0, new Rotation2d(0)),
-                new Translation2d(Units.inchesToMeters(12), 0) // Wren: not sure what Translation2d does
+                new Pose2d(Units.inchesToMeters(-12), 0, new Rotation2d(0)),
+                new Translation2d(Units.inchesToMeters(-6), 0) // Wren: not sure what Translation2d does
                 ),
             new IntakeSetState(intake, IntakeState.EXTENDED)));
   }

@@ -28,6 +28,10 @@ public final class Constants {
     // Hopper
     public static int kLeftBelt = 6;
     public static int kRightBelt = 7;
+
+    // Climber
+    public static int kWinch = 11;
+    public static int kTelescope = 12;
   }
 
   public static final class DriveConstants {
