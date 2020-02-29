@@ -41,8 +41,7 @@ public class AutoLineAuto extends SequentialCommandGroup {
       double acceleratorRPM,
       Hopper hopper,
       Limelight limelight,
-      double offsetTime1,
-      double offsetTime2) {
+      double offsetTime1) {
 
     super(
         new ParallelCommandGroup(
@@ -53,9 +52,6 @@ public class AutoLineAuto extends SequentialCommandGroup {
         new FeedSpunUpShooter(
             hopper,
             () -> shooter.getShotsFired() > 100000, 3),
-        // new HopperSetSpeed(
-        //     hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed),
-        // new WaitCommand(offsetTime2),
         new ParallelCommandGroup(
             new ShooterSetSpeed(shooter, 0),
             new ShooterSetAcceleratorSpeed(shooter, 0),
