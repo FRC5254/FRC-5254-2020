@@ -8,8 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,9 +20,11 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.ClimberSetWinchSpeed;
 import frc.robot.commands.DrivetrainAlignToGoal;
 import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
@@ -121,7 +125,7 @@ public class RobotContainer {
                 HopperConstants.kRightUnjamFeedSpeed))
         .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
 
-    new JoystickButton(driverController, XboxController.Button.kY.value)
+    new JoystickButton(driverController, XboxController.Button.kA.value)
         .whileActiveOnce(new DrivetrainAlignToGoal(m_robotDrive, m_limelight));
 
     // OPERATOR CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,6 +169,23 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kY.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, 0.0))
         .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, 0.0));
+
+    // if (new Timer().get() < 120) {
+    //     new JoystickButton(operatorController, XboxController.Button.kB.value)
+    //         .whenPressed(new ClimberSetWinchSpeed(m_climber, 0));
+    // }
+    
+    // Climb (winch down)
+    new JoystickButton(operatorController, XboxController.Button.kB.value)
+        .whenPressed(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed));
+
+    // Climb (winch UP)
+    // Want to have the right hand of the && be POV (dpad) 90 degrees (right)
+    if (operatorController.getBButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1)) {
+    new JoystickButton(operatorController, XboxController.Button.kB.value)
+        .whenPressed(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed));
+    }    
+
   }
 
   /**

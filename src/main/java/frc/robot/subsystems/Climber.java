@@ -43,7 +43,7 @@ public class Climber extends SubsystemBase {
     telescope.set(trigger);
   }
 
-  public void setWinchSpeed() {
-    winch.set(ClimberConstants.kWinchSpeed);
+  public void setWinchSpeed(double speed) {
+    winch.set(speed);
   }
 }
