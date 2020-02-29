@@ -39,7 +39,7 @@ public class PrepRobotForFeed extends ParallelCommandGroup {
                 Map.entry(true, new InstantCommand())),
             () -> drivetrain == null),
         // Spin the shooter up and wait for it to reach full speed
-        new ShooterSetSpeed(shooter, shooterRPM, true).withTimeout(2.5));
-    new ShooterSetAcceleratorSpeed(shooter, acceleratorRPM);
+        new ShooterSetSpeed(shooter, shooterRPM, true).withTimeout(2.5),
+        new ShooterSetAcceleratorSpeed(shooter, acceleratorRPM));
   }
 }
