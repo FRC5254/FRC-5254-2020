@@ -86,10 +86,11 @@ public class RobotContainer {
             },
             m_robotDrive));
 
+    // set Timer().get() < 120 for matches --- Timer().get() < 0 for practice teleOp
     m_climber.setDefaultCommand(
         new RunCommand(
             () -> {
-              if (new Timer().get() < 120) {
+              if (new Timer().get() < 0) {
                 m_climber.setTelescopeSpeed(0);
               } else {
                 m_climber.setTelescopeSpeed(operatorController.getY(GenericHID.Hand.kLeft));
