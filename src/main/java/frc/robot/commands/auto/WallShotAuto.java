@@ -18,15 +18,14 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
-import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
-import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.groups.FeedSpunUpShooter;
+import frc.robot.commands.groups.PrepRobotForFeed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Intake.IntakeState;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.HoodState;
 
@@ -36,7 +35,7 @@ import frc.robot.subsystems.Shooter.HoodState;
 public class WallShotAuto extends SequentialCommandGroup {
   /** Creates a new WallShotAuto. */
   public WallShotAuto(
-      Drivetrain drivetrain, Intake intake, Shooter shooter, Hopper hopper, double offsetTime) {
+      Drivetrain drivetrain, Intake intake, Shooter shooter, Hopper hopper, Limelight limelight, double offsetTime) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     // super(
@@ -81,18 +80,16 @@ public class WallShotAuto extends SequentialCommandGroup {
 
     super(
         new ParallelCommandGroup(
-            new IntakeSetState(intake, IntakeState.EXTENDED),
             new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
+            new PrepRobotForFeed(null, intake, shooter, ShooterConstants.kAcceleratorRPMWall, limelight, ShooterConstants.kWallShotRPM, HoodState.WALL_SHOT),
             AutoHelper.createStandardPath(
                 drivetrain,
                 false,
                 Units.feetToMeters(7),
                 new Pose2d(0, 0, new Rotation2d(0)),
                 new Pose2d(Units.inchesToMeters(72.5), 0, new Rotation2d(0)),
-                new Translation2d(Units.inchesToMeters(35), 0)),
-            new ShooterSetHoodState(shooter, HoodState.WALL_SHOT),
-            new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM, true),
-            new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMWall)),
+                new Translation2d(Units.inchesToMeters(35), 0))
+            ),
         new WaitCommand(offsetTime),
         new FeedSpunUpShooter(
             hopper,

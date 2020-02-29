@@ -20,9 +20,9 @@ import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
-import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.groups.FeedSpunUpShooter;
+import frc.robot.commands.groups.PrepRobotForFeed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -45,10 +45,7 @@ public class TrenchAuto extends SequentialCommandGroup {
 
     // Need to fill in createStandardPath distances and angles! Also need to see how much time is left after this to figure out what you want to do at the end
     super(
-        new ParallelCommandGroup(
-            new ShooterSetSpeed(shooter, 5_500, true),
-            new ShooterSetHoodState(shooter, HoodState.AUTOLINE_SHOT),
-            new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMAutoLine)),
+        new PrepRobotForFeed(null, null, shooter, ShooterConstants.kAcceleratorRPMAutoLine, limelight, 5_500, HoodState.AUTOLINE_SHOT),
         new WaitCommand(offsetTime1),
         new FeedSpunUpShooter(hopper, () -> shooter.getShotsFired() > 10, 3),
         new ParallelCommandGroup(

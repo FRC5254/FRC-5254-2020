@@ -19,7 +19,6 @@ public class IntakeSetState extends CommandBase {
 
   public IntakeSetState(Intake intake, IntakeState state) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
     m_intake = intake;
     this.state = state;
   }
