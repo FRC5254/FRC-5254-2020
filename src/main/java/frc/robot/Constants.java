@@ -136,6 +136,13 @@ public final class Constants {
     public static final int kHopperCurrentLimit = 25; // Estimate
   }
 
+  public static final class ClimberConstants {
+    public static final double kWinchSpeed = 1.0;
+    public static final double kTelescopeSpeed = 1.0;
+    public static final int kWinchCurrentLimit = 25; // Estimate
+    public static final int kTelescopeCurrentLimit = 25; // Estimate
+  }
+
   public static final class LimelightConstants {
     // Alignment constants
     public static final double kAlignmentkP = 0.35;
