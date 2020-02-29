@@ -44,7 +44,7 @@ public class AutoLineAuto extends SequentialCommandGroup {
 
     super(
         new ParallelCommandGroup(
-            new ShooterSetSpeed(shooter, 5_500),
+            new ShooterSetSpeed(shooter, 5_500, true),
             new ShooterSetHoodState(shooter, HoodState.AUTOLINE_SHOT),
             new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMAutoLine)),
         new WaitCommand(offsetTime1),

@@ -91,7 +91,7 @@ public class WallShotAuto extends SequentialCommandGroup {
                 new Pose2d(Units.inchesToMeters(72.5), 0, new Rotation2d(0)),
                 new Translation2d(Units.inchesToMeters(35), 0)),
             new ShooterSetHoodState(shooter, HoodState.WALL_SHOT),
-            new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM),
+            new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM, true),
             new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMWall)),
         new WaitCommand(offsetTime),
         new FeedSpunUpShooter(

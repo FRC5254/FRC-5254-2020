@@ -46,7 +46,7 @@ public class TrenchAuto extends SequentialCommandGroup {
     // Need to fill in createStandardPath distances and angles! Also need to see how much time is left after this to figure out what you want to do at the end
     super(
         new ParallelCommandGroup(
-            new ShooterSetSpeed(shooter, 5_500),
+            new ShooterSetSpeed(shooter, 5_500, true),
             new ShooterSetHoodState(shooter, HoodState.AUTOLINE_SHOT),
             new ShooterSetAcceleratorSpeed(shooter, ShooterConstants.kAcceleratorRPMAutoLine)),
         new WaitCommand(offsetTime1),
