@@ -38,45 +38,6 @@ public class WallShotAuto extends SequentialCommandGroup {
       Drivetrain drivetrain, Intake intake, Shooter shooter, Hopper hopper, Limelight limelight, double offsetTime) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    // super(
-    // new ParallelCommandGroup(
-    //     new IntakeSetState(intake, IntakeState.EXTENDED),
-    //     AutoHelper.createStandardPath(
-    //         drivetrain,
-    //         false,
-    //         Units.feetToMeters(4),
-    //         new Pose2d(
-    //             AutoHelper.getStartingPoint(
-    //                 StartingLocations.kInFrontOfGoal,
-    //                 OffsetConfig.OFFSET_TOWARDS_GOAL,
-    //                 LocationConstants.kStandardOffsetDistance),
-    //             Rotation2d.fromDegrees(0)),
-
-    //         new Pose2d(
-    //             AutoHelper.getStartingPoint(
-    //                 StartingLocations.kWallShot,
-    //                 OffsetConfig.OFFSET_AWAY_FROM_GOAL,
-    //                 LocationConstants.kStandardOffsetDistance),
-    //             Rotation2d.fromDegrees(0)),
-    //         new Translation2d(Units.inchesToMeters(80), Units.inchesToMeters(94.65))),
-    //         new InstantCommand(() -> {
-    //             SmartDashboard.putString("ending spot", new Pose2d(
-    //                 AutoHelper.getStartingPoint(
-    //                     StartingLocations.kWallShot,
-    //                     OffsetConfig.OFFSET_AWAY_FROM_GOAL,
-    //                     LocationConstants.kStandardOffsetDistance),
-    //                 Rotation2d.fromDegrees(0)).toString());
-    //         }),
-    //         new InstantCommand(() -> {
-    //             SmartDashboard.putString("starting spot", new Pose2d(
-    //                 AutoHelper.getStartingPoint(
-    //                     StartingLocations.kInFrontOfGoal,
-    //                     OffsetConfig.OFFSET_TOWARDS_GOAL,
-    //                     LocationConstants.kStandardOffsetDistance),
-    //                 Rotation2d.fromDegrees(0)).toString());
-    //         })
-
-    //         ));
 
     super(
         new ParallelCommandGroup(

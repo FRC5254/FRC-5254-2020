@@ -73,42 +73,5 @@ public class SneakyPete extends SequentialCommandGroup {
                     > 5, // This may be interferring with shooting --> would maybe be easier without
                          // FeedSpunUpShooter?
             5));
-    // new ParallelCommandGroup(
-    //     new IntakeSetState(intake, IntakeState.EXTENDED),
-    //     new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
-    //     AutoHelper.createStandardPath(
-    //         drivetrain,
-    //         false,
-    //         Units.feetToMeters(3),
-    //         new Pose2d(
-    //             AutoHelper.getStartingPoint(
-    //                 StartingLocations.kSneakyPete,
-    //                 OffsetConfig.OFFSET_AWAY_FROM_GOAL,
-    //                 LocationConstants.kStandardOffsetDistance),
-    //             Rotation2d.fromDegrees(0)),
-    //         new Pose2d(
-    //             AutoHelper.getStartingPoint(
-    //                 StartingLocations.kYoinkOpponentTrench,
-    //                 OffsetConfig.OFFSET_AWAY_FROM_GOAL,
-    //                 LocationConstants.kStandardOffsetDistance),
-    //             Rotation2d.fromDegrees(0)),
-    //         new Translation2d(122, StartingLocations.kYoinkOpponentTrench.getY()))),
-    // AutoHelper.createStandardPath(
-    //     drivetrain,
-    //     true,
-    //     Units.feetToMeters(9),
-    //     new Pose2d(
-    //         AutoHelper.getStartingPoint(
-    //             StartingLocations.kYoinkOpponentTrench,
-    //             OffsetConfig.OFFSET_AWAY_FROM_GOAL,
-    //             LocationConstants.kStandardOffsetDistance),
-    //         Rotation2d.fromDegrees(0)),
-    //     new Pose2d(
-    //         AutoHelper.getStartingPoint(
-    //             StartingLocations.kInFrontOfGoal,
-    //             OffsetConfig.OFFSET_TOWARDS_GOAL,
-    //             LocationConstants.kStandardOffsetDistance),
-    //         Rotation2d.fromDegrees(180)),
-    //     StartingLocations.kYoinkOpponentTrench));
   }
 }
