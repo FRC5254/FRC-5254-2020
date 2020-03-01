@@ -182,11 +182,11 @@ public class RobotContainer {
 
     // Climb (winch UP)
     // Want to have the right hand of the && be POV (dpad) 90 degrees (right)
-    if (operatorController.getBButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1)) {
-    new JoystickButton(operatorController, XboxController.Button.kB.value)
-        .whenPressed(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed));
-    }    
-
+    new Trigger(
+      () -> {
+        return operatorController.getBButton() && (operatorController.getPOV() == 90);
+      }
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed));
   }
 
   /**
