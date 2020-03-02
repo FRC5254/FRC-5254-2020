@@ -163,7 +163,7 @@ public class RobotContainer {
     // Climber Telescope SET POINT
     new Trigger(
       () -> {
-        return (operatorController.getY(GenericHID.Hand.kLeft) > 0) && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
+        return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
     ).whenActive(new ClimberSetTelescopeSpeed(m_climber, TICKS)); // not done with enconder stuff
 
@@ -176,8 +176,11 @@ public class RobotContainer {
     ).whenActive(new ClimberSetTelescopeSpeed(m_climber, operatorController.getY(GenericHID.Hand.kLeft)));
     
     // Climber Winch DOWN
-    new JoystickButton(operatorController, XboxController.Button.kB.value)
-        .whenPressed(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed));
+    new Trigger(
+      () ->{
+        return operatorController.getBButton() && (operatorController.getPOV() == -1);
+      }
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed));
 
     // Climber Winch UP
     new Trigger(

@@ -21,7 +21,7 @@ public class Climber extends SubsystemBase {
 
   public Climber() {
 
-    telescope = new CANSparkMax(RobotMap.kTelescope, MotorType.kBrushed);
+    telescope = new CANSparkMax(RobotMap.kTelescope, MotorType.kBrushless);
     winch = new CANSparkMax(RobotMap.kWinch, MotorType.kBrushed);
 
     telescope.restoreFactoryDefaults();
