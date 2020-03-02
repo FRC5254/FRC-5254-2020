@@ -34,13 +34,8 @@ public class Climber extends SubsystemBase {
     winch.setSmartCurrentLimit(ClimberConstants.kWinchCurrentLimit);
   }
 
-  public void setTelescopeSpeed(double trigger) {
-    if (-ClimberConstants.kTelescopeJoystickDeadzone <= trigger
-        && trigger <= ClimberConstants.kTelescopeJoystickDeadzone) {
-      trigger = 0.0;
-    }
-
-    telescope.set(trigger);
+  public void setTelescopeSpeed(double speed) {
+    telescope.set(speed);
   }
 
   public void setWinchSpeed(double speed) {

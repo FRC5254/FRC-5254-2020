@@ -24,6 +24,7 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.ClimberSetTelescopeSpeed;
 import frc.robot.commands.ClimberSetWinchSpeed;
 import frc.robot.commands.DrivetrainAlignToGoal;
 import frc.robot.commands.HopperSetSpeed;
@@ -85,18 +86,6 @@ public class RobotContainer {
               }
             },
             m_robotDrive));
-
-    // set Timer().get() < 120 for matches --- Timer().get() < 0 for practice teleOp
-    m_climber.setDefaultCommand(
-        new RunCommand(
-            () -> {
-              if (new Timer().get() < 0) {
-                m_climber.setTelescopeSpeed(0);
-              } else {
-                m_climber.setTelescopeSpeed(operatorController.getY(GenericHID.Hand.kLeft));
-              }
-            },
-            m_climber));
   }
 
   /**
@@ -171,17 +160,26 @@ public class RobotContainer {
         .whenPressed(new ShooterSetSpeed(m_shooter, 0.0))
         .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, 0.0));
 
-    // if (new Timer().get() < 120) {
-    //     new JoystickButton(operatorController, XboxController.Button.kB.value)
-    //         .whenPressed(new ClimberSetWinchSpeed(m_climber, 0));
-    // }
+    // Climber Telescope SET POINT
+    new Trigger(
+      () -> {
+        return (operatorController.getY(GenericHID.Hand.kLeft) > 0) && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
+      }
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, TICKS)); // not done with enconder stuff
+
+    // Climber Telescope manual
+    new Trigger(
+      () -> {
+        return ((operatorController.getY(GenericHID.Hand.kLeft) < -0.15) || (0.15 < operatorController.getY(GenericHID.Hand.kLeft)))
+        && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
+      }
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, operatorController.getY(GenericHID.Hand.kLeft)));
     
-    // Climb (winch down)
+    // Climber Winch DOWN
     new JoystickButton(operatorController, XboxController.Button.kB.value)
         .whenPressed(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed));
 
-    // Climb (winch UP)
-    // Want to have the right hand of the && be POV (dpad) 90 degrees (right)
+    // Climber Winch UP
     new Trigger(
       () -> {
         return operatorController.getBButton() && (operatorController.getPOV() == 90);
