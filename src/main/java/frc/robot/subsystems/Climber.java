@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.RobotMap;
@@ -46,9 +47,9 @@ public class Climber extends SubsystemBase {
 
   public void setTelescopeTicks(double targetTicks) {
     if (telescopeEncoder.getPosition() < targetTicks) {
-      telescope.set(1.0);
+      telescope.set(0.2);
     } else if (telescopeEncoder.getPosition() > targetTicks) {
-      telescope.set(-1.0);
+      telescope.set(-0.2);
     } else {
       telescope.set(0.0);
     }
@@ -56,5 +57,9 @@ public class Climber extends SubsystemBase {
 
   public void setWinchSpeed(double speed) {
     winch.set(speed);
+  }
+
+  public void periodic() {
+    SmartDashboard.putNumber("Climber telescope encoder", telescopeEncoder.getPosition());
   }
 }

@@ -17,13 +17,13 @@ public final class Constants {
     public static int kFlywheelMotorLeft = 8;
     public static int kFlywheelMotorRight = 9;
     public static int kAcceleratorMotor = 10;
-    public static int kHoodDoubleSolenoidFront = 2; // Towards piston head
-    public static int kHoodDoubleSolenoidBack = 3;
+    public static int kHoodDoubleSolenoidFront = 0; // Towards piston head
+    public static int kHoodDoubleSolenoidBack = 1;
 
     // Intake
     public static int kIntakeMotor = 5;
-    public static int kIntakeDoubleSolenoidFront = 0; // Towards piston head
-    public static int kIntakeDoubleSolenoidBack = 1;
+    public static int kIntakeDoubleSolenoidFront = 2; // Towards piston head
+    public static int kIntakeDoubleSolenoidBack = 3;
 
     // Hopper
     public static int kLeftBelt = 6;
@@ -141,7 +141,7 @@ public final class Constants {
     public static final int kWinchCurrentLimit = 25; // Estimate
     public static final int kTelescopeCurrentLimit = 25; // Estimate
     public static final double kTelescopeJoystickDeadzone = 0.1;
-    public static final int kMaxHeightTicks = 4096 * 49; // ARBITRARY (1 output shaft revolution)
+    public static final int kMiddleHeightTicks = 230; // ARBITRARY (1 output shaft revolution)
   }
 
   public static final class LimelightConstants {
