@@ -16,8 +16,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.RobotMap;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class Climber extends SubsystemBase {
 
   private final CANSparkMax telescope;
@@ -58,9 +56,5 @@ public class Climber extends SubsystemBase {
 
   public void setWinchSpeed(double speed) {
     winch.set(speed);
-  }
-
-  public void periodic() {
-    SmartDashboard.putNumber("Climber telescope encoder", telescopeEncoder.getPosition());
   }
 }

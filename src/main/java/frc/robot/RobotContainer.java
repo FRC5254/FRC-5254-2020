@@ -135,9 +135,9 @@ public class RobotContainer {
         .whenInactive(new IntakeSetRollers(m_intake, 0.0));
 
     // Rollers outtake
-    // new JoystickButton(operatorController, XboxController.Button.kBack.value)
-    //     .whenPressed(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
-    //     .whenReleased(new IntakeSetRollers(m_intake, 0.0));
+    new JoystickButton(operatorController, XboxController.Button.kBack.value)
+        .whenPressed(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
+        .whenReleased(new IntakeSetRollers(m_intake, 0.0));
 
     // Wall shot (shooter, accelerator, & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
@@ -171,24 +171,21 @@ public class RobotContainer {
         return (Math.abs(operatorController.getY(GenericHID.Hand.kLeft)) > 0.15)
         && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, operatorController.getY(GenericHID.Hand.kLeft) * 0.25))
-    .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, operatorController.getY(GenericHID.Hand.kLeft)));
     
     // Climber Winch DOWN
     new Trigger(
-      () -> {
+      () ->{
         return operatorController.getBButton() && (operatorController.getPOV() == -1);
       }
-    ).whenActive(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed * 0.25))
-    .whenInactive(new ClimberSetWinchSpeed(m_climber, 0));
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed));
 
     // Climber Winch UP
     new Trigger(
       () -> {
         return operatorController.getBButton() && (operatorController.getPOV() == 90);
       }
-    ).whenActive(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed * 0.25))
-    .whenInactive(new ClimberSetWinchSpeed(m_climber, 0));
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed));
   }
 
   /**
