@@ -141,6 +141,7 @@ public final class Constants {
     public static final int kWinchCurrentLimit = 25; // Estimate
     public static final int kTelescopeCurrentLimit = 25; // Estimate
     public static final double kTelescopeJoystickDeadzone = 0.1;
+    public static final int kMaxHeightTicks = 4096 * 49; // ARBITRARY (1 output shaft revolution)
   }
 
   public static final class LimelightConstants {

@@ -8,10 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.POVButton;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,6 +22,7 @@ import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ClimberSetTelescopeSpeed;
+import frc.robot.commands.ClimberSetTelescopeTicks;
 import frc.robot.commands.ClimberSetWinchSpeed;
 import frc.robot.commands.DrivetrainAlignToGoal;
 import frc.robot.commands.HopperSetSpeed;
@@ -165,12 +163,12 @@ public class RobotContainer {
       () -> {
         return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, TICKS)); // not done with enconder stuff
+    ).whenActive(new ClimberSetTelescopeTicks(m_climber, ClimberConstants.kMaxHeightTicks));
 
     // Climber Telescope manual
     new Trigger(
       () -> {
-        return ((operatorController.getY(GenericHID.Hand.kLeft) < -0.15) || (0.15 < operatorController.getY(GenericHID.Hand.kLeft)))
+        return (Math.abs(operatorController.getY(GenericHID.Hand.kLeft)) > 0.15)
         && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
     ).whenActive(new ClimberSetTelescopeSpeed(m_climber, operatorController.getY(GenericHID.Hand.kLeft)));
