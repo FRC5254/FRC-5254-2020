@@ -134,10 +134,17 @@ public class RobotContainer {
         .whenActive(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed))
         .whenInactive(new IntakeSetRollers(m_intake, 0.0));
 
-    // // Rollers outtake
+    // Rollers outtake
     // new JoystickButton(operatorController, XboxController.Button.kBack.value)
     //     .whenPressed(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
     //     .whenReleased(new IntakeSetRollers(m_intake, 0.0));
+
+    new Trigger(
+      () -> {
+        return operatorController.getPOV() == 0;
+      }
+    ).whenActive(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
+    .whenInactive(new IntakeSetRollers(m_intake, 0));
 
     // Wall shot (shooter, accelerator, & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
