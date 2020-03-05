@@ -163,7 +163,7 @@ public class RobotContainer {
       () -> {
         return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeTicks(m_climber, -ClimberConstants.kMaxHeightTicks))
+    ).whenActive(new ClimberSetTelescopeTicks(m_climber, ClimberConstants.kMaxHeightTicks))
     .whenInactive(new ClimberSetTelescopeTicks(m_climber, 0));
 
     // Climber Telescope manual (positive power to climb)
