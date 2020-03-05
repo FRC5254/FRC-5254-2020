@@ -55,7 +55,7 @@ public class RobotContainer {
   public final Shooter m_shooter = new Shooter();
   public final Hopper m_hopper = new Hopper();
   private final Intake m_intake = new Intake();
-  private final Climber m_climber = new Climber();
+  public final Climber m_climber = new Climber();
   private final Limelight m_limelight = new Limelight();
 
   // Controllers

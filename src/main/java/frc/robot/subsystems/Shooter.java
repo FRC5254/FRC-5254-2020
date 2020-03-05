@@ -147,7 +147,7 @@ public class Shooter extends SubsystemBase {
       double acceleratorRPM = SmartDashboard.getNumber("Shooter accelerator RPM", 0);
 
       CANPIDController pidController = flywheelLeft.getPIDController();
-      pidController.setReference(setpointRPM, ControlType.kVelocity);
+      setFlywheelToRPM(setpointRPM);
 
       SmartDashboard.putNumber("Shooter velocity", encoder.getVelocity());
       SmartDashboard.putNumber("Shooter error", encoder.getVelocity() - setpointRPM);
