@@ -135,16 +135,9 @@ public class RobotContainer {
         .whenInactive(new IntakeSetRollers(m_intake, 0.0));
 
     // Rollers outtake
-    // new JoystickButton(operatorController, XboxController.Button.kBack.value)
-    //     .whenPressed(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
-    //     .whenReleased(new IntakeSetRollers(m_intake, 0.0));
-
-    new Trigger(
-      () -> {
-        return operatorController.getPOV() == 0;
-      }
-    ).whenActive(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
-    .whenInactive(new IntakeSetRollers(m_intake, 0));
+    new JoystickButton(operatorController, XboxController.Button.kBack.value)
+        .whenPressed(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
+        .whenReleased(new IntakeSetRollers(m_intake, 0.0));
 
     // Wall shot (shooter, accelerator, & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
@@ -170,29 +163,25 @@ public class RobotContainer {
       () -> {
         return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeTicks(m_climber, -ClimberConstants.kMiddleHeightTicks))
+    ).whenActive(new ClimberSetTelescopeTicks(m_climber, -ClimberConstants.kMaxHeightTicks))
     .whenInactive(new ClimberSetTelescopeTicks(m_climber, 0));
 
-    // Climber Telescope manual
-    // new Trigger(
-    //   () -> {
-    //     return (Math.abs(operatorController.getY(GenericHID.Hand.kLeft)) > 0.15)
-    //     && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
-    //   }
-    // ).whenActive(new ClimberSetTelescopeSpeed(m_climber, operatorController.getY(GenericHID.Hand.kLeft)))
-    // .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
-
-    // Telescope (negative power to climb)
+    // Climber Telescope manual (positive power to climb)
     new Trigger(
       () -> {
-        return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) < 0.1);
+        return ((operatorController.getY(GenericHID.Hand.kLeft)) < -0.15)
+        && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
     ).whenActive(new ClimberSetTelescopeSpeed(m_climber, -0.25))
     .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
 
-    new JoystickButton(operatorController, XboxController.Button.kBack.value)
-      .whenPressed(new ClimberSetTelescopeSpeed(m_climber, 0.25))
-      .whenReleased(new ClimberSetTelescopeSpeed(m_climber, 0));
+    new Trigger(
+      () -> {
+        return ((operatorController.getY(GenericHID.Hand.kLeft)) > 0.15)
+        && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
+      }
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, 0.25))
+    .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
     
     // Climber Winch DOWN (negative power to climb)
     new Trigger(

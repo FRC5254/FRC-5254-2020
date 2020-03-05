@@ -46,9 +46,9 @@ public class Climber extends SubsystemBase {
   }
 
   public void setTelescopeTicks(double targetTicks) {
-    if (telescopeEncoder.getPosition() < targetTicks) {
+    if (telescopeEncoder.getPosition() < Math.abs(targetTicks)) {
       telescope.set(0.2);
-    } else if (telescopeEncoder.getPosition() > targetTicks) {
+    } else if (telescopeEncoder.getPosition() > Math.abs(targetTicks)) {
       telescope.set(-0.2);
     } else {
       telescope.set(0.0);
