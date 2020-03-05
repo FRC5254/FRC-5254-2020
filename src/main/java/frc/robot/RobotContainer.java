@@ -182,25 +182,26 @@ public class RobotContainer {
     // ).whenActive(new ClimberSetTelescopeSpeed(m_climber, operatorController.getY(GenericHID.Hand.kLeft)))
     // .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
 
+    // Telescope (negative power to climb)
     new Trigger(
       () -> {
         return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) < 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, 0.25))
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, -0.25))
     .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
 
     new JoystickButton(operatorController, XboxController.Button.kBack.value)
-      .whenPressed(new ClimberSetTelescopeSpeed(m_climber, -0.25))
+      .whenPressed(new ClimberSetTelescopeSpeed(m_climber, 0.25))
       .whenReleased(new ClimberSetTelescopeSpeed(m_climber, 0));
     
-    // Climber Winch DOWN
+    // Climber Winch DOWN (negative power to climb)
     new Trigger(
       () ->{
         return (operatorController.getBButton()
         && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) >  0.1))
         && (operatorController.getPOV() == -1);
       }
-    ).whenActive(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed))
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed))
     .whenInactive(new ClimberSetWinchSpeed(m_climber, 0));
 
     // Climber Winch UP
@@ -208,7 +209,7 @@ public class RobotContainer {
       () -> {
         return operatorController.getBButton() && (operatorController.getPOV() == 90);
       }
-    ).whenActive(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed))
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed))
     .whenInactive(new ClimberSetWinchSpeed(m_climber, 0));
   }
 

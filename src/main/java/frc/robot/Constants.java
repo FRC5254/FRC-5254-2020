@@ -92,8 +92,8 @@ public final class Constants {
     public static final double kLowRPMRampRate = 0.25;
 
     // Motor config
-    public static final int kFlywheelCurrentLimit = 30;
-    public static final int kAcceleratorCurrentLimit = 25;
+    public static final int kFlywheelCurrentLimit = 45; // 5 above breaker limit
+    public static final int kAcceleratorCurrentLimit = 35; // 5 above breaker limit
     public static final double kFlywheelkP = 0.000050;
     public static final double kFlywheelkF = 0.000165;
   }
@@ -125,7 +125,7 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final double kIntakeSpeed = 0.85;
-    public static final int kIntakeCurrentLimit = 25; // Estimate
+    public static final int kIntakeCurrentLimit = 35; // 5 above breaker limit
   }
 
   public static final class HopperConstants {
@@ -133,13 +133,13 @@ public final class Constants {
     public static final double kRightNormalFeedSpeed = 0.8;
     public static final double kLeftUnjamFeedSpeed = -0.3;
     public static final double kRightUnjamFeedSpeed = -0.3;
-    public static final int kHopperCurrentLimit = 25; // Estimate
+    public static final int kHopperCurrentLimit = 35; // 5 above breaker limit
   }
 
   public static final class ClimberConstants {
     public static final double kWinchSpeed = 1.0;
-    public static final int kWinchCurrentLimit = 25; // Estimate
-    public static final int kTelescopeCurrentLimit = 25; // Estimate
+    public static final int kWinchCurrentLimit = 45; // 5 above breaker limit
+    public static final int kTelescopeCurrentLimit = 35; // 5 above breaker limit
     public static final double kTelescopeJoystickDeadzone = 0.1;
     public static final int kMiddleHeightTicks = 230; // ARBITRARY (1 output shaft revolution)
   }
