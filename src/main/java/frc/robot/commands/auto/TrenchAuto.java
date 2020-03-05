@@ -46,8 +46,9 @@ public class TrenchAuto extends SequentialCommandGroup {
     // Need to fill in createStandardPath distances and angles! Also need to see how much time is left after this to figure out what you want to do at the end
     super(
         new PrepRobotForFeed(null, null, shooter, ShooterConstants.kAcceleratorRPMAutoLine, limelight, 5_500, HoodState.AUTOLINE_SHOT),
+        new WaitCommand(1), // Waits for flywheel spinup
         new WaitCommand(offsetTime1),
-        new FeedSpunUpShooter(hopper, () -> shooter.getShotsFired() > 10, 3),
+        new FeedSpunUpShooter(hopper,intake, () -> shooter.getShotsFired() > 10, 3),
         new ParallelCommandGroup(
             new HopperSetSpeed(hopper, 0, 0),
             new ShooterSetSpeed(shooter, 0),

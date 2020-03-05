@@ -53,7 +53,7 @@ public class WallShotAuto extends SequentialCommandGroup {
             ),
         new WaitCommand(offsetTime),
         new FeedSpunUpShooter(
-            hopper,
+            hopper, intake,
             () -> shooter.getShotsFired() > 100000,
             3), // Wren: --need to reset shotsFired - set big num for now-- why do we want the
                 // intake intaking?
