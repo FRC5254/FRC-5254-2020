@@ -10,14 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
-public class ClimberSetTelescopeTicks extends CommandBase {
+public class ClimberSetTelescopeRotations extends CommandBase {
   
   public final Climber m_climber;
-  public int ticks;
+  public double rotations;
 
-  public ClimberSetTelescopeTicks(Climber climber, int ticks) {
+  public ClimberSetTelescopeRotations(Climber climber, double rotations) {
     m_climber = climber;
-    this.ticks = ticks;
+    this.rotations = rotations;
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +27,7 @@ public class ClimberSetTelescopeTicks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climber.setTelescopeTicks(ticks);
+    m_climber.setTelescopeRotations(rotations);
   }
 
   // Called once the command ends or is interrupted.

@@ -141,7 +141,7 @@ public final class Constants {
     public static final int kWinchCurrentLimit = 45; // 5 above breaker limit
     public static final int kTelescopeCurrentLimit = 35; // 5 above breaker limit
     public static final double kTelescopeJoystickDeadzone = 0.1;
-    public static final int kMaxHeightTicks = -310;
+    public static final int kMaxHeightRotations = 100; // real value is 310 rotations
   }
 
   public static final class LimelightConstants {

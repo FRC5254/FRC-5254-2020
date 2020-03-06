@@ -22,7 +22,7 @@ import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ClimberSetTelescopeSpeed;
-import frc.robot.commands.ClimberSetTelescopeTicks;
+import frc.robot.commands.ClimberSetTelescopeRotations;
 import frc.robot.commands.ClimberSetWinchSpeed;
 import frc.robot.commands.DrivetrainAlignToGoal;
 import frc.robot.commands.HopperSetSpeed;
@@ -163,13 +163,13 @@ public class RobotContainer {
       () -> {
         return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeTicks(m_climber, ClimberConstants.kMaxHeightTicks))
-    .whenInactive(new ClimberSetTelescopeTicks(m_climber, 0));
+    ).whenActive(new ClimberSetTelescopeRotations(m_climber, ClimberConstants.kMaxHeightRotations))
+    .whenInactive(new ClimberSetTelescopeRotations(m_climber, 0));
 
-    // Climber Telescope manual (positive power to climb)
+    // Climber Telescope manual
     new Trigger(
       () -> {
-        return ((operatorController.getY(GenericHID.Hand.kLeft)) < -0.15)
+        return ((operatorController.getY(GenericHID.Hand.kLeft)) < -0.15) // telescope up
         && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
     ).whenActive(new ClimberSetTelescopeSpeed(m_climber, -0.25))
@@ -177,28 +177,30 @@ public class RobotContainer {
 
     new Trigger(
       () -> {
-        return ((operatorController.getY(GenericHID.Hand.kLeft)) > 0.15)
+        return ((operatorController.getY(GenericHID.Hand.kLeft)) > 0.15) // telescope down
         && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
     ).whenActive(new ClimberSetTelescopeSpeed(m_climber, 0.25))
     .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
     
-    // Climber Winch DOWN (negative power to climb)
+    // Climber Winch DOWN 
+    // climbing direction (shortening of rope)
     new Trigger(
       () ->{
         return (operatorController.getBButton()
         && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) >  0.1))
         && (operatorController.getPOV() == -1);
       }
-    ).whenActive(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed))
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed)) // climbing direction (shortening of rope)
     .whenInactive(new ClimberSetWinchSpeed(m_climber, 0));
 
     // Climber Winch UP
+    // reseting direction (lenthening of rope)
     new Trigger(
       () -> {
         return operatorController.getBButton() && (operatorController.getPOV() == 90);
       }
-    ).whenActive(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed))
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed)) // reseting direction (lenthening of rope)
     .whenInactive(new ClimberSetWinchSpeed(m_climber, 0));
   }
 
