@@ -12,7 +12,7 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
 public class ClimberSetTelescopeRotations extends CommandBase {
-  
+
   public final Climber m_climber;
   public double rotations;
 
@@ -40,6 +40,7 @@ public class ClimberSetTelescopeRotations extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((ClimberConstants.kMaxHeightRotations - 15) < m_climber.getPosition()) && ((m_climber.getPosition() < ClimberConstants.kMaxHeightRotations + 15));
+    return ((ClimberConstants.kMaxHeightRotations - 15) < m_climber.getPosition())
+        && ((m_climber.getPosition() < ClimberConstants.kMaxHeightRotations + 15));
   }
 }

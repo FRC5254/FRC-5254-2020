@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 public class ClimberSetWinchSpeed extends CommandBase {
-  
+
   public final Climber m_climber;
   public double speed;
 
@@ -19,7 +19,6 @@ public class ClimberSetWinchSpeed extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climber = climber;
     this.speed = speed;
-
   }
 
   // Called when the command is initially scheduled.
@@ -34,8 +33,7 @@ public class ClimberSetWinchSpeed extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

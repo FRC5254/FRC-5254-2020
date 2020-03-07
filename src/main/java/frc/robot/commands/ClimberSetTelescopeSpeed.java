@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
 public class ClimberSetTelescopeSpeed extends CommandBase {
-  
+
   public final Climber m_climber;
   public double speed;
 
