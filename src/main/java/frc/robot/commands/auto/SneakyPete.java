@@ -67,6 +67,7 @@ public class SneakyPete extends SequentialCommandGroup {
             drivetrain,
             intake,
             shooter,
+            ShooterConstants.kAcceleratorRPMAutoLine,
             limelight,
             ShooterConstants.kTrenchShotRPM,
             HoodState.TRENCH_SHOT),

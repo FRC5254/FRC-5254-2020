@@ -16,17 +16,21 @@ public final class Constants {
     public static int kFlywheelMotorLeft = 8;
     public static int kFlywheelMotorRight = 9;
     public static int kAcceleratorMotor = 10;
-    public static int kHoodDoubleSolenoidFront = 2; // Towards piston head
-    public static int kHoodDoubleSolenoidBack = 3;
+    public static int kHoodDoubleSolenoidFront = 0; // Towards piston head
+    public static int kHoodDoubleSolenoidBack = 1;
 
     // Intake
     public static int kIntakeMotor = 5;
-    public static int kIntakeDoubleSolenoidFront = 0; // Towards piston head
-    public static int kIntakeDoubleSolenoidBack = 1;
+    public static int kIntakeDoubleSolenoidFront = 2; // Towards piston head
+    public static int kIntakeDoubleSolenoidBack = 3;
 
     // Hopper
     public static int kLeftBelt = 6;
     public static int kRightBelt = 7;
+
+    // Climber
+    public static int kWinch = 11;
+    public static int kTelescope = 12;
   }
 
   public static final class DriveConstants {
@@ -69,25 +73,27 @@ public final class Constants {
     public static final double kAcceleratorMaxRPM = 11_000 / kAcceleratorGearRatio;
 
     // Shot details
-    public static final double kWallShotRPM = 3_800;
-    public static final double kTrenchShotRPM = 5_600;
-    public static final double kAutoLineRPM = 5_000;
+    public static final double kWallShotRPM = 4_000;
+    public static final double kAutoLineRPM = 5_400;
     public static final double kAcceptableRPMRange = 50;
-    public static final double kAcceleratorRPM = 6_000;
+    public static final double kAcceleratorRPMWall = 6_000;
+    public static final double kAcceleratorRPMAutoLine = 3_000;
+    public static final double kSpinUpSeconds = 1;
     public static final double kCurrentDrawnToDetectCompletedShot = 10;
     public static final double kCurrentDrawnTimeWindow = 0.075;
     public static final double kLowRPMThreshold = 1_500;
     public static final double kLowRPMRampRate = 0.25;
 
     // Motor config
-    public static final int kFlywheelCurrentLimit = 30;
-    public static final int kAcceleratorCurrentLimit = 25;
+    public static final int kFlywheelCurrentLimit = 45; // 5 above breaker limit
+    public static final int kAcceleratorCurrentLimit = 35; // 5 above breaker limit
     public static final double kFlywheelkP = 0.000050;
     public static final double kFlywheelkF = 0.000165;
   }
 
   public static final class IntakeConstants {
-    public static final double kIntakeSpeed = 0.85; // Suggested, not final
+    public static final double kIntakeSpeed = 0.85;
+    public static final int kIntakeCurrentLimit = 35; // 5 above breaker limit
   }
 
   public static final class HopperConstants {
@@ -95,6 +101,15 @@ public final class Constants {
     public static final double kRightNormalFeedSpeed = 0.8;
     public static final double kLeftUnjamFeedSpeed = -0.3;
     public static final double kRightUnjamFeedSpeed = -0.3;
+    public static final int kHopperCurrentLimit = 35; // 5 above breaker limit
+  }
+
+  public static final class ClimberConstants {
+    public static final double kWinchSpeed = 1.0;
+    public static final int kWinchCurrentLimit = 45; // 5 above breaker limit
+    public static final int kTelescopeCurrentLimit = 35; // 5 above breaker limit
+    public static final double kTelescopeJoystickDeadzone = 0.1;
+    public static final double kMaxHeightRotations = 100; // real value is 310 rotations
   }
 
   public static final class LimelightConstants {
