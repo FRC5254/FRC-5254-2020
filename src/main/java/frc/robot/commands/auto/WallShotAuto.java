@@ -10,6 +10,7 @@ package frc.robot.commands.auto;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.HopperSetSpeed;
@@ -33,7 +34,7 @@ public class WallShotAuto extends SequentialCommandGroup {
       new Path(
               AutoHelper.makePose(0, 0, 0),
               List.of(new Move().forward(35).get()),
-              new Move().forward(72.5).get(0))
+              new Move().forward(75).get(0))
           .setMaxSpeedFPS(8)
           .toTrajectory();
 
@@ -57,6 +58,7 @@ public class WallShotAuto extends SequentialCommandGroup {
                 limelight,
                 ShooterConstants.kWallShotRPM,
                 HoodState.WALL_SHOT)),
+        new WaitCommand(offsetTime),
         new FeedSpunUpShooter(hopper, intake, () -> false, 3.0),
         new ParallelCommandGroup(
             new HopperSetSpeed(hopper, 0, 0),

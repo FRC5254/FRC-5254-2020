@@ -31,7 +31,9 @@ import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
+import frc.robot.commands.auto.AutoLineAuto;
 import frc.robot.commands.auto.SneakyPete;
+import frc.robot.commands.auto.WallShotAuto;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
@@ -96,8 +98,9 @@ public class RobotContainer {
                   m_robotDrive.resetEncoders();
                   m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
                 }),
-            new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight)
-            // new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight, 0)
+            // new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight)
+            new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight, 0)
+            // new AutoLineAuto(m_robotDrive, m_intake, m_shooter, ShooterConstants.kAcceleratorRPMAutoLine, m_hopper, m_limelight, 0)
             );
   }
 
