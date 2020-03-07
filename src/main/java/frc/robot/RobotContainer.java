@@ -17,9 +17,13 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.HopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.ClimberSetTelescopeSpeed;
+import frc.robot.commands.ClimberSetTelescopeRotations;
+import frc.robot.commands.ClimberSetWinchSpeed;
 import frc.robot.commands.DrivetrainAlignToGoal;
 import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
@@ -27,7 +31,10 @@ import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
+import frc.robot.commands.auto.AutoLineAuto;
+import frc.robot.commands.auto.WallShotAuto;
 import frc.robot.commands.auto.SneakyPete;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -45,9 +52,10 @@ import frc.robot.subsystems.Shooter.HoodState;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_robotDrive = new Drivetrain();
-  private final Shooter m_shooter = new Shooter();
+  public final Shooter m_shooter = new Shooter();
   public final Hopper m_hopper = new Hopper();
   private final Intake m_intake = new Intake();
+  public final Climber m_climber = new Climber();
   private final Limelight m_limelight = new Limelight();
 
   // Controllers
@@ -123,7 +131,7 @@ public class RobotContainer {
                 HopperConstants.kRightUnjamFeedSpeed))
         .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
 
-    new JoystickButton(driverController, XboxController.Button.kY.value)
+    new JoystickButton(driverController, XboxController.Button.kA.value)
         .whileActiveOnce(new DrivetrainAlignToGoal(m_robotDrive, m_limelight));
 
     // OPERATOR CONTROLS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,52 +157,68 @@ public class RobotContainer {
         .whenPressed(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
         .whenReleased(new IntakeSetRollers(m_intake, 0.0));
 
-    // Wall shooter RPM (+ accelerator)
+    // Wall shot (shooter, accelerator, & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
+        .whenPressed(
+            new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMWall))
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
 
-    // Trench shooter RPM (+ accelerator)
+    // Auto line shot (shooter, accelerator, & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-        .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kTrenchShotRPM))
-        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
-        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
-
-    // Auto line RPM (+ accelerator)
-    new Trigger(
-            () -> {
-              return operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1;
-            })
-        .whenActive(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
-        .whenActive(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
-        .whenActive(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
+        .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
+        .whenPressed(
+            new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMAutoLine))
+        .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.AUTOLINE_SHOT));
 
     // Turn shooter + accelerator off
-    new JoystickButton(operatorController, XboxController.Button.kStart.value)
+    new JoystickButton(operatorController, XboxController.Button.kY.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, 0.0))
         .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, 0.0));
 
-    // // Hood state TRENCH
-    // new JoystickButton(operatorController, XboxController.Button.kY.value)
-    //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
+    // Climber Telescope SET POINT
+    new Trigger(
+      () -> {
+        return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
+      }
+    ).whenActive(new ClimberSetTelescopeRotations(m_climber, ClimberConstants.kMaxHeightRotations));
 
-    // // // Hood state WALL
-    // new JoystickButton(operatorController, XboxController.Button.kB.value)
-    //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
+    // Climber Telescope manual
+    new Trigger(
+      () -> {
+        return ((operatorController.getY(GenericHID.Hand.kLeft)) < -0.15) // telescope up
+        && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
+      }
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, 0.25))
+    .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
 
-    // Wall shot (w/Hood state)
-    // new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
-    //     .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM))
-    //     .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
-    //     .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
+    new Trigger(
+      () -> {
+        return ((operatorController.getY(GenericHID.Hand.kLeft)) > 0.15) // telescope down
+        && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
+      }
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, -0.25))
+    .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
+    
+    // Climber Winch DOWN 
+    // climbing direction (shortening of rope)
+    new Trigger(
+      () ->{
+        return (operatorController.getBButton()
+        && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) >  0.1))
+        && (operatorController.getPOV() == -1);
+      }
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, -ClimberConstants.kWinchSpeed)) // climbing direction (shortening of rope)
+    .whenInactive(new ClimberSetWinchSpeed(m_climber, 0));
 
-    // // Trench shot (w/Hood state)
-    // new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
-    // .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kTrenchShotRPM))
-    // .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPM))
-    // .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.TRENCH_SHOT));
-
+    // Climber Winch UP
+    // reseting direction (lenthening of rope)
+    new Trigger(
+      () -> {
+        return operatorController.getBButton() && (operatorController.getPOV() == 90);
+      }
+    ).whenActive(new ClimberSetWinchSpeed(m_climber, ClimberConstants.kWinchSpeed)) // reseting direction (lenthening of rope)
+    .whenInactive(new ClimberSetWinchSpeed(m_climber, 0));
   }
 
   /**

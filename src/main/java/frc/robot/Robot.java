@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpiutil.net.PortForwarder;
+
 import java.util.Map;
 
 /**
@@ -74,6 +75,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_robotContainer.m_shooter.resetShotsFired();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -99,6 +101,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    m_robotContainer.m_climber.resetTelescopeEncoder();
+    m_robotContainer.m_climber.setTelescopeSpeed(0);
   }
 
   /** This function is called periodically during operator control. */

@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.RobotMap;
 
 public class Intake extends SubsystemBase {
@@ -40,6 +41,7 @@ public class Intake extends SubsystemBase {
     rollers.restoreFactoryDefaults();
 
     rollers.setIdleMode(IdleMode.kBrake);
+    rollers.setSmartCurrentLimit(IntakeConstants.kIntakeCurrentLimit);
   }
 
   public void setIntakeMotor(double speed) {
@@ -56,5 +58,11 @@ public class Intake extends SubsystemBase {
     if (intakeState == null) {
       setIntakeState(IntakeState.RETRACTED);
     }
+
+    // Current peak number is a guess right now
+    // if (rollers.getOutputCurrent() >= 15) {
+    //   CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0,
+    // ControllerChoice.BOTH));
+    // }
   }
 }

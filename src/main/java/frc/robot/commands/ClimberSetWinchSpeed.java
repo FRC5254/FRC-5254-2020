@@ -8,19 +8,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Intake.IntakeState;
+import frc.robot.subsystems.Climber;
 
-public class IntakeSetState extends CommandBase {
-  /** Creates a new IntakeSetExtended. */
-  private Intake m_intake;
+public class ClimberSetWinchSpeed extends CommandBase {
+  
+  public final Climber m_climber;
+  public double speed;
 
-  private IntakeState state;
-
-  public IntakeSetState(Intake intake, IntakeState state) {
+  public ClimberSetWinchSpeed(Climber climber, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_intake = intake;
-    this.state = state;
+    m_climber = climber;
+    this.speed = speed;
+
   }
 
   // Called when the command is initially scheduled.
@@ -30,12 +29,13 @@ public class IntakeSetState extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setIntakeState(state);
+    m_climber.setWinchSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
