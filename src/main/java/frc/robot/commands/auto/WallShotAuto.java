@@ -40,16 +40,17 @@ public class WallShotAuto extends SequentialCommandGroup {
   public WallShotAuto(Drivetrain drivetrain, Intake intake, Shooter shooter, Hopper hopper) {
     super(
         new ParallelCommandGroup(
-            new IntakeSetState(intake, IntakeState.EXTENDED),
-            new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
-            AutoHelper.driveTrajectoryAndStop(trajectory, drivetrain),
-            new ShooterSetHoodState(shooter, HoodState.WALL_SHOT),
-            new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM)),
-        new FeedSpunUpShooter(hopper, intake, shooter, () -> false, 3),
-        new ParallelCommandGroup(
-            new HopperSetSpeed(hopper, 0, 0),
-            new ShooterSetSpeed(shooter, 0),
-            new IntakeSetRollers(intake, 0),
-            new ShooterSetAcceleratorSpeed(shooter, 0)));
+            // new IntakeSetState(intake, IntakeState.EXTENDED),
+            // new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
+            AutoHelper.driveTrajectoryAndStop(trajectory, drivetrain)
+            // new ShooterSetHoodState(shooter, HoodState.WALL_SHOT),
+            // new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM))
+            ));
+        // new FeedSpunUpShooter(hopper, intake, shooter, () -> false, 3),
+        // new ParallelCommandGroup(
+        //     new HopperSetSpeed(hopper, 0, 0),
+        //     new ShooterSetSpeed(shooter, 0),
+        //     new IntakeSetRollers(intake, 0),
+        //     new ShooterSetAcceleratorSpeed(shooter, 0)));
   }
 }

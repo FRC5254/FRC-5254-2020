@@ -28,6 +28,7 @@ import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.auto.SneakyPete;
+import frc.robot.commands.auto.WallShotAuto;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
