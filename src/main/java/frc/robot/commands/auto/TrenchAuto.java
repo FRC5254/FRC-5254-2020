@@ -44,25 +44,25 @@ public class TrenchAuto extends SequentialCommandGroup {
       double offsetTime1) {
 
     // Need to fill in createStandardPath distances and angles! Also need to see how much time is left after this to figure out what you want to do at the end
-    super(
-        new PrepRobotForFeed(null, null, shooter, ShooterConstants.kAcceleratorRPMAutoLine, limelight, 5_500, HoodState.AUTOLINE_SHOT),
-        new WaitCommand(ShooterConstants.kSpinUpSeconds), // Waits for flywheel spinup
-        new WaitCommand(offsetTime1),
-        new FeedSpunUpShooter(hopper,intake, () -> shooter.getShotsFired() > 10, 3),
-        new ParallelCommandGroup(
-            new HopperSetSpeed(hopper, 0, 0),
-            new ShooterSetSpeed(shooter, 0),
-            new ShooterSetAcceleratorSpeed(shooter, 0),
-            new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
-            new IntakeSetState(intake, IntakeState.EXTENDED),
-            AutoHelper.createStandardPath(
-                drivetrain,
-                false,
-                Units.feetToMeters(7),
-                new Pose2d(0, 0, new Rotation2d(0)),
-                new Pose2d(0, 0, new Rotation2d(0)),
-                new Translation2d(0, 0)),
-        new IntakeSetRollers(intake, 0))
-        );
+    // super(
+    //     new PrepRobotForFeed(null, null, shooter, ShooterConstants.kAcceleratorRPMAutoLine, limelight, 5_500, HoodState.AUTOLINE_SHOT),
+    //     new WaitCommand(ShooterConstants.kSpinUpSeconds), // Waits for flywheel spinup
+    //     new WaitCommand(offsetTime1),
+    //     new FeedSpunUpShooter(hopper,intake, () -> shooter.getShotsFired() > 10, 3),
+    //     new ParallelCommandGroup(
+    //         new HopperSetSpeed(hopper, 0, 0),
+    //         new ShooterSetSpeed(shooter, 0),
+    //         new ShooterSetAcceleratorSpeed(shooter, 0),
+    //         new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
+    //         new IntakeSetState(intake, IntakeState.EXTENDED),
+    //         AutoHelper.createStandardPath(
+    //             drivetrain,
+    //             false,
+    //             Units.feetToMeters(7),
+    //             new Pose2d(0, 0, new Rotation2d(0)),
+    //             new Pose2d(0, 0, new Rotation2d(0)),
+    //             new Translation2d(0, 0)),
+    //     new IntakeSetRollers(intake, 0))
+    //     );
   }
 }

@@ -15,6 +15,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
+import frc.robot.commands.IntakeSetState;
 import frc.robot.commands.ShooterSetAcceleratorSpeed;
 import frc.robot.commands.ShooterSetHoodState;
 import frc.robot.commands.ShooterSetSpeed;
@@ -25,6 +26,7 @@ import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake.IntakeState;
 import frc.robot.subsystems.Shooter.HoodState;
 import java.util.List;
 
@@ -40,11 +42,12 @@ public class WallShotAuto extends SequentialCommandGroup {
   public WallShotAuto(Drivetrain drivetrain, Intake intake, Shooter shooter, Hopper hopper, Limelight limelight, double offsetTime) {
     super(
         new ParallelCommandGroup(
+            new IntakeSetState(intake, IntakeState.EXTENDED),
             new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
             AutoHelper.driveTrajectoryAndStop(trajectory, drivetrain),
-            new ShooterSetHoodState(shooter, HoodState.WALL_SHOT),
-            new ShooterSetSpeed(shooter, ShooterConstants.kWallShotRPM)),
-        // new FeedSpunUpShooter(hopper, intake, shooter, () -> false, 3),
+            new PrepRobotForFeed(null, null, shooter, ShooterConstants.kAcceleratorRPMWall, limelight, ShooterConstants.kWallShotRPM, HoodState.WALL_SHOT)
+        ),
+        new FeedSpunUpShooter(hopper, intake, () -> false, 3.0),
         new ParallelCommandGroup(
             new HopperSetSpeed(hopper, 0, 0),
             new ShooterSetSpeed(shooter, 0),

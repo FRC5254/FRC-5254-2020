@@ -69,8 +69,8 @@ public class SneakyPete extends SequentialCommandGroup {
             shooter,
             ShooterConstants.kAcceleratorRPMAutoLine,
             limelight,
-            ShooterConstants.kTrenchShotRPM,
-            HoodState.TRENCH_SHOT),
-        new FeedSpunUpShooter(hopper, intake, shooter, () -> false, 5));
+            ShooterConstants.kAutoLineRPM,
+            HoodState.AUTOLINE_SHOT),
+        new FeedSpunUpShooter(hopper, intake, () -> false, 5));
   }
 }

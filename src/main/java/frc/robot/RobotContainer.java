@@ -99,8 +99,8 @@ public class RobotContainer {
                   m_robotDrive.resetEncoders();
                   m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
                 }),
-            new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight)
-            // new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper)
+            // new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight)
+            new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight, 0)
 
             );
   }

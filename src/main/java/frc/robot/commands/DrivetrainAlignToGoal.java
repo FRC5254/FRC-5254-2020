@@ -28,8 +28,8 @@ public class DrivetrainAlignToGoal extends CommandBase {
 
   public DrivetrainAlignToGoal(Drivetrain drivetrain, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drivetrain);
-    addRequirements(limelight);
+    // addRequirements(drivetrain);
+    // addRequirements(limelight);
     m_drivetrain = drivetrain;
     this.limelight = limelight;
     pidController =
