@@ -28,8 +28,10 @@ public class DrivetrainAlignToGoal extends CommandBase {
 
   public DrivetrainAlignToGoal(Drivetrain drivetrain, Limelight limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
-    // addRequirements(drivetrain);
-    // addRequirements(limelight);
+    if (drivetrain != null) {
+      addRequirements(drivetrain);
+      addRequirements(limelight);
+    }
     m_drivetrain = drivetrain;
     this.limelight = limelight;
     pidController =
@@ -65,13 +67,16 @@ public class DrivetrainAlignToGoal extends CommandBase {
 
     SmartDashboard.putNumber("Alignment error", pidController.getPositionError());
     m_drivetrain.tankDriveVolts(outputLeft, outputRight);
+
+    SmartDashboard.putBoolean("Alignment DONE", false);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_drivetrain.tankDriveVolts(0, 0);
-    limelight.setCamMode(CamMode.DRIVER_CAM);
+    // limelight.setCamMode(CamMode.DRIVER_CAM);
+    SmartDashboard.putBoolean("Alignment DONE", true);
 
     // CommandScheduler.getInstance().schedule(new ControllerVibrate(0.5, 1.0,
     // ControllerChoice.BOTH));

@@ -77,8 +77,8 @@ public final class Constants {
     public static final double kAutoLineRPM = 5_400;
     public static final double kAcceptableRPMRange = 50;
     public static final double kAcceleratorRPMWall = 6_000;
-    public static final double kAcceleratorRPMAutoLine = 3_000;
-    public static final double kSpinUpSeconds = 1;
+    public static final double kAcceleratorRPMAutoLine = 4_500;
+    public static final double kSpinUpSeconds = 1.75;
     public static final double kCurrentDrawnToDetectCompletedShot = 10;
     public static final double kCurrentDrawnTimeWindow = 0.075;
     public static final double kLowRPMThreshold = 1_500;
@@ -97,8 +97,8 @@ public final class Constants {
   }
 
   public static final class HopperConstants {
-    public static final double kLeftNormalFeedSpeed = 0.8;
-    public static final double kRightNormalFeedSpeed = 0.8;
+    public static final double kLeftNormalFeedSpeed = 0.55;
+    public static final double kRightNormalFeedSpeed = 0.55;
     public static final double kLeftUnjamFeedSpeed = -0.3;
     public static final double kRightUnjamFeedSpeed = -0.3;
     public static final int kHopperCurrentLimit = 35; // 5 above breaker limit

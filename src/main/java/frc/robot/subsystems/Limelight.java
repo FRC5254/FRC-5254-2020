@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
 public class Limelight implements Subsystem {
@@ -281,5 +282,9 @@ public class Limelight implements Subsystem {
     if (mode != SnapshotMode.UNKNOWN) {
       setValue("snapshot", mode.value);
     }
+  }
+
+  public void periodic() {
+    SmartDashboard.putNumber("Limelight horizontal offset", getHorizontalOffset());
   }
 }

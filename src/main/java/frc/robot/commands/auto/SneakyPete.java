@@ -13,8 +13,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.IntakeSetState;
+import frc.robot.commands.ShooterSetAcceleratorSpeed;
+import frc.robot.commands.ShooterSetSpeed;
 import frc.robot.commands.groups.*;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
@@ -27,29 +30,61 @@ import java.util.List;
 
 public class SneakyPete extends SequentialCommandGroup {
 
-  static Move slowingPoint = new Move().forward(80).markAsReference();
+  static Move slowingPoint = new Move().forward(89).markAsReference();
   static Trajectory initialDriveForwards =
       new Path(
               AutoHelper.makePose(0, 0, 0),
               List.of(new Move().forward(35).get()),
               slowingPoint.get(0))
-          .setMaxSpeedFPS(8)
+          .setMaxSpeedFPS(12)
           .toTrajectory();
 
-  static Move ballPoint = slowingPoint.copy().forward(10).markAsReference();
+  static Move rightBallPoint = slowingPoint.copy().forward(6).markAsReference();
   static Trajectory slowDriveForwards =
-      new Path(slowingPoint.get(0), List.of(slowingPoint.copy().forward(5).get()), ballPoint.get(0))
-          .setMaxSpeedFPS(3)
+      new Path(
+              slowingPoint.get(0),
+              List.of(slowingPoint.copy().forward(5).get()),
+              rightBallPoint.get(0))
+          .setMaxSpeedFPS(5)
           .toTrajectory();
 
-  static Move shotPoint = ballPoint.copy().left(100).backward(100).markAsReference();
+  static Move firstReversalPoint = rightBallPoint.copy().backward(40).markAsReference();
+  static Trajectory backup =
+      new Path(
+              rightBallPoint.get(0),
+              List.of(slowingPoint.copy().backward(8).get()),
+              firstReversalPoint.get(0))
+          .setMaxSpeedFPS(10)
+          .setReversed(true)
+          .toTrajectory();
+
+  static Move leftBallPoint = rightBallPoint.copy().left(15).forward(3).markAsReference();
+  static Trajectory intakeLeftBall =
+      new Path(
+              firstReversalPoint.get(0),
+              List.of(firstReversalPoint.copy().forward(17).left(2).get()),
+              leftBallPoint.get(10))
+          .setMaxSpeedFPS(5)
+          .toTrajectory();
+
+  static Move secondReversalPoint = leftBallPoint.copy().backward(47).markAsReference();
+  static Trajectory secondBackup =
+      new Path(
+              leftBallPoint.get(10),
+              List.of(leftBallPoint.copy().backward(25).get()),
+              secondReversalPoint.get(10))
+          .setMaxSpeedFPS(10)
+          .setReversed(true)
+          .toTrajectory();
+
+  static Move shotPoint = leftBallPoint.copy().left(150).backward(90).markAsReference();
   static Trajectory goToShootPosition =
       new Path(
-              ballPoint.get(0),
-              List.of(ballPoint.copy().left(35).backward(60).get()),
-              shotPoint.get(-180 - 45))
-          .setMaxSpeedFPS(9)
-          .setMaxAccelFPS(2)
+              firstReversalPoint.get(0),
+              List.of(leftBallPoint.copy().left(75).backward(40).get()),
+              shotPoint.get(-180 - 25))
+          .setMaxSpeedFPS(11)
+          .setMaxAccelFPS(6)
           .toTrajectory();
 
   public SneakyPete(
@@ -59,9 +94,16 @@ public class SneakyPete extends SequentialCommandGroup {
             new IntakeSetState(intake, IntakeState.EXTENDED),
             new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
             new SequentialCommandGroup(
-                AutoHelper.driveTrajectory(initialDriveForwards, drivetrain),
+                AutoHelper.driveTrajectoryAndStop(initialDriveForwards, drivetrain),
                 AutoHelper.driveTrajectoryAndStop(slowDriveForwards, drivetrain))),
-        new WaitCommand(0.25),
+        new WaitCommand(0.1),
+        new IntakeSetRollers(intake, 0),
+        AutoHelper.driveTrajectoryAndStop(backup, drivetrain),
+        new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
+        AutoHelper.driveTrajectoryAndStop(intakeLeftBall, drivetrain),
+        new WaitCommand(0.05),
+        AutoHelper.driveTrajectoryAndStop(secondBackup, drivetrain),
+        new IntakeSetRollers(intake, 0),
         AutoHelper.driveTrajectoryAndStop(goToShootPosition, drivetrain),
         new PrepRobotForFeed(
             drivetrain,
@@ -71,6 +113,10 @@ public class SneakyPete extends SequentialCommandGroup {
             limelight,
             ShooterConstants.kAutoLineRPM,
             HoodState.AUTOLINE_SHOT),
-        new FeedSpunUpShooter(hopper, intake, () -> false, 5));
+        new FeedSpunUpShooter(hopper, intake, () -> false, 5),
+        new HopperSetSpeed(hopper, 0, 0),
+        new ShooterSetSpeed(shooter, 0),
+        new ShooterSetAcceleratorSpeed(shooter, 0),
+        new IntakeSetRollers(intake, 0));
   }
 }
