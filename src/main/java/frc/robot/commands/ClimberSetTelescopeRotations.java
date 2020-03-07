@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.Climber;
 
 public class ClimberSetTelescopeRotations extends CommandBase {
@@ -32,11 +33,13 @@ public class ClimberSetTelescopeRotations extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_climber.setTelescopeSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return ((ClimberConstants.kMaxHeightRotations - 15) < m_climber.getPosition()) && ((m_climber.getPosition() < ClimberConstants.kMaxHeightRotations + 15));
   }
 }

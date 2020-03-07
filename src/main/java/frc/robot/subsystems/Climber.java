@@ -59,6 +59,10 @@ public class Climber extends SubsystemBase {
     telescopeEncoder.setPosition(0);
   }
 
+  public double getPosition() {
+    return telescopeEncoder.getPosition();
+  }
+
   public void setWinchSpeed(double speed) {
     winch.set(speed);
   }

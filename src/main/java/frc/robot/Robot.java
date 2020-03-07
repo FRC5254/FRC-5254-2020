@@ -103,6 +103,7 @@ public class Robot extends TimedRobot {
     }
 
     m_robotContainer.m_climber.resetTelescopeEncoder();
+    m_robotContainer.m_climber.setTelescopeSpeed(0);
   }
 
   /** This function is called periodically during operator control. */
