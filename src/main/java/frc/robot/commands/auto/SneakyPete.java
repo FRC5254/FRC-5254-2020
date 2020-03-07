@@ -36,7 +36,7 @@ public class SneakyPete extends SequentialCommandGroup {
               AutoHelper.makePose(0, 0, 0),
               List.of(new Move().forward(35).get()),
               slowingPoint.get(0))
-          .setMaxSpeedFPS(12)
+          .setMaxSpeedFPS(14)
           .toTrajectory();
 
   static Move rightBallPoint = slowingPoint.copy().forward(6).markAsReference();
@@ -45,7 +45,7 @@ public class SneakyPete extends SequentialCommandGroup {
               slowingPoint.get(0),
               List.of(slowingPoint.copy().forward(5).get()),
               rightBallPoint.get(0))
-          .setMaxSpeedFPS(5)
+          .setMaxSpeedFPS(8)
           .toTrajectory();
 
   static Move firstReversalPoint = rightBallPoint.copy().backward(40).markAsReference();
@@ -54,7 +54,7 @@ public class SneakyPete extends SequentialCommandGroup {
               rightBallPoint.get(0),
               List.of(slowingPoint.copy().backward(8).get()),
               firstReversalPoint.get(0))
-          .setMaxSpeedFPS(10)
+          .setMaxSpeedFPS(14)
           .setReversed(true)
           .toTrajectory();
 
@@ -64,7 +64,7 @@ public class SneakyPete extends SequentialCommandGroup {
               firstReversalPoint.get(0),
               List.of(firstReversalPoint.copy().forward(17).left(2).get()),
               leftBallPoint.get(10))
-          .setMaxSpeedFPS(5)
+          .setMaxSpeedFPS(8)
           .toTrajectory();
 
   static Move secondReversalPoint = leftBallPoint.copy().backward(47).markAsReference();
@@ -83,8 +83,7 @@ public class SneakyPete extends SequentialCommandGroup {
               firstReversalPoint.get(0),
               List.of(leftBallPoint.copy().left(75).backward(40).get()),
               shotPoint.get(-180 - 25))
-          .setMaxSpeedFPS(11)
-          .setMaxAccelFPS(6)
+          .setMaxSpeedFPS(14)
           .toTrajectory();
 
   public SneakyPete(
@@ -96,7 +95,7 @@ public class SneakyPete extends SequentialCommandGroup {
             new SequentialCommandGroup(
                 AutoHelper.driveTrajectoryAndStop(initialDriveForwards, drivetrain),
                 AutoHelper.driveTrajectoryAndStop(slowDriveForwards, drivetrain))),
-        new WaitCommand(0.1),
+        new WaitCommand(0.05),
         new IntakeSetRollers(intake, 0),
         AutoHelper.driveTrajectoryAndStop(backup, drivetrain),
         new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
