@@ -39,6 +39,7 @@ public class Climber extends SubsystemBase {
     winch.setSmartCurrentLimit(ClimberConstants.kWinchCurrentLimit);
 
     telescopeEncoder = telescope.getEncoder();
+    telescopeEncoder.setPositionConversionFactor(-1);
   }
 
   public void setTelescopeSpeed(double speed) {
@@ -46,9 +47,9 @@ public class Climber extends SubsystemBase {
   }
 
   public void setTelescopeRotations(double targetRotations) {
-    if (Math.abs(telescopeEncoder.getPosition()) < targetRotations) {
+    if (telescopeEncoder.getPosition() < targetRotations) {
       telescope.set(0.05); // telescope up
-    } else if (Math.abs(telescopeEncoder.getPosition()) > targetRotations) {
+    } else if (telescopeEncoder.getPosition() > targetRotations) {
       telescope.set(-0.05); // telescope down
     } else {
       telescope.set(0.0);

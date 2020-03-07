@@ -163,9 +163,8 @@ public class RobotContainer {
       () -> {
         return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeRotations(m_climber, ClimberConstants.kMaxHeightRotations))
-    .whenInactive(new ClimberSetTelescopeRotations(m_climber, 0));
-
+    ).whenActive(new ClimberSetTelescopeRotations(m_climber, ClimberConstants.kMaxHeightRotations));
+    
     // Climber Telescope manual
     new Trigger(
       () -> {
