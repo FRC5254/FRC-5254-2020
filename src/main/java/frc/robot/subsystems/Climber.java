@@ -38,8 +38,10 @@ public class Climber extends SubsystemBase {
     telescope.setSmartCurrentLimit(ClimberConstants.kTelescopeCurrentLimit);
     winch.setSmartCurrentLimit(ClimberConstants.kWinchCurrentLimit);
 
+    telescope.setInverted(true);
+
     telescopeEncoder = telescope.getEncoder();
-    telescopeEncoder.setPositionConversionFactor(-1);
+    telescopeEncoder.setPositionConversionFactor(1);
   }
 
   public void setTelescopeSpeed(double speed) {
@@ -69,6 +71,6 @@ public class Climber extends SubsystemBase {
   }
 
   public void periodic() {
-    SmartDashboard.putNumber("Climber telescope encoder", telescopeEncoder.getPosition());
+    SmartDashboard.putNumber("Climber telescope encoder Rotations", telescopeEncoder.getPosition());
   }
 }

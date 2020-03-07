@@ -164,14 +164,14 @@ public class RobotContainer {
         return operatorController.getStartButton() && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
     ).whenActive(new ClimberSetTelescopeRotations(m_climber, ClimberConstants.kMaxHeightRotations));
-    
+
     // Climber Telescope manual
     new Trigger(
       () -> {
         return ((operatorController.getY(GenericHID.Hand.kLeft)) < -0.15) // telescope up
         && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, -0.25))
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, 0.25))
     .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
 
     new Trigger(
@@ -179,7 +179,7 @@ public class RobotContainer {
         return ((operatorController.getY(GenericHID.Hand.kLeft)) > 0.15) // telescope down
         && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
       }
-    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, 0.25))
+    ).whenActive(new ClimberSetTelescopeSpeed(m_climber, -0.25))
     .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
     
     // Climber Winch DOWN 
