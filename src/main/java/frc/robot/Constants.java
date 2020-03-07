@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.subsystems.Limelight.Pipeline;
@@ -45,16 +44,9 @@ public final class Constants {
     public static final double kDistancePerPulse =
         (1.0 / kGearRatio) * Units.inchesToMeters(6.0) * Math.PI;
 
-    // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-    // These characterization values MUST be determined either experimentally or theoretically
-    // for *your* robot's drive.
-    // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
-    // values for your robot.
     public static final double ksVolts = 0.18;
     public static final double kvVoltSecondsPerMeter = 2.45;
     public static final double kaVoltSecondsSquaredPerMeter = 0.495;
-
-    // Example value only - as above, this must be tuned for your drive!
     public static final double kPDriveVel = 1.91;
 
     // Motor config
@@ -97,31 +89,6 @@ public final class Constants {
     public static final int kAcceleratorCurrentLimit = 35; // 5 above breaker limit
     public static final double kFlywheelkP = 0.000050;
     public static final double kFlywheelkF = 0.000165;
-  }
-
-  // Okay, this is a little gross
-  // Coordinate (0, 0) is outside of the field!! Because of the curved driver stations
-  // The point of view is from behind the driver station facing the field on the close side of your
-  // robot
-  // Which means its as if you were looking at the robot from the other alliance's POV
-  // So with that: Y moves you left/right along the intiation line
-  // and X moves you towards the driver station wall (theoretically, X = 0 is against the flat part
-  // of the wall)
-  public static final class LocationConstants {
-    public static final class StartingLocations {
-      public static final Translation2d kInFrontOfGoal =
-          new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(94.655));
-      public static final Translation2d kWallShot =
-          new Translation2d(Units.inchesToMeters(50), Units.inchesToMeters(94.655));
-
-      public static final Translation2d kSneakyPete =
-          new Translation2d(Units.inchesToMeters(121), Units.inchesToMeters(286.311));
-      public static final Translation2d kYoinkOpponentTrench =
-          new Translation2d(Units.inchesToMeters(121 + 12 * 5), Units.inchesToMeters(286.311));
-    }
-
-    public static final double kRobotLengthWithBumpersMeters = Units.inchesToMeters(38);
-    public static final double kStandardOffsetDistance = kRobotLengthWithBumpersMeters / 2;
   }
 
   public static final class IntakeConstants {

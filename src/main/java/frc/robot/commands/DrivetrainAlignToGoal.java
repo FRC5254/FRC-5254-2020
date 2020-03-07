@@ -57,12 +57,14 @@ public class DrivetrainAlignToGoal extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double pidOutput =
-        pidController.calculate(limelight.getHorizontalOffset())
-            + feedForward.calculate(m_drivetrain.getLeftEncoder().getVelocity());
+    double pidOutput = pidController.calculate(limelight.getHorizontalOffset());
+    double outputLeft =
+        -pidOutput - feedForward.calculate(m_drivetrain.getLeftEncoder().getVelocity());
+    double outputRight =
+        pidOutput + feedForward.calculate(m_drivetrain.getRightEncoder().getVelocity());
 
     SmartDashboard.putNumber("Alignment error", pidController.getPositionError());
-    m_drivetrain.tankDriveVolts(-pidOutput, pidOutput);
+    m_drivetrain.tankDriveVolts(outputLeft, outputRight);
   }
 
   // Called once the command ends or is interrupted.
