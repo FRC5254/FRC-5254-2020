@@ -106,7 +106,6 @@ public class SneakyPete extends SequentialCommandGroup {
         AutoHelper.driveTrajectoryAndStop(goToShootPosition, drivetrain),
         new PrepRobotForFeed(
             drivetrain,
-            intake,
             shooter,
             ShooterConstants.kAcceleratorRPMAutoLine,
             limelight,

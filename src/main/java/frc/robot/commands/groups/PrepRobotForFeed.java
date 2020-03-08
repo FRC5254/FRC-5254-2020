@@ -19,7 +19,6 @@ import java.util.Map;
 public class PrepRobotForFeed extends ParallelCommandGroup {
   public PrepRobotForFeed(
       Drivetrain drivetrain,
-      Intake intake,
       Shooter shooter,
       double acceleratorRPM,
       Limelight limelight,

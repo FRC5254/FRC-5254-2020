@@ -34,7 +34,7 @@ public class FullShotSequence extends SequentialCommandGroup {
       double timeout) {
     addCommands(
         new PrepRobotForFeed(
-            drivetrain, intake, shooter, acceleratorRPM, limelight, shooterRPM, hoodState),
+            drivetrain, shooter, acceleratorRPM, limelight, shooterRPM, hoodState),
         new FeedSpunUpShooter(hopper, intake, endCondition, timeout));
   }
 }

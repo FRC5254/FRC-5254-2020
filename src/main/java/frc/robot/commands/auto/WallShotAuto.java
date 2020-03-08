@@ -52,7 +52,6 @@ public class WallShotAuto extends SequentialCommandGroup {
             AutoHelper.driveTrajectoryAndStop(trajectory, drivetrain),
             new PrepRobotForFeed(
                 null,
-                null,
                 shooter,
                 ShooterConstants.kAcceleratorRPMWall,
                 limelight,
