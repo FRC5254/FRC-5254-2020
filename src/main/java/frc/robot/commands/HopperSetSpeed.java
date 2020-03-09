@@ -9,20 +9,24 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Shooter;
 
 public class HopperSetSpeed extends CommandBase {
   /** Creates a new HopperSetSpeed. */
   private final Hopper m_hopper;
+  private final Shooter m_shooter;
 
   private double leftSpeed;
   private double rightSpeed;
 
-  public HopperSetSpeed(Hopper hopper, double leftSpeed, double rightSpeed) {
+  public HopperSetSpeed(Hopper hopper, Shooter shooter, double leftSpeed, double rightSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(hopper);
     m_hopper = hopper;
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
+
+    m_shooter = shooter;
   }
 
   // Called when the command is initially scheduled.
@@ -32,7 +36,13 @@ public class HopperSetSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if ((leftSpeed != 0 || rightSpeed != 0) && m_shooter.isAcceleratorRunning()) {
     m_hopper.setHopper(leftSpeed, rightSpeed);
+    }
+    else {
+      m_hopper.setHopper(0, 0);
+
+    }
   }
 
   // Called once the command ends or is interrupted.

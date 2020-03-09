@@ -58,11 +58,11 @@ public class AutoLineAuto extends SequentialCommandGroup {
     new PrepRobotForFeed(null, shooter, ShooterConstants.kAcceleratorRPMAutoLine, limelight, 5_500, HoodState.AUTOLINE_SHOT),
     new WaitCommand(ShooterConstants.kSpinUpSeconds), // Waits for flywheel spinup
     new WaitCommand(offsetTime1),
-    new FeedSpunUpShooter(hopper, intake, () -> shooter.getShotsFired() > 100000, 3),
+    new FeedSpunUpShooter(hopper, intake, shooter, () -> shooter.getShotsFired() > 100000, 3),
     new ParallelCommandGroup(
         new ShooterSetSpeed(shooter, 0),
         new ShooterSetAcceleratorSpeed(shooter, 0),
-        new HopperSetSpeed(hopper, 0, 0),
+        new HopperSetSpeed(hopper, shooter, 0, 0),
         new IntakeSetRollers(intake, 0),
         AutoHelper.driveTrajectoryAndStop(trajectory, drivetrain)
     ));

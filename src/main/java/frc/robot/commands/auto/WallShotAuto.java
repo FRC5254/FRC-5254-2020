@@ -58,9 +58,9 @@ public class WallShotAuto extends SequentialCommandGroup {
                 ShooterConstants.kWallShotRPM,
                 HoodState.WALL_SHOT)),
         new WaitCommand(offsetTime),
-        new FeedSpunUpShooter(hopper, intake, () -> false, 3.0),
+        new FeedSpunUpShooter(hopper, intake, shooter, () -> false, 3.0),
         new ParallelCommandGroup(
-            new HopperSetSpeed(hopper, 0, 0),
+            new HopperSetSpeed(hopper, shooter, 0, 0),
             new ShooterSetSpeed(shooter, 0),
             new IntakeSetRollers(intake, 0),
             new ShooterSetAcceleratorSpeed(shooter, 0)));

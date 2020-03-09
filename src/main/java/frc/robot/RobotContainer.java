@@ -117,19 +117,19 @@ public class RobotContainer {
     new JoystickButton(driverController, XboxController.Button.kBumperRight.value)
         .whenPressed(
             new HopperSetSpeed(
-                m_hopper,
+                m_hopper, m_shooter,
                 HopperConstants.kLeftNormalFeedSpeed,
                 HopperConstants.kRightNormalFeedSpeed))
-        .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
+        .whenReleased(new HopperSetSpeed(m_hopper, m_shooter, 0.0, 0.0));
 
     // Hopper unjam (backward)
     new JoystickButton(driverController, XboxController.Button.kBumperLeft.value)
         .whenPressed(
             new HopperSetSpeed(
-                m_hopper,
+                m_hopper, m_shooter,
                 HopperConstants.kLeftUnjamFeedSpeed,
                 HopperConstants.kRightUnjamFeedSpeed))
-        .whenReleased(new HopperSetSpeed(m_hopper, 0.0, 0.0));
+        .whenReleased(new HopperSetSpeed(m_hopper, m_shooter, 0.0, 0.0));
 
     new JoystickButton(driverController, XboxController.Button.kA.value)
         .whileActiveOnce(new DrivetrainAlignToGoal(m_robotDrive, m_limelight));

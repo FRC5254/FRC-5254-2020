@@ -8,15 +8,17 @@ import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+
 import java.util.function.BooleanSupplier;
 
 public class FeedSpunUpShooter extends ParallelCommandGroup {
   public FeedSpunUpShooter(
-      Hopper hopper, Intake intake, BooleanSupplier endCondition, double timeout) {
+      Hopper hopper, Intake intake, Shooter shooter, BooleanSupplier endCondition, double timeout) {
     addCommands(
         // Spin up hopper
         new HopperSetSpeed(
-            hopper, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed),
+            hopper, shooter, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed),
         // Intaking to make sure powercells don't get stuck in intake
         new IntakeSetRollers(intake, IntakeConstants.kIntakeSpeed),
 

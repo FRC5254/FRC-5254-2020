@@ -176,4 +176,12 @@ public class Shooter extends SubsystemBase {
   public HoodState getHoodState() {
     return hoodState;
   }
+
+  public boolean isAcceleratorRunning() {
+    return accelerator.get() != 0;
+  }
+
+  public boolean isFlywheelRunning() {
+    return flywheelLeft.get() != 0 && flywheelRight.get() != 0;
+  }
 }
