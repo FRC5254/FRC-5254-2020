@@ -99,8 +99,8 @@ public class RobotContainer {
                   m_robotDrive.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
                 }),
             // new SneakyPete(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight)
-            new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight, 0)
-            // new AutoLineAuto(m_robotDrive, m_intake, m_shooter, ShooterConstants.kAcceleratorRPMAutoLine, m_hopper, m_limelight, 0)
+            // new WallShotAuto(m_robotDrive, m_intake, m_shooter, m_hopper, m_limelight, 0)
+            new AutoLineAuto(m_robotDrive, m_intake, m_shooter, ShooterConstants.kAcceleratorRPMAutoLine, m_hopper, m_limelight, 0)
             );
   }
 
@@ -188,18 +188,18 @@ public class RobotContainer {
     // Climber Telescope manual
     new Trigger(
             () -> {
-              return ((operatorController.getY(GenericHID.Hand.kLeft)) < -0.15) // telescope up
+              return ((operatorController.getY(GenericHID.Hand.kLeft)) < -0.15)
                   && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
             })
-        .whenActive(new ClimberSetTelescopeSpeed(m_climber, 0.25))
+        .whenActive(new ClimberSetTelescopeSpeed(m_climber, 0.25)) // telescope up
         .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
 
     new Trigger(
             () -> {
-              return ((operatorController.getY(GenericHID.Hand.kLeft)) > 0.15) // telescope down
+              return ((operatorController.getY(GenericHID.Hand.kLeft)) > 0.15)
                   && (operatorController.getTriggerAxis(GenericHID.Hand.kLeft) > 0.1);
             })
-        .whenActive(new ClimberSetTelescopeSpeed(m_climber, -0.25))
+        .whenActive(new ClimberSetTelescopeSpeed(m_climber, -0.25)) // telescope down
         .whenInactive(new ClimberSetTelescopeSpeed(m_climber, 0));
 
     // Climber Winch DOWN
