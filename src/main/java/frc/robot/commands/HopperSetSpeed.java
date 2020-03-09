@@ -36,7 +36,7 @@ public class HopperSetSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ((leftSpeed != 0 || rightSpeed != 0) && m_shooter.isAcceleratorRunning()) {
+    if ((leftSpeed != 0 || rightSpeed != 0) && m_shooter.isAcceleratorRunning() && m_shooter.isFlywheelRunning()) {
     m_hopper.setHopper(leftSpeed, rightSpeed);
     }
     else {
