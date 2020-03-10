@@ -8,50 +8,61 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.HopperConstants;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
-public class HopperSetSpeed extends CommandBase {
-  /** Creates a new HopperSetSpeed. */
+public class HopperAndAcceleratorSetSpeeds extends CommandBase {
+  
   private final Hopper m_hopper;
   private final Shooter m_shooter;
 
-  private double leftSpeed;
-  private double rightSpeed;
+  private double leftSpeed, rightSpeed, acceleratorRPM;
+  private boolean didTrigger;
 
-  public HopperSetSpeed(Hopper hopper, Shooter shooter, double leftSpeed, double rightSpeed) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(hopper);
+  public HopperAndAcceleratorSetSpeeds(Hopper hopper, Shooter shooter, double leftSpeed, double rightSpeed, double acceleratorRPM) {
     m_hopper = hopper;
+    m_shooter = shooter;
+
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
+    this.acceleratorRPM = acceleratorRPM;
+    
+    didTrigger = false;
 
-    m_shooter = shooter;
+    addRequirements(m_shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    didTrigger = false;
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if ((leftSpeed != 0 || rightSpeed != 0) && m_shooter.isFlywheelRunning()) {
-    m_hopper.setHopper(leftSpeed, rightSpeed);
+    if (didTrigger || m_shooter.getBallSensor()) {
+      didTrigger = true;
+      m_hopper.setHopper(0, 0);
+      m_shooter.setAcceleratorToRPM(0);
     }
     else {
-      m_hopper.setHopper(0, 0);
-
+      m_hopper.setHopper(leftSpeed, rightSpeed);
+      m_shooter.setAcceleratorToRPM(acceleratorRPM);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

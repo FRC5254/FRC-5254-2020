@@ -6,6 +6,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Timer;
@@ -33,6 +35,7 @@ public class Shooter extends SubsystemBase {
   private Timer currentMonitorTimer;
   private DoubleSolenoid hoodPiston;
   public HoodState hoodState;
+  public DigitalInput ballSensor;
 
   public Shooter() {
     shotsFired = 0;
@@ -41,6 +44,8 @@ public class Shooter extends SubsystemBase {
     flywheelLeft = new CANSparkMax(RobotMap.kFlywheelMotorLeft, MotorType.kBrushless);
     flywheelRight = new CANSparkMax(RobotMap.kFlywheelMotorRight, MotorType.kBrushless);
     accelerator = new CANSparkMax(RobotMap.kAcceleratorMotor, MotorType.kBrushless);
+
+    ballSensor = new DigitalInput(0);
 
     hoodPiston =
         new DoubleSolenoid(RobotMap.kHoodDoubleSolenoidFront, RobotMap.kHoodDoubleSolenoidBack);
@@ -84,6 +89,10 @@ public class Shooter extends SubsystemBase {
     flywheelLeft.getPIDController().setOutputRange(-1, 1);
   }
 
+  public boolean getBallSensor() {
+    return ballSensor.get();
+  }
+
   public void setFlywheelToRPM(double rpm) {
     if (rpm == 0) {
       flywheelLeft.set(0.0);
@@ -102,6 +111,9 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    SmartDashboard.putBoolean("BallSensor", getBallSensor());
+
     if (hoodState == null) {
       setHoodState(HoodState.AUTOLINE_SHOT);
     }

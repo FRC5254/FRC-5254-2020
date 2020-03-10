@@ -32,7 +32,11 @@ public class ShooterSetAcceleratorSpeed extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putNumber("Shooter accelerator RPM", rpm);
-    m_shooter.setAcceleratorToRPM(rpm);
+    if ( rpm != 0 && m_shooter.isFlywheelRunning()) {
+      m_shooter.setAcceleratorToRPM(rpm);
+    } else {
+      m_shooter.setAcceleratorToRPM(0);
+    }
   }
 
   // Called once the command ends or is interrupted.

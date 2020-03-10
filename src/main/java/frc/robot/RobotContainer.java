@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -25,6 +26,7 @@ import frc.robot.commands.ClimberSetTelescopeRotations;
 import frc.robot.commands.ClimberSetTelescopeSpeed;
 import frc.robot.commands.ClimberSetWinchSpeed;
 import frc.robot.commands.DrivetrainAlignToGoal;
+import frc.robot.commands.HopperAndAcceleratorSetSpeeds;
 import frc.robot.commands.HopperSetSpeed;
 import frc.robot.commands.IntakeSetRollers;
 import frc.robot.commands.IntakeSetState;
@@ -120,7 +122,9 @@ public class RobotContainer {
                 m_hopper, m_shooter,
                 HopperConstants.kLeftNormalFeedSpeed,
                 HopperConstants.kRightNormalFeedSpeed))
-        .whenReleased(new HopperSetSpeed(m_hopper, m_shooter, 0.0, 0.0));
+        .whenPressed(new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMWall))
+        .whenReleased(new HopperSetSpeed(m_hopper, m_shooter, 0.0, 0.0))
+        .whenReleased(new ShooterSetAcceleratorSpeed(m_shooter, 0));
 
     // Hopper unjam (backward)
     new JoystickButton(driverController, XboxController.Button.kBumperLeft.value)
@@ -144,12 +148,14 @@ public class RobotContainer {
     new JoystickButton(operatorController, XboxController.Button.kA.value)
         .whenPressed(new IntakeSetState(m_intake, IntakeState.RETRACTED));
 
-    // Rollers intake
+    // Rollers intake & conditionally run hopper + accelerator
     new Trigger(
             () -> {
               return operatorController.getTriggerAxis(GenericHID.Hand.kRight) > 0.1;
             })
+        .whenActive(new HopperAndAcceleratorSetSpeeds(m_hopper, m_shooter, HopperConstants.kLeftNormalFeedSpeed, HopperConstants.kRightNormalFeedSpeed, 500))
         .whenActive(new IntakeSetRollers(m_intake, IntakeConstants.kIntakeSpeed))
+        .whenInactive(new HopperAndAcceleratorSetSpeeds(m_hopper, m_shooter, 0, 0, 0))
         .whenInactive(new IntakeSetRollers(m_intake, 0.0));
 
     // Rollers outtake
@@ -157,18 +163,14 @@ public class RobotContainer {
         .whenPressed(new IntakeSetRollers(m_intake, -IntakeConstants.kIntakeSpeed))
         .whenReleased(new IntakeSetRollers(m_intake, 0.0));
 
-    // Wall shot (shooter, accelerator, & hood)
+    // Wall shot (shooter & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperRight.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kWallShotRPM))
-        .whenPressed(
-            new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMWall))
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.WALL_SHOT));
 
-    // Auto line shot (shooter, accelerator, & hood)
+    // Auto line shot (shooter & hood)
     new JoystickButton(operatorController, XboxController.Button.kBumperLeft.value)
         .whenPressed(new ShooterSetSpeed(m_shooter, ShooterConstants.kAutoLineRPM))
-        .whenPressed(
-            new ShooterSetAcceleratorSpeed(m_shooter, ShooterConstants.kAcceleratorRPMAutoLine))
         .whenPressed(new ShooterSetHoodState(m_shooter, HoodState.AUTOLINE_SHOT));
 
     // Turn shooter + accelerator off
