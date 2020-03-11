@@ -47,11 +47,11 @@ public class HopperAndAcceleratorSetSpeeds extends CommandBase {
     if (didTrigger || m_shooter.getBallSensor()) {
       didTrigger = true;
       m_hopper.setHopper(0, 0);
-      m_shooter.setAcceleratorToRPM(0);
+      // m_shooter.setAcceleratorToRPM(0);
     }
     else {
       m_hopper.setHopper(leftSpeed, rightSpeed);
-      m_shooter.setAcceleratorToRPM(acceleratorRPM);
+      // m_shooter.setAcceleratorToRPM(acceleratorRPM);
     }
   }
 
