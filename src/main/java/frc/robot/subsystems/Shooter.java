@@ -90,7 +90,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean getBallSensor() {
-    return ballSensor.get();
+    return !ballSensor.get();
   }
 
   public void setFlywheelToRPM(double rpm) {
