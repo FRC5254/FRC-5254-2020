@@ -36,10 +36,6 @@ public class ControllerVibrate extends WaitCommand {
       Robot.m_robotContainer.driverController.setRumble(RumbleType.kLeftRumble, intensity);
       Robot.m_robotContainer.driverController.setRumble(RumbleType.kRightRumble, intensity);
     }
-    if (choice == ControllerChoice.OPERATOR || choice == ControllerChoice.BOTH) {
-      Robot.m_robotContainer.operatorController.setRumble(RumbleType.kLeftRumble, intensity);
-      Robot.m_robotContainer.operatorController.setRumble(RumbleType.kRightRumble, intensity);
-    }
   }
 
   // Called once the command ends or is interrupted.
@@ -47,7 +43,5 @@ public class ControllerVibrate extends WaitCommand {
   public void end(boolean interrupted) {
     Robot.m_robotContainer.driverController.setRumble(RumbleType.kLeftRumble, 0);
     Robot.m_robotContainer.driverController.setRumble(RumbleType.kRightRumble, 0);
-    Robot.m_robotContainer.operatorController.setRumble(RumbleType.kLeftRumble, 0);
-    Robot.m_robotContainer.operatorController.setRumble(RumbleType.kRightRumble, 0);
   }
 }

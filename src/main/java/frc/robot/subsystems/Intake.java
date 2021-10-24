@@ -31,9 +31,11 @@ public class Intake extends SubsystemBase {
   private CANSparkMax rollers;
   private DoubleSolenoid intakeDoubleSolenoid;
   private IntakeState intakeState;
+  private double intakeSpeed;
 
   public Intake() {
     intakeState = null;
+    intakeSpeed = 0.0;
     rollers = new CANSparkMax(RobotMap.kIntakeMotor, MotorType.kBrushed);
     intakeDoubleSolenoid =
         new DoubleSolenoid(RobotMap.kIntakeDoubleSolenoidFront, RobotMap.kIntakeDoubleSolenoidBack);
@@ -45,7 +47,18 @@ public class Intake extends SubsystemBase {
   }
 
   public void setIntakeMotor(double speed) {
-    rollers.set(speed);
+    this.intakeSpeed = speed;
+    rollers.set(this.intakeSpeed);
+  }
+
+  public void toggleIntakeSpeed(double speed) {
+    if(speed == this.intakeSpeed) {
+      // We are toggling with the current value, that means we want to turn the intake off
+      this.setIntakeMotor(0.0);
+    } else {
+      // The value is something else currently so we want to set it to the speed
+      this.setIntakeMotor(speed);
+    }
   }
 
   public void setIntakeState(IntakeState state) {
