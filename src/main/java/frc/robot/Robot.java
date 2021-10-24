@@ -65,9 +65,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {
-    m_robotContainer.m_climber.setTelescopeSpeed(0);
-  }
+  public void disabledInit() {}
 
   @Override
   public void disabledPeriodic() {}
@@ -101,12 +99,7 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
-      m_robotContainer.m_climber.setTelescopeSpeed(0);
-
     }
-
-    m_robotContainer.m_climber.resetTelescopeEncoder();
-    m_robotContainer.m_climber.setTelescopeSpeed(0);
   }
 
   /** This function is called periodically during operator control. */
